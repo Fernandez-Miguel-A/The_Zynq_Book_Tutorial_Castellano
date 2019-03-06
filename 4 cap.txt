@@ -1,0 +1,1304 @@
+ Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
+"El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
+
+
+--------------************ Explicar Que quiere decir HLS (High Level Synthesis  -  Síntesis en Alto Nivel)
+
+Se realiza una sitesis de un circuito electrónico describiendolos utilizando lenguajes de alto nivel
+**************------------
+
+
+
+ 4                             Creando Cores de I.P.
+
+
+
+        Introducción
+    Éste tutorial lo guiará a travez del proceso de creación de modulos I.P personalizados. Que son
+compatibles el Integrador I.P. Vivado, desde una variedad de archivos fuentes diferentes. Todos los
+I.P. creados serán compatibles con la interfaz AXI-Lite soportada por Xilinx, y serán conectados como
+dispositivos esclavos al implementarlo en el integrador de I.P.
+
+    Todos los métodos de creación de I.P. que son cubiertos aqui coincide con aquellos cubiertos en los
+libros.
+
+    * HDL.
+    * MathWorks HDL Coder.
+    * Xilinx Vivado HLS.
+
+    Éste tutorial esta separado en tres ejercicios y se organiza como sigue:
+
+
+ Ejercicio 4A - Éste ejercicio será usado HDL para crear un controlador que permitirá controlar los leds
+de la placa de desarrollo Zynq mediante un programa (aplicación software) ejecutandose en la seccion de PS.
+El "wizard" de Creación y Empaquetado de I.P. se usará para crear una interfaz vinculadora AXI-Lite que el
+proceso de control y la interfaz de led será añadida conjuntamente.
+
+
+ Ejercicio 4B - HDL Coder (Generador HDL), la herramienta de generación HDL de MathWorks será explorada en
+éste ejercicio. Un filtro LMS (Least Mean Square) ó Mínimos Cuadrados se creará y probará en el Espacio de
+Trabajo de Simulink. Entonces se usará el diseño LMS para generar codigo HDL al invocar al Consejero de 
+Flujo de Trabajo del generador HDL. Donde la opción de genegar un Core de I.P Xilinx será seleccionada.
+Las diferentes etapas del flujo de trabajo verificarán el diseño para asegurar que es un generador HDL
+de confianza y produce el codigo HDL en un formato que es compatible con el Integrador I.P. Nota:
+requerirá de MATLAB, Simulink y HDL Coder para completar el EJ 4B.
+
+
+ Ejercicio 4C - En el ejercicio final, Vivado HLS será usado para crear un Core de I.P. para un Oscilador
+Controlado Numéricamente (NCO - Numerically Controled Oscilator). Un algoritmo existente de codigo C será
+simulado para prueba, e iremos a travez de las diferentes etapas de sintesis para crear un Core de I.P.
+compatible con el Integrador I.P.
+
+
+
+
+Oscilador controlado por valores
+Oscilador controlado via numerica
+Oscilador controlado via valores
+Oscilador controlado por numeros
+Oscilador controlado numéricamente
+Oscilador de control Numérico
+
+
+
+
+ Ejercicio 4A - Creando Cores de I.P. en HDL
+
+    Con los dispositivos Zynq compactando a la seccion de PS y la seccion de PL juntas, la mayoría de
+los I.P. que se crean para funcionar el la seccion de PL deben ser capaces de comunicarse con el programa
+(aplicación software) que se ejecuta en la seccion de PS. Ésto requiere que los I.P. deban ser
+empaquetados con una interfaz que sea compatible con la seccion de PS (en éste caso la interfaz AXI).
+
+    Al crear un I.P. en HDL, Vivado provee un conjunto de plantillas de interfaz AXI que pueden ser creadas
+y personalizadas mediante el "wizard" Creación y Empaquetado de I.P. .El "wizard", como su nombre lo
+sujiere facilita 2 funciones principales: la creación de perisféricos de I.P. AXI4 y del empaquetado de 
+archivos fuentes dentro de un paquete que es compatible con la herramienta Integrador de I.P. .
+
+    En éste ejercicio actualmente se hará uso de ambas de estas caracteríticas para primeramente crear
+una plantilla AXI4-Lite I.P. que añadirá funcionalidad para permitir que los leds sobre la placa de
+desarrollo sean controlados via programa ejecutandose sobre la seccion de PS de la Zynq. Una vez que la
+funcionalidad haya sido añadida a la plantilla, los archivos fuentes serán empaquetados adentro de un
+bloque I.P. compatible con Integrador I.P. que será incluido a un sistema procesador Zynq simple.
+
+    Comenzaremos creando un proyecto nuevo en el IDE Vivado.
+
+    (a) Abra Vivado al hacer doble click en el icono de Vivado del escritorio ó desde Inicio>Todos los 
+Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
+
+    (b) Seleccione create new project ( crear proyecto nuevo ) desde la pantalla de bienvenida.
+
+    (c) En el diálogo "new project" ( proyecto nuevo ) seleccione siguiente (Next).
+
+    (d) En el diálogo de nombre de proyecto ingrese controlador_led en el campo Nombre De Proyecto,
+(Project Name), y en Ubicación De Proyecto, (Project Location), ingrese "C:/Zynq_Book".
+
+    Asegurese de que halla seleccionado la opción "create project subdirectory" ( crear subcarpeta de 
+proyecto ), todas las opciones deben ser las mismas que en la figura 4.1.
+    
+    Seleccione siguiente (Next).
+
+    (e) En el diálogo de tipo de proyecto, del ingles Project type, seleccione proyecto RTL y asegurese
+de que la opción "Do not specify sources at this time" ( No especificar archivos fuentes esta vez) se 
+encuentre desmarcada, es decir que NO este seleccionada:
+
+    Seleccione siguiente (Next).
+
+    (f) Dentro del diálogo añadir fuentes, del ingles Add Sources, seleccione VHDL como lenguaje 
+utilizado, en el campo (target languaje).
+
+    Si existen archivos fuente del tipo HDL ó archivos netlist para añadir al proyecto, se los puede 
+añadir en ésta etapa.
+
+    Como NO hemos tenido que añadir ningun archivo fuente al proyecto, seleccionamos siguiente (Next).
+
+    (g) Añadir Cores de I.P. existentes (opcional), al seleccionarlo se abrirá dicho diálogo.
+
+    Si existen archivos fuente de Cores de I.P. para añadir al proyecto, se los puede añadir aqui.
+
+    Como NO hemos tenido que añadir ningun archivo fuente de Cores de I.P. al proyecto, seleccionamos 
+siguiente (Next).
+
+    (h) Añadir restriciones (opcional), al seleccionarlo se abrirá dicho diálogo.
+
+    Ésta es la etapa donde cualquier archivo de restriciones (CONSTRAINTS) físicas o de temporizado
+se puede añadir al proyecto.
+
+    Como NO hemos tenido que añadir ningun archivo de restriciones (CONSTRAINTS) al proyecto, seleccionamos 
+siguiente (Next).
+
+    (i) Desde la ventana de diálogo de la parte predeterminada. Aqui seleccionaremos la parte Zynq que se
+esta utilizado.
+
+
+ | Zed | Seleccione placas (boards) desde el diálogo selector, luego seleccione ZedBoard Zynq Evaluation and
+ Development Kit (Equipo de Evaluacion y desarrollo ZedBoard de Zynq), del campo nombre exhivido, del ingles
+ display name, elija All (Todos) de la lista de revisión de la placa, tal y como se muetra en la figura 4.2:
+    Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.D).
+
+    Seleccione siguiente (Next).
+
+| Zybo | Asegurese de que haber realizado con el procedimiento de configuracíon de la parte de placa de
+Zybo. Explicado en el comienzo del EJ 1A.
+
+    Seleccione placas (boards) desde el diálogo selector, luego
+seleccione Zybo del campo nombre exhivido, del ingles display name, elija All (Todos) de la lista de
+revisión de la placa, tal y como se muetra en la figura 4.3:
+    Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.B.3).
+
+    Seleccione siguiente (Next).
+
+
+| Ambas | (j) En el diálogo de resumen del proyecto nuevo (New Project Summary), revise las opciones 
+elegidas y seleccione finalizar (Finish) para crear el nuevo proyecto.
+
+    =====> hasta aca todo igual de (a) -> (j) de EJ 1A.   <=====
+
+    Con el proyecto nuevo creado, podemos comenzar el proceso de creación de nuestro I.P. basado en HDL.
+
+    (k) Desde la barra de menues, seleccione Herramientas > Creación y Empaquetado de I.P. ..., (Tools >
+Create and package IP ...), como en la figura 4.4, abra el "Wizard" Creación y Empaquetado de I.P..
+
+    (l) Se abrirá el diálogo Creación y Empaquetado de I.P., tal y como en la figura 4.5.
+    
+    Seleccione siguiente (Next).
+
+    El diálogo Elija Perisférico Creado ó I.P. Empaquetado (figura 4.6), es donde se especifica si crear
+un nuevo archivo de plantilla perisférico ó empaquetar archivos fuente existentes dentro de un Core de I.P.
+    
+    En nuestro caso queremos crear una nueva plantilla I.P. .
+
+    (m) Seleccione crear un nuevo perisférico AXI, (create new AXI peripheral), tal como la figura 4.6.
+
+    Seleccione siguiente (Next).
+
+    El diálogo detalle de perisférico, (Peripheral Details), le permite que usted especifique la
+información Vendor, Library, Name and Version (VLNV)   <==========, así como otros detalles para el nuevo
+perisférico, que yace en la Ubicación IP, (IP Location), por defecto.
+
+    (n) Complete en detalle, tal como en la figura 4.7.
+
+    Seleccione siguiente (Next).
+
+    El diálogo Añadir Interfaz, (Add Interface), le permite especificar la Interfaz/ces que se presentarán
+en su perisférico personalizado. Aqui puede especificar:
+
+    * Numero de interfaces.
+    * Tipo de interfaz (AXI-Lite, AXI-Stream, AXI-Full).
+    * Modo de la interfaz (maestro, esclavo).
+    * Ancho del dato de la interfaz.
+
+    Caracteríticas especificas para tipos de interfaces individuales tambien estarán disponibles cuando
+el tipo correspondiente es seleccionado.
+
+    Como nuestro perisférico es un simple controlador para leds, que solo requiere valores a ser
+tranferidos, es suficiente una interfaz AXI-Lite esclavo. Solo se requiere de un registro de mapeo de
+memoria para nuestro simple controlador, pero como la cantidad mínima que se puede especificar es 4,
+elegimos esa.
+
+    (ñ) Especifique en el diálogo los mismos valores que muestra la figura 4.8.
+
+    Seleccione siguiente (Next).
+
+    (o) Revise la información en el diálogo crear perisférico, que detalla los archivos de salida que serán
+creados.
+    
+    Seleccione la opción Edtar I.P., (Edit IP). Ésta creará los archivos del perisférico de I.P. y creará
+un nuevo proyecto Vivado, en donde la funcionalidad del perisférico se puede modificar en el archivo de
+codigo fuente HDL y entonces empaquetarlo.
+
+    Seleccione finalizar (Finish) para cerrar el "Wizard" y crear la plantilla del perisférico.
+
+    Se abrirá un nuevo proyecto Vivado nombrado controlador_led_editado_v1_0.
+
+    En el bloque archivos fuentes (SOURCES), debe ver dos archivos fuente HDL (puede necesitar deslizarse
+hacia abajo para ver la seccion Archivo):
+
+    
+    Ya que se especifico VHDL como nuestro lenguaje utilizado, en el campo (target languaje), en el paso
+(f) cercano, la plantilla ha sido generada en VHDL. Para el caso de haber especificado Verilog como nuestro
+lenguaje a utilizar, Archivos fuente Verilog habrían sido creados.
+
+    Los dos archivos fuente son:
+
+        * controlador_led_v1_0.vhd -- Éste archivo instancia todas las interfaces AXI-Lite. En este
+caso solo una interfaz es presentada.
+
+        *  controlador_led_v1_0_S00_AXI.vhd -- Éste archivo contiene la funcionalidad de la interfaz
+AXI4-Lite que controla la interacción con los perisféricos en la seccion de PL y en el programa en ejecución
+en la seccion de PS.
+
+    Tambien se abrirá el bloque Empaquetador de IP, (IP Packager), en el Espacio de Trabajo.
+
+    Será visible la información que se especifica sobre nuestro perisférico en el paso (n). El parametro
+Vendor será dependiente del dominio de red de su computadora y puede ser cambiado.
+
+    Ahora podemos añadir funcionalidad a nuestro perisférico controlador_led. Añadiremos un nuevo puerto
+de salida a la plantilla del perisférico para permitirle conectarse a los pines de los leds del dispositivo
+Zynq, así como asignar el valor recibido desde la seccion de PS de la Zynq a el nuevo puerto de salida.
+
+    
+    (p) Abra controlador_led_v1_0_S00_AXI.vhd al hacer selección doble este nombre que esta el
+bloque de Archivos fuente (SOURCES). A continuación se abrirá el archivo en el Espacio de Trabajo.
+
+
+
+ | Zed | Deslizese hacia abajo hasta que vea el siguiente comentario en la declaración del puerto de la
+entidad:
+
+    Añada la siguiente declaración de puerto directamente debajo del comentario:
+
+    Ésta crea un nuevo puerto de salida con un ancho de 8-bits (un bit para representar a cada led en la
+ZedBoard).
+
+    Deslizese hasta abajo del archivo. Usted debe ver el siguiente comentario:
+
+    y añada la siguiente asignación de señal a puerto:
+
+    Éste asigna el valor que es recibido desde la seccion de PS de la Zynq (almacenada en slv_reg0) al
+puerto de salida que creamos en el paso previo.
+
+
+
+ | Zybo | Deslizese hacia abajo hasta que vea el siguiente comentario en la declaración del puerto de la
+entidad:
+
+    Añada la siguiente declaración de puerto directamente debajo del comentario:
+
+    Ésta crea un nuevo puerto de salida con un ancho de 4-bits (un bit para representar a cada led en la
+Zybo).
+
+    Deslizese hasta abajo del archivo. Usted debe ver el siguiente comentario:
+
+    y añada la siguiente asignación de señal a puerto:
+
+    Éste asigna el valor que es recibido desde la seccion de PS de la Zynq (almacenada en slv_reg0) al
+puerto de salida que creamos en el paso previo.
+
+
+
+| Ambas | (q) Guarde el archivo al seleccionar Archivo > Guardar Archivo, (File > Save File), desde la barra de
+herramientas ó desde el atajo de teclado "Ctrl+S".
+
+
+
+    (r) Abra controlador_led_v1_0.vhd al hacer selección doble este nombre que esta el
+bloque de Archivos fuente (SOURCES). A continuación se abrirá el archivo en el Espacio de Trabajo.
+
+    Debemos crear una vez más un puerto de salida nuevo en el archivo fuente de mayor jerarquia, y
+vincularlo al puerto equivalente que hemos creado en el archivo de la interfaz AXI4-Lite en los pasos
+previos.
+
+
+
+ | Zed | Deslizese hacia abajo hasta que vea el siguiente comentario en la declaración del puerto de la
+entidad:
+
+    Añada la siguiente declaración de puerto directamente debajo del comentario:
+
+    Como hemos añadido un nuevo puerto al archivo de la interfaz AXI4-Lite, debemos tambien añadirlo a la
+declaración del Componente en el archivo fuente de mayor jerarquia.
+
+    Deslizese hasta abajo del archivo hasta ver el siguiente comentario:
+    
+    unas cuantas lineas más debajo la declaración de puertos del componente:
+
+    Adentro de la declaración de puertos (debajo de la linea "port ("), añada la siguiente definición de
+puerto de salida: # 8-bits
+
+
+
+
+ | Zybo | Deslizese hacia abajo hasta que vea el siguiente comentario en la declaración del puerto de la
+entidad:
+
+    Añada la siguiente declaración de puerto directamente debajo del comentario:
+
+    Como hemos añadido un nuevo puerto al archivo de la interfaz AXI4-Lite, debemos tambien añadirlo a la
+declaración del Componente en el archivo fuente de mayor jerarquia.
+
+    Deslizese hasta abajo del archivo hasta ver el siguiente comentario:
+    
+    Unas cuantas lineas más debajo la declaración de puertos del componente:
+
+    Adentro de la declaración de puertos (debajo de la linea "port ("), añada la siguiente definición de
+puerto de salida: # 4-bits
+
+
+
+
+| Ambas | Finalmente, debemos añadir una vinculación entre un puerto y el puerto de salida de los leds
+del archivo fuente de mayor jerarquia y el archivo de la interfaz AXI4-Lite.
+
+
+
+    (s) Deslizese hacia abajo hasta que vea el siguiente comentario en la declaración del puerto de la
+entidad:
+
+    Unas cuantas lineas más debajo la declaración de puertos del componente:
+
+    Adentro de la declaración de puertos (debajo de la linea "port ("), añada la siguiente definición de
+puerto de salida:
+
+    (t) Guarde el archivo.
+
+    Ahora que hemos hecho las modificaciones necesarias a los archivos fuente del perisférico, debemos
+reempaquetar el IP para combinar los cambios.
+
+    (u) Regrese al Empaquetador de IP, (IP Packager), seleccionando la pestaña "Package - IP
+controlador_led" que está en el Espacio de Trabajo.
+
+
+    El Empaquetador de IP detectará los cambios de los archivos fuente y las areas que necesita actualizar
+serán resaltadas con el siguiente icono: |=/| . Usted debe ver que las siguientes dos areas de interes
+necesitan refrescarse:
+
+    #Custom Parameters
+    #Ports and Interfaces
+
+    (v) Seleccione "Custom Parameters" en el bloque Empaquetador de IP.
+
+    Usted debe ver el siguiente mensaje de información encima del bloque de la ventana:
+
+    Seleccione Combinar cambios desde el "Wizard" de personalización.
+
+    Ésto actualizará la información del Empaquetador de IP para reflejar los cambios hechos en los archivos
+fuente HDL.
+
+        Nota: Éste proceso actualiza la información del Empaquetador de IP para todas las areas y el icono
+|=/|  será removido.
+
+    Verifique que el Empaquetador de IP ha actualizado los puertos y la area de interfaz, la abriremos y lo
+verificaremos.
+
+    (w) Seleccione "Ports and Interfaces" en el bloque Empaquetador de IP.
+
+
+
+ | Zed | Advierta que el puerto salida_LEDs que se añadió a los archivos fuente ha sido añadido al bloque
+de puertos IP y tiene una longitud de 8.
+
+
+
+ | Zybo | Advierta que el puerto salida_LEDs que se añadió a los archivos fuente ha sido añadido al bloque
+de puertos IP y tiene una longitud de 4.
+
+
+
+| Ambas | El paso final en la creación de nuestro nuevo perisférico IP es empaquetar al IP.
+
+
+    
+    (x) Seleccione "Review and Package" (Revición y empaquetado) desde el bloque Empaquetador de IP.
+
+    (y) En el panel de post-empaquetado, seleccione editar configuracíon de empaquetado, (edit package
+settings) que está debajo:
+
+    (z) En el panel comportamiento automático, (Automatic Behavior), habilite la opción Crear archivo de
+IP, (Create archieve of IP), cerrar ventana del Empaquetador de IP, (Close IP Packager Window), y añadir IP al
+catálogo IP del proyecto actual, (Add IP to IP Catalog if the Current Project). Puede seleccionar borrar
+el proyecto luego de empaquetarlo, (Delete project after Packaging), si así lo desea (lo cual no tiene
+impacto sobre lo que resta de éste tutorial).
+
+    Ésto crea un archivo comprimido del IP empaquetado y cierra la ventana del Empaquetador de IP una vez
+finalizado.
+
+    (aa) Seleccione OK para aplicar la configuracíon.
+
+    (ab) Revise la información provista en la ventana "Review and Package" y seleccione reempaquetar IP,
+(Re-Package IP).
+
+    (ac) Una ventana de diálogo le aparecerá preguntandole si quiere cerrar el proyecto, Seleccione SI/Yes.
+
+    (ad) Los cambios hechos en el perisférico IP serán incluidos en el IP reempaquetado y el proyecto
+Vivado se cerrará.
+
+
+    Ahora retornaremos a nuestro proyecto Vivado original y crearemos un diseño de bloque de procesador
+Zynq para verificar la funcionalidad de nuestro controlador led perisférico.
+
+======> Bloques de Diseño nuevo  // diseño en bloques  // Diseño por bloques <==========
+    Para comenzar, crearemos un Diseño por Bloques nuevo y añadiremos el perisférico IP que hemos creado
+precisamente para el diseño.
+
+    (ae) En la ventana del Navegador de Flujo, (Flow Navigator), seleccione crear diseño en bloques, (Create
+ Block Desing), desde la seccion del integrador de Cores de I.P. .
+
+    Ingrese sistema_prueba_led en el campo de nombre de diseño, (Desing Name), y seleccione OK para crear
+un diseño en blanco.
+
+    (af) Dentro del ambito en algun lugar en blanco haga click derecho con el
+mouse y seleccione añadir Core de I.P., (Add IP). Alternativamente use el atajo de teclado "Ctrl+I", éste
+abrirá la ventana del catálogo de Cores de I.P. .
+
+    Ingrese led en el campo de busqueda y luego seleccione "controlador_led_v1_0" para añadir una
+instancia del Controlador Led IP al diseño.
+
+
+------------------***
+puertos de interfaz de más alto nivel sobre el diseño. /// archivo fuente de mayor jerarquia ///
+El nivel superior del diseño /// interfaz de más alto nivel sobre el diseño.
+
+***-----------------
+
+
+
+ | Zed | Un bloque controlador_led_v1.0 será presentado en la ventana de diseño por bloques, tal como
+en la figura 4.9.
+
+    El puerto de 8-bits salida_LEDs que se añadió al perisférico está presentado a la derecha del bloque.
+
+    Para habilitar que el perisférico se conecte a los leds de la ZedBoard, debemos hacer a salida_LEDs
+un puerto externo. Ésto permite que el la salida del puerto sea conectada a los pines físicos particulares
+sobre el dispositivo Zynq, que son conectados a los leds.
+
+
+    Al desplazar el mouse sobre la interfaz salida_LEDs (aparecerá el nombre de la interfaz) sobre el
+bloque de controlador_led hasta que el icono del mouse cambie a un lapiz. Tecla derecha del mouse y
+seleccione Hacer Externo, (Make External). Alternativamente, seleccione la interfaz y pulse "Ctrl+T"
+en su teclado.
+
+    El diseño por bloques ahora debería parecerse al de la figura 4.10.
+
+
+
+
+ | Zybo | Un bloque controlador_led_v1.0 será presentado en la ventana de diseño por bloques, tal como
+en la figura 4.11.
+
+    El puerto de 4-bits salida_LEDs que se añadió al perisférico está presentado a la derecha del bloque.
+
+    Para habilitar que el perisférico se conecte a los leds de la Zybo, debemos hacer a salida_LEDs
+un puerto externo. Ésto permite que el la salida del puerto sea conectada a los pines físicos particulares
+sobre el dispositivo Zynq, que son conectados a los leds.
+
+
+    Al desplazar el mouse sobre la interfaz salida_LEDs (aparecerá el nombre de la interfaz) sobre el
+bloque de controlador_led hasta que el icono del mouse cambie a un lapiz. Tecla derecha del mouse y
+seleccione Hacer Externo, (Make External). Alternativamente, seleccione la interfaz y pulse "Ctrl+T"
+en su teclado.
+
+    El diseño por bloques ahora debería parecerse al de la figura 4.12.
+    
+
+
+
+| Ambas | El paso siguiente es añadir un bloque Sistema de procesamiento de Zynq así que el controlador LED
+puede ser conectado a el.
+
+    Añada una instancia de "ZYNQ7 Processing System", utilizando el mismo procedimiento que el paso (af).
+
+    Aparecerá el mensaje del asistente de diseño, en la parte superior de la ventana de diagrama:
+
+    Seccione la opcion de ejecución de automatización del bloque (Run Block Automation), del mensaje del
+asistente de diseño. Aparecerá un mensaje de información.
+
+    Asegurese de que la opción "Apply Board Preset" este seleccionada, entonces seleccione OK.
+
+    Ésto hará todas las modificaciones necesarias al sistema de procesamiento Zynq que son relativos a los
+presets de la placa y hará las conexiones externas requeridas.
+
+    Ahora debemos conectar el controlador LED al sistema de procesamiento Zynq. Éste paso tambien puede
+ser realizado utilizando el asistente de diseño.
+
+    (ag) En el mensaje del asistente de diseño, seleccione ejecución de automatización de conexión
+(Run Connection Automation).
+
+    Aparecerá un mensaje de información, seleccione controlador_led_0/S00_AXI y seleccione OK.
+
+    Ésto añadirá algunos bloques adicionales al diseño que se requerirá para conectar al controlador
+LED al sistema de procesamiento Zynq.
+
+    Ahora nuestro bloque de diseño esta completo.
+
+    (ah) Valide el diseño al seleccionar Herramientas > Validar Diseño, (Tools > Validate Desing), de la
+ barra de menues. 
+                                                           __
+    Alternativamente, seleccione el botón validar diseño, |./|, de la barra de herramientas principal ó
+                                                           ¯¯
+seleccione el atajo de teclado "f6" (se refiere a la tecla funcion6 de arriba de todo en el teclado y
+NO la combinación "F+6")
+
+    Seleccione OK para descartar el mensaje.
+
+    Ahora podemos generar archivos HDL para el diseño.
+
+    (ai) En el bloque Archivos fuente (SOURCES), teclado derecha del mouse sobre el diseño por bloques
+sistema_prueba_led y seleccione crear vinculador HDL, (Create HDL Wrapper).
+
+    Seleccione Permitir a Vivado administralo y actualizarlo automaticamente,
+(Let Vivado manage wrapper and auto-update), Seleccione OK.
+
+    Ésto generará el vinculador HDL de alto nivel para su sistema.
+
+    Ahora debemos conectar el puerto salida_LEDs del diseño a los pines correspondientes sobre el
+dispositivo Zynq.
+
+    Ésto se hace a travez de la especificación del archivo de restriciones (CONSTRAINTS) en el archivo XDC.
+
+    (aj) En la ventana del Navegador de Flujo, (Flow Navigator), seleccione añadir Archivos fuente,
+(Add Sources), desde la seccion del administrador de Proyecto, (Project Manager).
+
+    Se abrirá el diálogo añadir Archivos fuente.
+
+    Seleccione Añadir ó Crear Archivo de Restriciones, (Add or Create Constraints), y seleccione siguiente
+(Next).
+
+    (ak) Seleccione el simbolo | + | y entonces seleccione Crear Archivo.., (Create File..), como muestra
+en la figura 4.13.
+
+    Se abrirá el diálogo Crear Archivo de Restriciones, (Create Constraints File), seleccione XDC como el
+tipo de archivo y entonces ingrese restriciones_led como nombre de archivo.
+
+    Seleccione OK.
+
+    (al) Seleccione finalizar (Finish) para crear el archivo y cerrar el diálogo.
+
+    (am) En la pestaña archivos fuente (Sources) abra el campo restriciones (Constraints) y abra el archivo
+XDC creado recientemente al seleccionar sobre restriciones_led.xdc .
+
+    Se abrirá el archivo en el Espacio de Trabajo.
+
+
+
+ | Zed | Añada las siguientes lineas al archivo de restriciones. Alternativamente, se pueden copiar desde
+archivo fuente disponible en "C:/Zynq_Book/sources/zedboard/controlador_led".
+
+    Éste conecta cada bit individual del puerto salida_LEDs a un pin especifico sobre el dispositivo Zynq.
+
+    Los pines especificados son conectados a los LEDs de la ZedBoard.
+
+
+
+
+ | Zybo | Añada las siguientes lineas al archivo de restriciones. Alternativamente, se pueden copiar desde
+archivo fuente disponible en "C:/Zynq_Book/sources/zybo/controlador_led".
+
+    Éste conecta cada bit individual del puerto salida_LEDs a un pin especifico sobre el dispositivo Zynq.
+
+    Los pines especificados son conectados a los LEDs de la Zybo.
+
+
+
+| Ambas | (an) Guarde el archivo de restriciones (CONSTRAINTS).
+
+    
+
+
+    Ahora nuestro diseño simple esta completo. Y ahora podemos generar un bitstream.
+
+    (añ) En el navegador de flujo, (Flow Navigator), seleccione generar trama de bits, (generate bitstream), de la
+seccion Programa y depuración (Program and Debug). Si la ventana de diálogo aparece para guardar
+su diseño, seleccione guardar (Save).
+
+    La ventana de diálogo se abrirá advirtiendole que esta lanzando implementación y sintesis
+antes de comenzar el proceso de generación del bitstream. Seleccione SI/Yes para llevar a cabo
+el proceso.
+    
+     La combinacion de ejecución de sistesis, implementación y generación del bitstream uno tras
+otro tomará unos cuantos minutos, dependiendo del desempeño de su computadora.
+
+    (ao) Una vez que la generación del bitstream finalizo, otra ventana de diálogo se abrirá
+confirmandole que el proceso a sido completado.
+
+    Seleccione abrir diseño implementado, (Open Implemented Desing), y seleccione OK.
+
+    Con la generación del bitstream completa, el paso final en Vivado es exportar el diseño al SDK, donde se 
+creará el programa que le permitirá a la seccion de PS de la Zynq controlar los leds en la placa
+de desarrollo Zynq.
+
+    (ap) Seleccione Archivo > Exportar > Exportar hardware, (File>Export>Export hardware), 
+desde la barra de menues.
+    
+    La ventana de diálogo de exportación de hardware se abrirá. Asegurese de que la opcion
+incluir bitstream, (include bitstream), esta seleccionada, luego seleccione OK.
+
+    (aq) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK, (File> Launch SDK), desde
+la barra de menues y seleccione OK.
+
+    El SDK se abrirá.
+
+    (ar) Una vez que se abra el SDK, cree un Proyecto de Aplicación nuevo, (Application Project) al
+seleccionar Archivo > Nuevo > Proyecto de Aplicación, (File>New>Application Project), de la barra de
+menues.
+
+    En el diálogo de proyecto nuevo, (new Project), ingrese sistema_prueba_led en el campo Nombre De
+Proyecto, (Project Name).
+
+    Por defecto la opción para crear paquetes de soporte de placa nuevo está seleccionado. Seleccione
+siguiente (Next).
+
+    (as) En el diálogo Plantilla (Templates), seleccione Aplicación vacia, (Empty Application), y
+seleccione finalizar (Finish).
+
+
+    Usted debe recordar que cuando creabamos al perisférico en las etapas previas de este ejercicio,
+que eran generados un conjunto de archivos controladores. Ahora debemos poner en el SDK aquellos archivos
+controladores. Ésto es hecho al añadir un nuevo repositorio al proyecto SDK.
+
+    (at) Explore en Xilinx Tools> Repositorios en la barra de herramientas.
+
+    En la ventana de preferencias del repositorio, (Repositories Preferences), seleccione en nuevo (new),
+tal como en la figura 4.14.
+
+    (au) Valla a la carpeta "C:/Zynq_Book/ip_repo/controlador_led_1.0", como en la figura 4.15 y
+seleccione OK.
+
+    (av) Cierre la ventana de preferencias de repositorios al seleccionar OK.
+
+    Una vez que cierre la ventana de preferencias, el SDK analizará automaticamente los repositorios y
+reconstruirá el proyecto para incluir los archivos controladores.
+
+    Ahora debemos verificar que el controlador importado recientemente ha sido asignado al controlador
+LED perisférico.
+
+    (aw) La pestaña system.mss debe estar abierta en el Espacio de Trabajo. Si NO es así, abrala
+desplegando sistema_prueba_led_bsp en el explorador de proyecto, (project explorer), y haciendo
+seleccion doble sobre system.mss.
+
+    (ax) En la esquina superior izquierda de la pestaña system.mss, seleccione Modificar éstas
+caracteríticas de BSP, (Modify this BSP´s Settings).
+
+    Se abrirá la ventana de configuracíon del empaquetado de soporte de placa, (Board Support Package
+Settings), tal como en la figura 4.16.
+
+    (ay) Seleccione Controladores (Drivers) desde el menu de mano izquierda. Desde la lista de componentes
+en el bloque Controladores (Drivers), identifique controlador_led_0 y asegurese que controlador_led está
+seleccionado desde el menu desplegable en la columna Controladores (Drivers), ver figura 4.17.
+
+    Seleccione OK.
+
+    Ahora el proyecto se reconstruirá.
+
+    Ahora podemos crear una aplicación C simple para controlar los leds. En este caso será importado un
+archivo fuente preescrito.
+
+    (az) En el explorador de proyecto, (project explorer), abra sistema_prueba_led y tecla derecha del
+mouse sobre src. Seleccione Importar (Import) desde el menu desplegable.
+
+    La ventana de Importación, abra General y haga seleccion doble sobre sistema de archivo, (File System).
+
+    Seleccione Navegar (Browse) en la esquina superior derecha y explore
+
+
+
+ | Zed | "C:/Zynq_Book/sources/zedboard/controlador_led".
+
+
+
+| Zybo | "C:/Zynq_Book/sources/zybo/controlador_led".
+
+
+
+| Ambas | Seleccione OK.
+    
+    En el panel de mano izquierda seleccione "led_controller_test_tut_4A.c" y seleccione finalizar (Finish).
+
+    Ahora el proyecto se reconstruirá para añadir el archivo fuente nuevo.
+
+    Abra "led_controller_test_tut_4A.c" y examine su funcionalidad.
+
+    Antes de lanzar la aplicación sobre la placa de desarrollo Zynq, debemos programar la seccion de la PL
+de la Zynq y crear una nueva conexión consola/terminal.
+
+    (ba) Desde la barra de menues, seleccione Xilinx > Programar FPGA, (Xilinx Tools > Program FPGA).
+
+    El campo bitstream ya debe estar completo con el correspondiente bitstream que hemos exportado desde
+Vivado antes.
+
+    Seleccione Programar (Program), para programar la seccion de PL la Zynq.
+
+        Nota: Una vez que el dispositivo ha sido programado exitosamente, el led Hecho (DONE) sobre la ZedBoard
+cambiará a Azul. Similarmente, el led Hecho (DONE) en la Zybo pasará a Verde.
+
+    (bb) Seleccione la pestaña Consola (Terminal) desde la ventana de consola debajo del Espacio de Trabajo,
+como en la figura 4.18.
+
+    (bc) Seleccione el icono Conectar (Connect), como esta resaltado en la figura 4.18.
+
+    (bd) Se abrirá la ventana configuracíon de consola, configure las caracteríticas tal como se especifica
+en la figura 4.19.
+
+        Nota: El valor del campo Puerto (Port) variará dependiendo de cual cable UART-USB este conectado.
+        Para determinar ésto sobre el sistema Windows, abra el administrador de dispositivos,
+(Device Manager), e identifique el puerto COM (puede que este nombrado como "USB serial Port").
+
+    (be) Seleccione OK para iniciar la nueva conexión de consola.
+
+    Ahora que la seccion de la PL de la Zynq esta programada y la conexión de consola ha sido creada
+podemos programar la seccion de la PS de la Zynq con nuestro programa (aplicación software).
+
+    (bf) En el explorador de proyecto, (project explorer), tecla derecha del mouse sobre sistema_prueba_led
+y seleccione ejecutar como > Lanzar en Hardware (GDB), (Run As > Launch in Hardware (GDB)). Ver figura 4.20.
+
+    (bg) Cambiese a la pestaña Consola (Terminal) de la ventana de Consola, y confime que el valor del led
+esté siendo sacados, como en la figura 4.21.
+
+    Usted tambien debe ver que los leds sobre la placa de desarrollo exhiven los correspondientes valores
+LED.
+
+    Ésto concluye este ejercicio sobre diseño de IP Zynq en HDL. Ahora usted debe estar familiarizado con:
+
+    * Creación de plantillas de interfaz AXI con el "Wizard" Crear y Empaquetar IP, (Create and Package IP).
+
+    * Añadir funcionalidad al perisférico IP HDL en Vivado y al Empaquetador de IPs.
+
+    * Como conectar IP empacados a un sistema de procesamiento Zynq en el Integrador de IP.
+
+    * Crear programas (aplicaciónes software) para controlar el IP HDL utilizando el controlador software
+C generado, y ejecutandolo sobre la placa de desarrollo Zynq.
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Ejercicio 4B - Creando Cores de I.P. en HDL con la herramienta de "MathWorks"
+
+    En éste ejercicio crearemos un Core de IP que desempeñe la función de un filtro filtro de cancelación
+de ruido LMS. El generador de codigo HDL de MathWorks (HDL Coder) será utilizado para trasformar un modelo
+basado en bloques Simulink en una descripción RTL la que se empacará para uso en el catálogo IP de Vivado.
+Comenzaremos abriendo el modelo Simulink en MATLAB.
+
+    Antes de comenzar este ejercicio es necesario copiar algunos archivos fuentes adentro de un carpeta
+de trabajo nueva.
+
+    (a) En el explorador de ventanas, dirijase a "C:/Zynq_Book/sources/generador_hdl_lms" y copie el contenido
+de la carpeta en una nueva carpeta nombrada "C:/Zynq_Book/generador_hdl_lms".
+
+    (b) Abra MATLAB al dirijirse a Inicio>Todos los Programas> MATLAB> R2015a> MATLAB R2015a,
+(Start>All Programs> MATLAB> R2015a> MATLAB R2015a).
+
+    Se abrirá MATLAB y verá el espacio de trabajo principal, ver figura 4.22, (ó una variación de éste).
+
+        Nota: Éste libro utiliza la version R2015a de MATLAB. Si usted tiene una versión diferente de
+MATLAB puede necesitar reemplazar por su propia versión a R2015a (R2013a,R2013b,R2014a,R2014b).
+
+    (c) Si HDL Toolpath de MATLAB ya ha sido configurado por usted, vaya al paso (d), de otro modo
+realize el siguiente procedimiento.
+
+    * Descarge e instale Xilinx ISE 14.7 desde el sitio de internet ó desde el siguiente enlaze:
+
+    "http://www.xilinx.com/products/design-tools/ise-design-suite.html"
+
+    * Utilizando el explorador de ventanas ubique la Aplicación ISE de Xilinx nombrada ise.exe, usando la
+ruta de instalación Xilinx ISE 14.7. Típicamente, la aplicación se puede encontrar en la siguiente ruta,
+si es que se instalo en el Disco C.
+    
+    "C:\Xilinx\14.7\ISE_DS\ISE\bin\nt\ise.exe"
+
+    * Copie la ruta en el portapapeles (clipboard) y abra el espacio de trabajo de MATLAB, mostrado
+previamente en la figura 4.22.
+
+    * En la ventana de Comandos, (Command Window), ingrese la siguiente función:
+
+    De donde el cuarto parámentro (dirección de aplicación), es la ruta de instalación previamente copiada
+al portapapeles (clipboard).
+
+    * Habiendo configurado exitosamente a HDL Toolpath, se exhivirá el siguiente mensaje de información:
+
+    * Ahora se puede usar el generador de codigo HDL para sintetizar codigo HDL en la plataforma hardware
+de Xilinx.
+
+    (d) Ingrese "C:/Zynq_Book/generador_hdl_lms" como la carpeta de trabajo, tal como se resalta en la
+figura 4.23.
+
+    En el bloque de carpeta actual, (Current Folder), tambien debe ver cuatro lineas:
+
+        * charla_original.wav - Un pequeño recorte del audio de una charla.
+
+        * setup.m - Realiza comandos de configuracíon para importar muestras de audio adentro del espacio de
+trabajo de MATLAB y establece la taza de muestreo de sistema corresponddiente.
+
+        * lms.slx - Un modelo Simulink que implementa un proceso de cancelación de ruido LMS.
+
+        * playback.m - Puede usarse para verificar el proceso de filtrado LMS mediante grabaciones de audio
+de varias etapas.
+
+    El comando de configuracíon en setup.m se invoca automaticamente cuando la simulación es iniciada.
+
+    (e) Abra el modelo Simulink LMS al hacer seleccion doble sobre lms.slx en el bloque Carpeta Actual,
+(Current Folder).
+
+    El modelo debe abrir y usted debe ver el sistema LMS, como el de la figura 4.24.
+
+    Los dos archivos fuente de caracteríticas del modelo:
+
+        * Bloque Onda Senoidal, (Sine Wave), que genera una ruido tonal.
+        * Bloque Desde Espacio de Trabajo, (From Workspace), que importa las muestras de audio desde el
+espacio de trabajo de MATLAB.
+
+    Es entonces añadido/combinado el ruido tonal con las muestras de audio para crear una señal de audio
+corrupta.
+
+    Para generar codigo HDL para el modelo LMS de Simulink utilizando el generador de codigo HDL, las
+entradas del sistema deben estar en formato numérico de precición fija (formato entero). Dos bloques de
+conversión de tipo de datos, (Data Type Conversion) son usados para convertir a la señal de audio corrupta
+y la señal de ruido tonal a formato numérico de precición fija. Las señales de precición fija son entonces
+la entradas a un subsistema LMS, el cual se explorará en el siguiente paso.
+
+    A la salida del subsistema LMS, la señal de error e(k), es la entrada a el ambito hacia adelante con
+el audio corrupto y la entrada de ruido tonal, para una inspección visual de las señales. Dos bloques
+A Espacio de Trabajo, (To Workspace), tambien son presentados para permitir a la salida del LMS y la señal
+de audio corrupta ser la salida del espacio de trabajo de MATLAB para reproducción de audio.
+
+    (f) Para explorar en profundidad el bloque subsistema LMS haga seleccion doble sobre si. Verá el
+sistema en la figura 4.25.
+
+    Las caracteríticas de un bloque de filtrado LMS simple. Como no son de interes en la señal Salida (Output),
+es desconectado. Para continuar leyendo sobre la funcionalidad de un filtro LMS, se puede encontrar al
+presionar tecla derecha del mouse sobre el bloque de filtrado LMS y seleccionando Ayuda (Help) como se muestra
+debajo:
+
+    (g) Abra Parametros del bloque de filtrado LMS, (LMS Filter Block Parameters), al hacer seleccion doble
+con el mouse sobre el bloque del Filtro LMS, (LMS Filter).
+
+    Tomese un momento para explorar los parámentros. Usted debe ser capaz de detereminar que hay 16
+coeficientes del filtro adaptativo y un tamaño de paso de 0.125.
+
+    (h) Cierre la ventana Parametros y retorne al modelo Simulink principal al seleccionar al botón
+                                    |  /\  |
+                                    | /__\ |
+arriba al ancestro, (Up to Parent), |  ||  |.
+
+    Será generado el codigo HDL solo para el subsistema LMS.
+
+    Tecla derecha del mouse sobre el subsistema LMS y seleccione Generador de codigo HDL > Consejero
+de flujo de trabajo HDL, (HDL Coder> HDL WorkFlow Advisor).
+
+    Se abrirá la ventana del Consejero de flujo de trabajo HDL, como en la figura 4.26.
+
+    El Consejero de flujo de trabajo HDL, nos guia a travez de los pasos requeridos para generar codigo
+RTL para su diseño.
+
+    (i) En el panel de mano izquierda, abra establecer un dispositivo, (Set Target), y seleccione
+1.1 establecer un dispositivo especifico y la herramienta de sistesis, (1.1 Set Target Device and
+Synthesis Tool).
+
+    Aqui especificamos el formato de salida del RTL y de la plataforma elegida.
+
+    (j) En el bloque de parámentros de entrada, (Input Parameters), seleccione Generación de Core de IP,
+(IP Core Generation), como el flujo de trabajo elegido, (target WorkFlow), y Plataforma Xilinx generica,
+(Generic Xilinx Platform), como la plataforma elegida.
+
+
+
+ | Zed | En ésta etapa, ahora estarán disponibles opciones de especificación de partes adicionales. Elija
+la ZedBoard mediante la primera confirmación de partes requerida al inspeccionar el chip Zynq sobre la
+placa. Ingrese los detalles de placa adentro del generador de codigo HDL, tal y como muestra en la
+figura 4.27.
+
+
+
+ | Zybo | En ésta etapa, ahora estarán disponibles opciones de especificación de partes adicionales. Elija
+la Zybo mediante la primera confirmación de partes requerida al inspeccionar el chip Zynq sobre la
+placa. Ingrese los detalles de placa adentro del generador de codigo HDL, tal y como muestra en la 
+figura 4.28.
+
+
+
+
+ | Ambas | (k) Seleccione ejecutar esta tarea, (Run this task), para aplicar la configuracíon.
+
+
+
+    (l) Seleccione Establecer interfaz elegida, (Set Target Interface), desde el panel de mano izquierda.
+
+    Aqui especificamos la interfaz elegida para la generación de codigo HDL.
+
+    En el bloque de parámentros de entrada, (Input Parameters), seleccione Coprocesamiento Bloqueante,
+(Coprocessing - Blocking), como la sincronización Procesador/FPGA. Ésto automaticamente inferirá una
+interfaz AXI4-Lite para todos los puertos del diseño y especifirá una dirección de memoria para cada uno
+como en la figura 4.29.
+
+    (m) Seleccione ejecutar esta tarea, (Run this task), para aplicar la configuracíon.
+
+    (n) Abra preparar modelo para generación de codigo HDL, (Prepare model for HDL Code Generation), de
+mano izquierda y seleccione verificar caracteríticas globales, (Check Global Settings).
+
+    Aqui las caracteríticas a nivel modelo serán verificadas si el modelo esta listo para la generación de
+codigo HDL.
+
+    (ñ) Seleccione ejecutar esta tarea, (Run this task), para verificar la configuracíon a nivel modelo.
+
+    Si el paso falla, seleccione Modificar Todo, (Modify All), para permitir al Consejero de flujo de
+trabajo HDL modificar las caracteríticas.
+
+    Ahora éste paso debe pasar, y será presentado con una tabla de resultados.
+
+    Los poquitos pasos siguientes son todos verificaciones y puede ser realizado en un batch (Guión).
+
+    (o) Tecla derecha del mouse sobre verificar tiempos de muestra, (Check Sample Times), a la izquierda
+del bloque y seleccione Ejecutar tarea seleccionada, (Run To Selected Task), como en la figura 4.30.
+
+    (p) Ésto realizará las verificaciones una atras de la otra para prevenirlo de que cada una se ejecuta
+individualmente.
+    
+    Todas las verificaciones deberían pasar.
+
+    El paso final involucra la especificación de configuracíon basica sobre el codigo RTL, tal como que
+lenguaje usar (VHDL/Verilog), y que reporte de generación de codigo generar. Finalmente, el codigo HDL
+será generado.
+
+    (q) Abra el bloque Generación de codigo HDL, (HDL Code Generation), de mano izquierda y abra otra vez
+Establecer opciones de generación de codigo, (Set Code Generation Options).
+
+    Seleccione en Establecer opciones basicas, (Set Basic Options).
+
+    (r) Seleccione VHDL como Lenguaje elegido, en el bloque Lenguaje elegido (Target).
+
+    Tambien puede seleccionar cualquier reporte de generación de codigo, (Code Generation reports), que
+usted quiera.
+
+    (s) Seleccione Establecer Opciones Avanzadas, (Set Advanced Options), de mano izquierda del panel.
+
+    Aqui usted puede especificar opciones avanzadas para el codigo HDL.
+
+    Se dejarán los valores por defecto, pero usted puede, si así lo desea, explorar las configuraciones
+para uso futuro.
+
+    (t) Tecla derecha sobre Establecer Opciones Avanzadas, (Set Advanced Options), y seleccione Ejecutar
+tarea seleccionada, (Run To Selected Task), para aplicar la configuracíon.
+
+    (u) Finalmente, Seleccione Generar Codigo RTL y Core de IP, (Generate RTL Code and IP Core), de mano
+izquierda del panel.
+
+    Éste es el paso que finalmente generará el codigo HDL para el Core de IP LMS.
+
+    Establezca el nombre de Core IP a pcore_lms y seleccione ejecutar esta tarea, (Run this task).
+
+    Una vez que el generador de codigo HDL ha terminado de generar el codigo HDL, se abrirá la ventana de
+reporte de generación de codigo, (Code Generation Report). Ésto le provee un resumen del resultado de la
+generación de codigo y provee más información sobre la interfaz elegida, como tambien del temporizado.
+
+    La etapa final de creación de nuestro Core de IP LMS es empaquetarlo con el Empaquetador de IP así que
+podemos usarlo en el diseño integrador de IP. Para hacer esto necesitamos crear un proyecto Vivado nuevo.
+
+
+    (v) Abra Vivado y cree un proyecto nuevo nombrado lms_enpaquetado en la siguiente ubicación:
+"C:/Zynq_Book/generador_hdl_lms" asegurandose de que halla seleccionado la opcion crear subcarpeta de 
+proyecto, (create project subdirectory). Establezca proyecto RTL, (RTL Project), como su tipo de proyecto,
+seleccione VHDL como lenguaje elegido e ingrese la parte por defecto corresponddiente a su placa de
+desarrollo Zynq.
+
+    Para más detalles sobre el proceso de creación de un proyecto Vivado nuevo, revise el paso (a) del
+EJ 4A.
+
+    (w) Cuando el proyecto ya ha sido creado y abierto, seleccione Herramientas> Crear y Empaquetar IP, 
+(Tools> Create and Package IP) desde la barra de herramientas y luego seleccione siguiente (Next).
+
+    (x) Seleccione la opción Empaquetar en una carpeta especifica, (Package a specified directory),
+luego seleccione siguiente (Next).
+
+    (y) Ingrese "C:/Zynq_Book/generador_hdl_lms/pry_hdl/coreip/pcore_lms_v1_00_a" como Ubicación IP,
+(IP Location).
+
+    (z) seleccione siguiente (Next) para ir a Editar (Edit), en el diálogo de Nombre de Proyecto del
+Empaquetador IP, (IP Packager Project Name), y seleccione siguiente (Next) para aceptar el nombre de
+proyecto y ubicación por defecto.
+
+    (aa) En la ventana Resumen (Summary), seleccione finalizar (Finish) para abrir el Empaquetador de IP,
+(IP Packager).
+
+    (ab) De la mano izquierda del panel de la ventana del Empaquetador de IP, (IP Packager), seleccione
+Puertos e Interfaces, (Ports and Interfaces).
+
+    Se abrirá el panel interfaces de IP, y usted debe ver Empaquetador de IP ha identificado los puertos
+AXI individuales, pero NO fué inferido como una Interfaz AXI.
+
+    Para inferir una interfaz AXI:
+
+    (ac) Tecla derecha de mouse sobre algun lugar en blanco del bloque Puertos e Interfaces de IP, 
+(IP Ports and Interfaces) y seleccione inferir una interfaz automaticamente..., (Auto Infer Interface...).
+
+    (ad) Se abrirá la ventana del Selector de Interfaz inferida automaticamente:
+
+    Seleccione aximm desde la lista, como es mostrado y seleccione OK.
+
+    Los puertos AXI individuales de nuestro diseño serán ajustados a una interfaz AXI-Lite.
+
+    (ae) Seleccione Direccionamiento y memoria, (Addressing and Memory), desde la izquierda del panel.
+Aquí el Empaquetador IP ha especificado incorrectamente un Rango (Range) de direcciones de unos 65536,
+Seleccione sobre Rango (Range) y cambie el valor a 32.
+
+    (af) Finalmente, Revisar y empaquetar, (Review and Package), desde mano izquierda del menu.
+Revise la información provista y seleccione Empaquetar IP, (Package IP).
+
+
+    Ésto completa la generación de un componente LMS desde el generador de codigo HDL de MathWorks.
+Ahora usted debe estar familiarizado con:
+
+    * Utilización del ambiente de diseño basado en bloques de Simulink, para el diseño y simulación de IP.
+
+    * Utilización del Consejero de flujo de trabajo HDL para guiarse a travez de los pasos de generación
+de codigo RTL y Cores de IP para diseños Simulink existentes.
+
+    * Empaquetar bloques IP generados por el generador de codigo HDL en el Empaquetador de IP para uso
+en el diseño integrador de IP de Vivado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Ejercicio 4C - Creando Cores de I.P. con Vivado HLS
+
+    En el ejercicio final, crearemos un Core de IP que implementará la funcionalidad de un NCO.
+La herramienta que será usada es Vivado HLS, y debemos explorar algunas caracteríticas que nos permitan
+especificar tipos de datos de precición fija arbitrarios, así como las directivas requridas para exportar
+un IP con una interfaz esclavo AXI-Lite, para permitir al Core de IP vincularse al procesador Zynq.
+
+    Comenzaremos por crear un Proyecto Nuevo en Vivado HLS.
+
+    (a) Abra la GUI de HLS de Vivado explorando Inicio > Todos los Programas > Xilinx Desing Tools >
+Vivado 2015.1 > Xilinx HLS 2015.1 .
+
+    (b) Cuando la GUI de Vivado HLS inicie, se encontrará con la pantalla de bienvenida. Ver figura 4.31.
+
+    (c) Seleccione la opción crear proyecto nuevo, (Create New Project), como la de la figura 4.32.
+
+    Ingrese hls_nco como Nombre de Proyecto, (Project Name), y "C:/Zynq_Book" como Ubicación De Proyecto,
+(Project Location).
+
+    Asegúrese que la opción de igualar la seleccion de la figura 4.32 y seleccione siguiente (Next).
+
+    (d) Ahora se le exhivirá una ventana para añadir y/o remover archivos fuente. 
+Aqui es donde los archivos fuente tipo "C" (ó archivo C fuente, directamente) pueden ser añadidos al
+proyecto, ó donde archivos fuente nuevos son creados.
+
+    Ingrese nco como la función superior y seleccione Añadir Archivos..., (Add Files...).
+
+    Explore hasta "C:/Zynq_Book/sources/hls_nco" y seleccione nco.cpp, luego seleccione Abrir (Open).
+
+    El diálogo debería parecerse al de la figura 4.33.
+    
+    Seleccione siguiente (Next).
+
+    (e) Debe aparecer un segundo diálogo para añadir y/o remover. Aquí es donde los archivos de bancos de
+prueba <====================== pueden ser añadidos al proyecto, ó donde bancos de prueba (testbench) nuevos
+son creados.
+
+    Seleccione Añadir Archivos..., (Add Files...), y explore hasta "C:/Zynq_Book/sources/hls_nco".
+Seleccione nco_bnc_prb.cpp y luego seleccione Abrir (Open) para añadir archivos de bancos de prueba
+(testbench) al proyecto.
+
+    Seleccione siguiente (Next).
+
+    (f) Se abrirá el diálogo de Configuracíon de la Solución, (Solution Configuration). Aquí
+seleccionaremos la parte que será elegida.
+
+    Asegúrese de que el Período (Period) sea de 10.
+
+    Seleccione, |...| en el panel de seleccion de partes.
+
+    Se abrirá el diálogo de selección de dispositivo.
+
+
+
+ | Zed | Ya que estamos utilizando la ZedBoard, seleccione Placas (Boards) en el bloque específico, y
+entonces seleccione ZedBoard Zynq Evaluation and Development Kit (ZedBoard Equipo Zynq de evaluacion y
+desarrollo), como en la figura 4.34.
+
+    Seleccione OK para cerrar el diálogo y retornar al "Wizard" de Proyecto Nuevo.
+
+
+
+| Zybo | Ya que estamos utilizando la Zybo, seleccione Partes (Parts), y entonces filtre las partes de placas
+utilizando el filtro con menu desplegable como el de la figura 4.35.
+
+    La parte requerida puede ser confirmada al inspeccionar el chip Zynq sobre Zybo, la placa de desarrollo Zynq.
+Se debe seleccionar el chip de Zynq 'Z7010' con encapsulado clg400. Seleccione OK. 
+
+
+
+| Ambas | (g) Seleccione Finalizar (Finish) para cerrar el "Wizard" de Proyecto Nuevo y crear el proyecto.
+
+    Se abrirá el Espacio de Trabajo de Vivado HLS.
+
+    (h) En el panel Explorador (Explorer) abra los bloquecitos Archivos fuente (SOURCE) y el de Bancos de
+Prueba (Test Bench). Usted debe ver los archivos fuente que especifico en el "Wizard" de Proyecto Nuevo,
+como en la figura 4.36.
+
+    (i) Abra nco.cpp y examine el contenido del archivo.
+
+    Advierta de la inclución del archivo de cabecera "ap_fixed.h" en la primera linea. Ésta es una 
+librería/<=========== (habia una desambligüación que ahora no recuerdo, cambiar la traduccion),
+de precición arbitraria de punto fijo, que añade soporte para el uso de tipos de datos de punto fijo
+en C++.
+
+    La siguiente cosa que debe ver es la declaración de un vector global de 2^12 = 4096 valores.
+
+    Ésto forma la tabla de onda senoidal de consulta. Está definido como un vector de tipo ap_fixed<16,2>,
+lo cuál significa que todos los valores son de 16-bits, punto fijo signado (2 bits para la parte entera y
+14 bits para la parte fraccionaria).
+
+    Más información de tipos de datos de punto fijo de Vivado HLS se pueden encontrar en el libro de Zynq
+Capítulo 15 - Vivado HLS: Una vista rápida (A Closer Look).
+
+    La funcionalidad de NCO esta contenida en la función:
+
+    Que toma dos argumentos:
+
+        - *sine_sample : Un puntero a una variable de 16-bits de punto fijo signada, la cual forma la
+muestra de salida del NCO.
+        
+        - tamaño_del_paso (step_size) : Valor de 16-bits de punto fijo NO-signado, que provee un tamaño
+de paso de la entrada para el NCO.
+
+
+    (j) Examine la función nco, asegurandose de que lo comprende todo.
+
+    Abra el nco_bnc_prb.cpp. Éste es el archivo de banco de pruebas (testbench), que es usado para
+asegurar que es correcta la funcionalidad archivo C fuente.
+
+    Examine el codigo del archivo, asegurandose de que comprende la funcionalidad.
+
+    Éste es un archivo simple que abre un archivo de texto en modo de escritura, para permitirle sacar
+las muestras sinusoidales. Que invoca a la función nco desde un bucle for para generar una cantidad finita
+de muestras, las cuales entonces son llevadas al archivo de texto.
+
+    Se formatea el archivo de texto en un modo que le permita importar facilmente a las muestras hacia
+MATLAB para un posterior análisis.
+
+        Nota: La ubicación del archivo de salida es determinada por la siguiente linea del archivo de
+banco de pruebas (testbench).
+
+    Debería cambiar la ruta del archivo de salida de acuerdo a la ubicación donde usted pueda encontrarlo
+en su computadora.
+
+    Ahora ejecutaremos una simulación en C.
+
+    (k) Haga Click en el botón de ejecución simulación en C, (Run C Simulation), de la barra de herramientas
+para realizar una simulación en codigo C de la solución. Seleccione OK para ejecutar la simulación con la
+configuracíon predeterminada.
+
+    Se ejecutará la simulación en C y usted debe ver la siguiente salida en la ventana de la consola:
+
+    Las muestras de onda senoidal <==== (ó sinusoidal)  que fue generada por la NCO han sido llevadas a la
+ubicación que se especifico en el paso anterior.
+
+    Si lo desea puede importar las muestras de onda Senoidal a MATLAB utilizando el archivo de salida para
+Verificar que la NCO ha generado correctamente una onda senoidal. Ésto debe ser hecho bajo su propia
+discreción y NO será cubierto en éste ejercicio.
+
+    El proceso HLS (High Level Synthesis  -  Síntesis en Alto Nivel), ha sido cubierto previamente en
+El Libro de Tutoriales de Zynq: Diseñando con Vivado HLS (Síntesis en Alto Nivel). Y usted debe de
+dirijirse a el para adquirir información más detallada de los pasos que éste proceso involucra. Para los
+propósitos de éste ejercicio, se presume que usted tiene ya un conocimiento razonable de la herramienta HLS
+de Vivado.
+
+    Como queremos que nuestro perisférico NCO sea controlado por la seccion de PS de la Zynq, es necesario
+darle/proveerle una interfaz. Ésto se puede alcanzar utilizando una variedad de interfaces tales como la
+interfaz AXI ó un GPIO para una transferencia de datos simple. La interfaz AXI será utilizada, ésto se
+realiza en Vivado HLS a travez del uso de directivas.
+
+    (l) Asegúrese de que nco.cpp es el archivo fuente activo, y luego seleccione la pestaña Directiva
+(Directive) de mano derecha del Espacio de Trabajo de Vivado HLS, como lo muestra la figura 4.37.
+
+    Primero, definiremos la interfaz del NCO como una AXI-Lite esclava.
+
+    (m) Desde la pestaña Directiva (Directive), tecla derecha del mouse sobre "nco", y seleccione Insertar
+Directiva, (Insert Directive).
+
+    Como tipo de directiva, seleccione INTERFAZ (INTERFACE).
+
+    Deje a Destino (Destination) como archivo de Directiva (Directive File).
+
+    Seleccione s_axilite desde el menu desplegable.
+
+    Seleccione OK.
+
+    Ahora definiremos al NCO como poseedora de una interfaz sin_ctrl_ap (ap_ctrl_none), para remover
+señales de control innecesarias. 
+
+    (n) Desde la pestaña Directiva (Directive), tecla derecha del mouse sobre "nco", y seleccione Insertar
+Directiva, (Insert Directive).
+
+    Como tipo de directiva, seleccione INTERFAZ (INTERFACE).
+
+    Deje a Destino (Destination) como archivo de Directiva (Directive File).
+
+    Seleccione sin_ctrl_ap desde el menu desplegable.
+
+    Seleccione OK.
+
+    Finalmente definiremos dos variables, muestras_seno (sine_sample) y tamaño_del_paso (step_size), como
+puertos sobre la interfaz AXI-Lite esclava.
+
+    (ñ) Desde la pestaña Directiva (Directive), tecla derecha del mouse sobre "muestras_seno", y seleccione Insertar
+Directiva, (Insert Directive).
+
+    Como tipo de directiva, seleccione INTERFAZ (INTERFACE).
+
+    Deje a Destino (Destination) como archivo de Directiva (Directive File).
+
+    Seleccione s_axilite desde el menu desplegable.
+
+    Seleccione OK.
+
+    (o) Repita el paso previo para la variable tamaño_del_paso en la pestaña Directiva.
+
+    Al completarlo, la pestaña Directiva debe verse como la figura 4.38.
+
+    Ahora podemos ejecutar HLS.
+
+
+    (p) Haga Click en el botón de ejecución simulación en C, (Run C Simulation), de la barra de
+herramientas.
+                                                           .
+    (q) Seleccione el botón Exportar RTL, (Export RTL), |-:+:-|, de la barra de herramientas.
+                                                           '
+
+    Se abrirá la ventana de diálogo de Exportación RTL, como en la figura 4.39.
+
+    (r) Seleccione Catálogo IP (IP Catalog) como Formato elegido (Format Selection).
+
+    Si lo desea puede editar la información de Identificación de IP al seleccionar el botón configuracíon
+(Configuration).
+
+    Adicionalmente, se puede generar el Core de IP en Verilog ó VHDL. Vivado es capaz de sintetizar desde
+lenguajes de descripción de hardware mixtos. Mantendremos la opción predeterminada utilizando Verilog.
+    
+    Seleccione OK para generar el Core de IP.
+
+    Cuando la generación de RTL se ha completado, una carpeta nombrada "impl" estará visible en el panel
+de Explorador (Explorer).
+
+    Ésta carpeta contiene una subcarpeta "ip" que contiene el paquete IP generado.
+
+    Tomese un momento para explorar el contenido de la carpeta "ip".
+
+    Con el Core de IP generado, el siguiente paso sería incluirlo en un diseño Integrador de IP (que será
+desarrollado en el siguiente tutorial). Sin embargo, para referencias futuras, vale la pena describir
+brevemente como se haría esto.
+
+    Para incluir la descripción HLS al Core de IP generado en el Integrador de IP, primero se debe añadir
+al catálogo IP de Vivado. Para hacer ésto usted debe de añadir la salida del HLS a un repositorio IP. Se
+puede realizar ésto de cualquier manera, al añadir la carpeta de salida generada por HLS a una carpeta
+repositorio IUP, ó al crear un repositorio nuevo. En cualquiera de los dos casos la ruta de la carpeta es
+la misma. En éste caso:
+
+    Ahora hemos completado la generación de un componente NCO como un bloque AXI-Lite compatible con el
+Integrador de IP. Ahora debe de estar familiarizado con:
+
+    * Especificación de Directivas en diseños HLS de Vivado, que definen la interfaz de control del RTL
+exportado.
+
+    * El proceso de especificar una interfaz AXI4 para un diseño, para habilitar un sistema HLS de Vivado
+para que sea facilmente conectado a la seccion de PS de la Zynq.
+
+    * Exportar un diseño HLS de Vivado como un Core de IP que es compatible con el catálogo IP de Vivado
+y el Integrador de IP.

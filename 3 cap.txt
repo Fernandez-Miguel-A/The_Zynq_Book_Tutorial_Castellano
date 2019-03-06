@@ -1,0 +1,483 @@
+Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
+"El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
+
+
+
+3                                Diseñando con Vivado HLS
+
+
+
+        Introducción
+    Éste tutorial presenta una introducción de sintesis de alto nivel, (High Level Synthesis - HLS),
+utilizando el ambiente de Vivado HLS. Será cubierta la creación de proyectos manualmente a travez de la
+GUI y la automatización a travez de GUIONES (Scripts). El proceso de simulación, sintesis y análisis de
+un diseño HLS de Vivado será explorado, con optimizaciones de diseño y comparación de solución mediante
+un modo.
+
+    Éste tutorial esta separado en cuatro ejercicios y se organiza como sigue:
+
+ Ejercicio 3A - Éste ejercicio concierne en la creación de proyectos utilizando ambos métodos, Diseño a
+ travez de la GUI de Vivado HLS y el uso de GUIONADO (Scripting) Tcl. Detalla la inclución de
+archivos fuente relevantes, archivos de prueba y generación de un proyecto para uso en el ejercicio
+siguiente.
+
+ Ejercicio 3B - En éste ejercicio involucra optimizaciones de diseño de una función de multiplicación de
+ matriz, a travez de varias directivas. Presenta el ambiente de diseño de Vivado HLS y métodos de sintesis
+ y análisis de soluciónes de proyecto.
+
+ Ejercicio 3C - Finalmente, se investiga más en detalle como Vivado HLS sintetiza interfaces.
+
+
+
+
+
+ Ejercicio 3A - Creando proyectos en Vivado HLS.
+
+    En éste ejercicio presentaremos la creación de proyectos con Vivado HLS utilizando ambos métodos, 
+diseño a travez de la GUI de Vivado HLS y el uso de GUIONADO (Scripting) Tcl para llevar a cabo el proceso.
+
+    (a) Antes de comenzar es necesario copiar los archivos desde "C:/Zynq_Book/sources/hls" a una nueva
+carpeta "C:/Zynq_Book/HLS".
+
+    (b) Abra la GUI de HLS de Vivado explorando Inicio > Todos los Programas > Xilinx Desing Tools >
+Vivado 2015.1 > Xilinx HLS 2015.1 .
+
+    (c) Cuando la GUI de Vivado HLS inicie, se encontrará con la pantalla de bienvenida. Ver figura 3.1.
+
+    (d) Seleccione la opción crear proyecto nuevo, (Create New Project), como la de la figura 3.1.
+
+    (e) En el diálogo de nombre de proyecto ingrese proy_mult_matriz en el campo Nombre De Proyecto,
+(Project Name), y en Ubicación De Proyecto, (Project Location), ingrese "C:/Zynq_Book/HLS/tut3A".
+    
+    Seleccione siguiente (Next).
+
+    (f) Ahora se le exhivirá una ventana para añadir y/o remover archivos fuente para el proyecto. Todos
+los archivos C de este tutorial han sido creados en avanzado, como intentamos guiarlo a travez del flujo
+de diseño en lugar de la propia programación. Seleccione añadir archivos..., (add Files...), y explore
+hasta "C:/Zynq_Book/HLS/tut3A".
+
+    Seleccione los archivos mult_matriz.cpp y mult_matriz.h (mantenga presionado la tecla 'Ctrl'- Control
+de su teclado para seleccionar varios archivos) y seleccione abrir (Open). En el campo función superior,
+(Top function), defina a mult_matriz, tal como en la figura 3.2. Seleccione siguiente (Next).
+
+    (g) Ahora se le exhivirá una ventana para añadir un archivo de banco de pruebas ('testbench') para
+probar el diseño. Una vez más seleccione añadir archivos... y explore en la carpeta anterior pero
+esta vez añadiendo al archivo prueba_mult_matriz.cpp y luego seleccione siguiente.
+
+    El siguiente paso es configurar una solución para una tecnología de FPGA específica. En éste caso,
+omita el nombre de la solución y asegurese de que el Periodo de Relog (Clock Period), esté establecido a 5
+como lo muestra la figura 3.3.
+
+
+
+ | Zed | Ya que estamos utilizando la ZedBoard con el chip Zynq-7020 seleccione, |...| en el panel
+de seleccion de partes.
+
+    En la seccion Seleccionar (Select), seleccione Placas (Boards), y entonces filtre las partes de placas
+utilizando el filtro con menu desplegable como el de la figura 3.4. Seleccione ZedBoard Zynq Evaluation and
+Development Kit (ZedBoard Equipo Zynq de evaluacion y desarrollo) y seleccione OK. Seleccione Finalizar
+(Finish).
+
+
+
+| Zybo | Ya que estamos utilizando la Zybo con el chip Zynq-7010 seleccione, |...| en el panel
+de seleccion de partes.
+
+    En la seccion Seleccionar (Select), seleccione Partes (Parts), y entonces filtre las partes de placas
+utilizando el filtro con menu desplegable como el de la figura 3.5. La parte requerida puede ser confirmada
+al inspeccionar el chip Zynq sobre Zybo, la placa de desarrollo Zynq. Se debe seleccionar el chip de Zynq
+ 'Z7010' con encapsulado clg400. Seleccione OK. 
+
+    Seleccione Finalizar (Finish).
+
+
+
+| Ambas | (h) Será generado el proyecto y el espacio de trabajo abrirá en modo sintesis (Synthesis),
+para el proyecto y solución generado. Como en la figura 3.6.
+
+    Abriendo la seccion Archivos Fuentes y bancos de prueba (Sources y testbench) desde la izquiera de
+la pestaña Explorador (Explorer) muestra la inclución de los archivos fuentes y de los archivos de pruebas
+del paso anterio. Haciendo seleccion doble (Double Click) con el mouse sobre estos archivos, abre los
+archivos en el editor para examinación y edición.
+
+    El proyecto consiste en un multiplicador de matriz, el cual multiplica dos matrices 'inA' e 'inB' para
+producir la salida 'prod'. El banco de pruebas ejerce la multiplicación de dos matrices conocidas y verifica
+el valor dentro de 'prod' con los valores que se esperan.
+
+    Mientras que el proceso de obtencion de esta etapa del desarrollo de HLS es relativamente sencillo,
+que puede ser un poco repetitivo así que puede ser facilitado mediante el uso de GUIONADO en Tcl. Ésto
+automatiza el proceso nombrado de proyecto e inserción de archivos, Como tal, demostraremos ahora la
+creación del mismo proyecto utilizando el antes mencionado GUIONADO (Scripting) de acceso.
+
+    (i) Primero, cierre la GUI HLS de Vivado. Ahora abriremos la ventana de comandos de Vivado HLS.
+
+    Abra la ventana de comandos al explorar Inicio > Todos los Programas > Xilinx Desing Tools >
+Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
+
+    (j) Observe que la ruta de la carpeta predeterminada para los comandos es la carpeta de instalación
+de Vivado HLS, como muestra la figura 3.7. Para cambiarla por nuestra carpeta de trabajo de éste tutorial,
+utilizamos los siguientes comandos seguidos de la tecla (Enter).
+
+    * cd..                      - Éste es un comando de cambio de carpeta que va a la carpeta de atras.
+Repitalo hasta haber alcanzado la ruta al disco "C:/".
+    * cd Zynq_Book              - Éste comando cambia a la carpeta Zynq_Book.
+    * cd HLS                    - Éste comando cambia a la carpeta Zynq_Book/HLS.
+    * cd tut3A                  - Éste comando cambia a la carpeta Zynq_Book/HLS/tut3A.
+
+    La ventana de comandos debe estar en la carpeta de trabajo "C:/Zynq_Book/HLS/tut3A". Ésta carpeta
+contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION (Script) Tcl
+requerido para construir el proyecto, run_hls_zed.tcl y run_hls_zybo.tcl.
+
+    (k) Con la carpeta de trabajo correcta y los archivos requeridos dentro de ella, podemos construir
+el proyecto. Ésto es llevado a cabo a travez de la simple ejecución del GUION Tcl utilizando el comando:
+
+
+
+ | Zed | vivado_hls -f run_hls_zed.tcl
+
+
+
+| Zybo | vivado_hls -f run_hls_zybo.tcl
+
+
+
+| Ambas | Ésto comenzará el proceso de creación de proyecto, inserción de archivos fuentes y bancos de
+prueba. Entonces es creada una solución HLS antes de configurar el proyecto y el dispositivo objetivo.
+Finalmente una simulación C es ejecutada, que usa al banco de pruebas para asegurar que el proyecto
+funciona correctamente.
+
+    
+
+    El banco de pruebas ejerce la multiplicación idéntica utilizando la solución Hardware de HLS y el
+programa; y compara el resultado. Si el resultado es idéntico, se exhivirá un mensaje "Test Passed!"
+(Prueba superada):
+
+    (l) Para abrir el proyecto en la GUI de Vivado HLS ingrese el siguiente comando:
+
+    'vivado_hls -p proy_mult_matriz' y presione Enter. Ésto abrirá la GUI de Vivado HLS para el proyecto,
+el cual utilizaremos en el siguiente ejercicio.
+
+
+
+
+
+
+
+
+    Utilizando el proyecto generado en el ejercicio previo, ahora investigaremos el proceso de optimizacion
+ de diseño en Vivado HLS. Ésto tambien proveerá una idea dentro del flujo desde que se crea un proyecto
+hasta su sintesis C y cosimulación C/RTL. Tambien discutiremos el uso de la perspectiva de Analisis 
+('Analysis') en el análisis de una solución HLS.
+
+
+Ejercicio 3B - Optimización de Diseño en Vivado HLS
+
+    (a) Usted ya debe tener abierta la GUI desde el ejercicio anterior, pero si no es así. Abra el
+proyecto proy_mult_matriz en la carpeta "C:/Zynq_Book/HLS/tut3A".
+
+    (b) Abra la pestaña Archivos Fuentes y bancos de prueba (Sources y testbench) desde la pestaña
+Explorador (Explorer) de la vista de sintesis. Como antes esto muestra los archivos fuentes y archivos 
+de prueba que han sido añadidos exitosamente al proyecto. Haciendo seleccion doble (Double Click) con el
+mouse sobre estos archivos, abre los archivos en el editor para ser inspeccionados y alterados como es
+requerido.
+
+    mult_matriz.cpp contiene el codigo que hace la multiplicación de las dos matrices a travez del uso
+de ciclos iterativos que recorren por las filas y columnas para calcular el producto.
+
+    mult_matriz.h contiene definiciones y el prototipo de función para la multiplicación de matrices.
+
+    prueba_mult_matriz.cpp es el banco de pruebas ('testbench'), que calcula el producto de dos matrices
+dadas utilizando ambas, solución de Hardware HLS y el programa comparandolas a las dos para asegurar
+de una operación exitosa.
+    
+    (c) Haga Click en el botón de ejecución simulación en C, (Run C Simulation), de la barra de herramientas
+para realizar una simulación en codigo C de la solución. Ignore las opciónes predeterminadas (sin
+bloques de verificación ni argumentos de entrada) y seleccione OK. Una vez que la simulación complete
+se mostrará el mensaje "Test Passed!", en la consola debajo de la pantalla. Ver figura 3.8.
+
+    (d) El siguiente paso es sintetizar el codigo C++ utilizando el codigo HLS. Seleccione el botón
+de Sintesis C, (C Synthesis), en la barra de herramientas. Vivado HLS comenzará el proceso de conversión
+de codigo C++ a un modelo RTL con el codigo asociado VHDL/Verilog/SystemC. La consola detalla los pasos
+ejecutados en la realización de ésto.
+
+    Una vez completado, un reporte de sintesis (Synthesis Report) se abrirá automaticamente. Éste detalla
+varios aspectos del diseño sintetizado, tales como información concerniente al temporizado y latencia,
+estimazación del uso de recursos de la FPGA.(Usted puede abrir los bloques para ver los resultados).
+
+    El diseño de sistetizado tiene un intervalo 687 ciclos de relog (cantidad de pulsos de relog).
+Cada arreglo de entrada contiene 25 elementos (como utiliza matrices 5X5) y esto sugiere aproximadamente
+27 ciclos de relog por cada lectura de entrada.
+
+    Ahora podemos ejecutar una cosimulación C/RTL para asegurarnos que este RTL sintetizado se comporta
+exactamente como el codigo C++ bajo prueba.
+
+    Seleccione el botón |./| ejecutar cosimulación C/RTL, (Run C/RTL Cosimulation). Para la seccion RTL,
+asegurese de que se selecciono VHDL y entonces seleccione OK. Ahora comenzará la cosimulación, siendo
+generado el sistema RTL utilizando VHDL. Éste proceso puede tardar un poco mientras se completa pero el 
+progreso se puede ver en la consola. Una vez completado, se abrirá el Reporte de Cosimulación, 
+(Cosimulation Report), tal y como la figura 3.10.
+
+    Note el mensaje 'Pass' ('Superado') en la figura 3.10 indicando que el RTL se comporta igual al codigo
+fuente C++.
+
+    (e) Cree una solución nueva para el diseño desde cualquier medio, seleccionando el botón Solución Nueva
+|+[<>]| (New Solution), en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
+(Project > New Solution). Seleccione Finalizar (Finish), para aceptar por defecto los de la solución2.
+
+    (f) Haga doble seleccion (Double Click) sobre mult_matriz.cpp de la seccion Archivos Fuentes, (Sources),
+de la pestaña Explorador (Explorer), para asegurar que el codigo es visible en el espacio de trabajo,
+ahora insertaremos una directiva que paralelizará los bucles anidados del codigo de la multiplicación de
+matrices. Ésto ejecutará bucles planos, removiendo la necesidad para transiciones de bucles.   <=== ???
+
+    Abra la pestaña Directivas (Directives), de la derecha del espacio de trabajo. Seleccione Producto
+y observará la porción de codigo asociada resaltada en el editor, a este punto la multiplicación de 
+elementos del arreglo para producir los elementos producto de la matriz resultante.    <==== ~~~~ +-+-
+Tecla derecha del mouse sobre Producto y seleccione Insertar Directiva, (Insert Directive):
+
+    Ésto abrirá al editor de Directivas. Use el menu desplegable para seleccionar la opción PIPELINE
+(PARALELIZADO). Seleccione OK para aceptar las opciónes por defecto. La pestaña Directivas (Directives),
+debe parecerse a la de la figura 3.11.
+
+    (g) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. La consola producirá
+la misma información sobre el proceso de aplanamiento del bucle Fila. Tambien explica que la segunda
+columna, Objetivo (target), del campo intervalo de inicialización es igual a 1 por defecto, significa que
+no pudo ser encontrado pora el bucle Producto. Ésto es debido a la dependencia del bucle.
+
+    Desde el reporte de sintesis, figura 3.12, se observa que el bucle del primer nivel    <==== ~~~~ +-+-
+Fila_Columna no ha sido paralelizado pues el bucle Columna no fué aplanado. Tambien se observa que
+la primera columna, realizado (achieved), fué 2 a pesar tener Objetivo (target) en 1.
+
+    (h) Abra la perspectiva Análisis (Analysis), al selecionar sobre |.=O-O| ó Ventana > Perspectiva de
+ Análisis, (Window > Analysis Perspective), que tambien abrirá la vista de desempeño mostrandonos como
+varios varias operaciónes con el codigo son planificadas como ciclos de relog. 
+
+    (i) Abra los bucles Fila_Columna al selecionarlos para obtener la vista mostrada en la figura 3.13.
+
+    Note que la operación de escritura resaltada ocurre en el estado C3, node_33(write). Haga Click
+derecho sobre esta celda y seleccione Ir al Archivo Fuente, (Goto Source), resaltará la linea asociada
+del codigo en el archivo fuente.
+
+    Ésta es una operación de escritura inicializada como una escritura en un puerto en el RTL que ocurre
+antes de cualquier operación en el bucle, Producto, se puede ejecutar. Ésto previene el aplanamiento del
+bucle Producto en Fila_Columna.
+
+    Más aún, la inabilitación de encontrar el campo Objetivo de Intervalo de Inicialización (II=1) puede
+ser explicado al considerar iteraciones consecutivas del bucle.
+
+    Para mostrar la consola valla a Ventana > Ver Vista > Consola, (Window > Show View > Console),
+la consola muestra el siguiente mensaje (puede necesitar deslizarse hacia abajo para ver este mensaje):
+
+    Existe una dependencia entre las iteraciones de la linea 16 del codigo fuente, la cual es la operación
+con el bucle Producto.
+
+    Debido a la precencia del operador '+=', ésta linea de codigo contiene una lectura del arreglo prod
+(la antes mencionada operación 'load' - 'cargar') y una escritura al arreglo prod (una operación 'store'-
+'almacenar') con II en 1, una iteracion del bucle Producto procesada ocurriría en ciclo de relog posterior
+a la inicialización de la primera iteracion. Ésto es visualizado en la figura 3.14 al pegar copias
+consecutivas de las operaciónes de multiplicación de matrices, una sobre la otra. Con II establecido en 1
+se observa el solapamiento resaltado. Los arreglos son interpretados como BRAM por defecto, y desde este
+solapamiento requiere una operación de lectura y una de escritura para ser ejecutado en el mismo ciclo de
+relog, esto simplemente es imposible, como ambas operaciónes NO pueden suceder sobre la BRAM al mismo
+tiempo. Por lo tanto establecer II a 2 permite que la operación de escritura sea completada antes de que
+comience la operación de lectura de la siguiente iteracion.
+
+    (j) Regrese a la Perspectiva de Sintesis por Defecto al seleccionar Ventana > Perspectiva de Sintesis,
+(Window > Synthesis Perspective). Seleccione SI/Yes si una ventana de dialogo aparece.
+
+    Ahora crearemos una solución nueva que paralelizará al bucle Columna, desenvolviendo al bucle Producto,
+para eliminar la dependencia de iteración anidada pero a costa de incrementar operadores y por lo tanto
+a coste de hardware.
+
+    (k) Cree una nueva solución para el diseño desde cualquier medio, seleccionando el botón Solución Nueva
+|+[<>]| (New Solution), en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
+(Project > New Solution). Desde el menu desplegable asegurese que esta seleccionada solución1 como esta
+no tiene directivas ni restricciones.
+    Seleccione Finalizar (Finish), para crear la solución.
+
+    (l) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor, en la pestaña
+Directivas tecla derecha de mouse sobre el bucle Columna y seleccione Insertar Directiva, (Insert
+Directive). Desde el menu desplegable seleccione el tipo de directiva PIPELINE (PARALELIZADO) asegurese
+que II=1 y seleccione OK. La pestaña Directivas (Directives), debe parecerse a la de la figura 3.15.
+
+    (m) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. Observando que la consola
+mostrará que mientras que el bucle Producto fué desenvolvuelto, el bucle Fila fué aplanado. El Objetivo
+(target) II en 1, no pudo ser encontrado por el bucle Fila_Columna. Ésto vez debido a las limitaciones
+de recursos. (Puede necesitar deslizarse hacia abajo para ver este mensaje):
+
+    (n) Abra la perspectiva Análisis (Analysis), al selecionar sobre |.=O-O| ó Ventana > Perspectiva de
+ Análisis, (Window > Analysis Perspective), que abrirá la vista de desempeño. Cambia a Vista de recursos
+ al selecionar la pestaña debajo de la pantalla. 
+
+    (ñ) Abra los Puertos de Memoria, (Memory Ports), para ver los recursos almacenados sobre la memoria
+con el sistema. Su vista debería verse similar a la de la figura 3.16.
+
+    La figura 3.16 muestra las operaciónes por recursos en cada ciclo de relog. En el estado actual, la
+opereción de lectura de 2 ciclos al comienzo de b en C3 solapa con aquellas que estan en C4, así que solo
+una de ciclo unico es visible. Hay instancias las dos, a y b, siendo sometido a 3 operaciónes de lectura a
+la vez, lo cual recordará que NO es posible para BRAM de puertos duales (dual-port). Por lo tanto es
+necesario particionar esos arreglos en pequeños secciones, que permitan modificar el arreglo sin alterar
+el codigo fuente.
+
+    (o) Regrese a la Perspectiva de Sintesis al seleccionar | >_< |. Cree una nueva solución para el
+diseño desde cualquier medio, seleccionando el botón Solución Nueva |+[<>]| (New Solution), en la barra de
+herramientas ó desde la opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione 
+Finalizar (Finish), para aceptar por defecto los de la solución4. Note que las directivas serán copiadas
+de la solución3.
+
+    Para ésta solución redimencionaremos los arreglos de entrada utilizando directivas. El bucle Producto
+es accesado via indice k de iteracion, por lo tanto los arreglos a y b deben ser particionados por su
+dimensión k. Inspeccionando a linea 16 de mult_matriz.cpp se observa que a[i][k] es de doble dimensión y
+para b[k][j] es de una sola.
+
+    (p) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor y abra la pestaña
+Directivas. Tecla derecha de mouse sobre la variable a y seleccione Insertar Directiva, (Insert
+Directive). Asegurese de que la directiva esta configurada como la figura 3.17, habiendo seleccionado
+el tipo de directiva ARRAY_RESHAPE (redimencionar arreglo/vector), y la dimensión específicada sea 2.
+
+    (q) Repita el paso (p) pero para la variable b, ésta vez asegurese de que la dimensión sea 1.
+
+    (r) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. El reporte de
+sintesis se abrirá mostrando que el Objetivo (target) II en 1, HA SIDO ENCONTRADO.
+
+=========>de mayor jerarquia.<============
+    El nivel superior del diseño toma 34 ciclos de relog en completarlo, con el bucle Fila_Columna sacando
+una muestra luego de una iteracion con latencia de 9. Una muestra es entonces leer en cada ciclo (debido a
+que II es 1), y luego de 25 veces todas las muestras han sido leidas. Los 34 ciclos de relog de éste diseño
+es por consiguiente justificado por las 25 veces más la latencia de 9. 25 + 9 = 34.
+
+    La función entonces procede a calcular siguiente conjunto de datos.
+
+    (s) La optimizacion final en éste ejercicio es paralelizar la función, en lugar de los bucles con que
+la función para comparación <==== ~~~~ +-+-. Cree una nueva solución para el diseño desde cualquier medio,
+seleccionando el botón Solución Nueva |+[<>]| (New Solution), en la barra de herramientas ó desde la
+opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione Finalizar (Finish), para
+aceptar por defecto los de la solución5. 
+
+    (t) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor y abra la pestaña
+Directivas. Primero remueva la directiva PIPELINE (PARALELIZADO) insertada previamente en el bucle Columna.
+Tecla derecha de mouse sobre el bucle Columna y seleccione Remover Directiva, (Remove Directive). Si una
+ventana de dialogo parecida a la de la figura 3.19 aparece seleccione NO.
+    
+    (u) Haga Click derecho sobre la función de nivel superior, mult_matriz y seleccione Insertar Directiva,
+seleccione el tipo de directiva PIPELINE (PARALELIZADO) y seleccione OK.
+
+    (v) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. Vivado HLS provee
+una herramienta para comparar reportes de sintesis. Seleccione el botón |o¯¯> O| ó desde la opción del
+menu Proyecto > Comparar Reportes, (Project > Compare Reports). Asegurese de que la solución4 y la
+solución5 fueron añadidas como en la figura 3.20, y seleccione OK.
+
+    La figura 3.21 muestra la comparación de reportes de sintesis para la solución4 (con paralelismo de
+bucles) y la solución5 (con paralelismo de la función de nivel superior). Se observa que el paralelismo de
+la función de nivel superior, resulta en un diseño que alcanza el completado al cabo de pocos ciclos de
+relog, requiriendo de solo 13 ciclos para comenzar con una nueva transaccion, en lugar de 35 para el 
+paralelismo de bucles.
+
+    Sin embargo, este trae consigo un coste de aumento de utilización de hardware, debido al desentramado
+de todos los bucles con el diseño. Que no sería comercializable, debido a su altisimo precio, por lo tanto
+es necesario hacer un balance entre desempeño de sistema y utilización de hardware para el diseño, y es 
+posible que un diseño parcialmente desentramado pueda encontrar los requerimientos de diseño en una
+reducción del coste de hardware.
+
+    La ZedBoard contiene el chip Zynq Z-7020, con unos comodamente 220 DSP48E slices, que hacen a este
+dispositivo estar muy bien provisto para implementar este diseño hardware. Sin embargo, la Zybo que
+contiene al chip Zynq Zynq-7010, solo contiene 48 DSP48E .slices La solución5 requiere 125 DSP48E slices
+indicando que el paralelismo de la función de nivel superior del diseño hardware tenga que incrementar
+la utilización del dispositivo para extender que el chip Zynq de la Zybo no puede llevar a cabo la
+implementación por completo. La solución4 estaría aparentemente provista con utilización de recursos
+reducidos e incrementando la latencia.
+
+    (w) Ésto completa el ejercicio. Cierre la GUI de Vivado HLS.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Ahora exploraremos brevemente los conceptos de interfaz de sintesis de Vivado HLS, utilizando la
+función de multiplicación de matrices de los dos ejercicios anteriores.
+
+
+
+
+
+
+
+
+ Ejercicio 3C - Interfaz de sintesis
+
+    (a) Abra la ventana de comandos al explorar Inicio > Todos los Programas > Xilinx Desing Tools >
+Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
+
+    (b) Cambie la carpeta de trabajo a "C:/Zynq_Book/HLS/tut3C". Ésta carpeta
+contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION (Script) Tcl
+requerido para construir el proyecto, run_hls_zed.tcl y run_hls_zybo.tcl.
+
+    (C) Ejecute el GUION Tcl utilizando el comando:
+
+
+
+ | Zed | vivado_hls -f run_hls_zed.tcl
+
+
+
+| Zybo | vivado_hls -f run_hls_zybo.tcl
+
+
+
+| Ambas | (d) Para abrir el proyecto en la GUI de Vivado HLS ingrese el siguiente comando:
+
+    'vivado_hls -p proy_mult_matriz' y presione Enter. Ésto abrirá la GUI de Vivado HLS para el proyecto,
+el cual utilizaremos en el siguiente ejercicio.
+
+
+
+    (e) Abra el archivo mult_matriz.cpp desde la seccion Archivos Fuentes, (Sources), de la pestaña
+Explorador (Explorer), y seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL.
+Cuando el reporte de sintesis abra, desplasece hasta la seccion interfaz.
+
+    Note que los arreglos de entrada a y b, así como el arreglo producto resultante prod han sido
+implementados utilizando el protocolo ap_memory. Esto es inferido desde el codigo C++ como el tipo array
+corresponde a la estructura de memoria.
+
+    Los arreglos de entrada a y b son ambos de 8-bits signados sobre puertos a_q0 y b_q0. El arreglo de
+salida, prod de 16-bits signados sobre el puerto prod_d0. Cada señal tiene su correspondiente puerto de
+direcciones de 5-bits, designados como a_address0, b_address0 y prod_address0.
+
+    El protocolo tambien requiere señales habilitadas por relog (a_ce0, b_ce0) y un habilitador de
+escritura (prod_we0).
+
+    Desde el diseño requiere más que un ciclo de relog para completar y por lo tanto es sincrónico, un
+puerto relog y reset han sido sintetizados como ap_clk y ap_rst y ambos son señales de 1-bit.
+
+    Un protocolo de nivel de bloque con enlace de sincronismo ó handshaking, ap_ctrl_hs, tambien ha sido
+implementado (ap_start, ap_done, ap_idle, ap_ready).
+
+    * La entrada ap_start es afirmada/verificada, exhiviendo el bloque de operación. Éste produce tres
+señales de control indicando la etapa de operación.
+
+    * ap_ready indica que el bloque esta listo para nuevas entradas.
+    * ap_idle es una indicación de que ese dato esta procesando datos.
+    * ap_done indica que el dato de salida ha sido procesado y está disponible.
+
+    Volviendo al EJ 3B, los arreglos que fueron particionados para reducir a cada uno en varias secciones
+pequeñas con puertos expandidos, señales de control y recursos de implementación. Ésto incrementa el ancho
+de banda. Éste influencia directamente la interfaz de sintesis a travez del uso de directivas.
+
+
+
+
+
+
+
+
+    Ésto concluye la introducción al flujo de diseño de Vivado HLS. Se usará esta herramienta aún más en
+ejercicios futuros, y RTL sintetizados serán implementados como parte de un modelo funcional extenso.

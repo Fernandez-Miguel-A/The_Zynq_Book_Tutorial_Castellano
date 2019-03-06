@@ -1,0 +1,156 @@
+Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
+"El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
+
+ip => Cores de I.P. => bloques predefinidos => bloques prediseñados
+
+
+
+                                            Entendimiento/Consentimiento:
+    Ésta es una nueva versión de los tutoriales que acompañan al libro sobre Zynq. Ésta basada en Vivado
+2015.1 y ahora soporta a las dos placas de desarrollo, Zybo y ZedBoard.
+
+    Una cantidad valuable/Valiosísima de gente contribuyo en respuesta (realimentacion) al conjunto de
+tutoriales original,  sobre la que se baso Austin Lesea y Y. C. Wang en la prueba de los tutoriales de 
+Xilinx en una etapa preliminar a su creación. Y obtubieron varias sugerencias útiles. En la universidad de
+Strathclyde, Iain Chalmers, Sarunas Kalade, Damien Muir y Craig Ramsay tambien han sido muy utiles 
+trabajando atravez de varias versiones de los tutoriales asi como al comentarnos sus experiencias. 
+
+    Otra vez, nuestro más sincero agradecimiento debe ir a Cathal McCabe del programa de la universidad de
+Xilinx. Quien no solo brindo comentarios vitales y soporte en la creación del material del tutorial, sino
+que tambien coordino la distribución de aquellos materiales a otros.
+
+
+
+Louise Crockett, Ross Elliot, Martin Enderwitz, and David Northcote.
+
+
+Agosto 2015.
+
+
+
+
+
+
+
+
+
+
+                                            Como utilizar éste libro:
+    Archivos de ejemplo y libros en su version electrónica.
+    Para seguir los tutoriales del libro sobre Zynq, debe descargar un conjunto de archivos preparados del sitio de 
+internet del libro:         www.zynqbook.com
+
+    Una version libro digital (PDF  NO-Imprimible) de este conjunto de tutoriales tambien se puede descargar del
+enlace de arriba.
+
+
+
+                        Instrucciones para las placas de desarrollo Zybo y ZedBoard:
+    Como usted lee atravez de los tutoriales, notara que ciertos procesos tienen diferentes variaciones dependiendo
+de la placa de desarrollo que se este utilizando. En donde una secuencia de instrucciones es específica a una placa
+(Zybo ó ZedBoard), el comienzo de la secuencia esta (precededido) indicado por un iconico bloque coloreado 
+localizado en el margen izquierdo:
+
+ | Zed |            Para ZedBoard.
+
+| Zybo |            Para Zybo.
+
+
+| Ambas |   La reanudación a las instrucciones comunes para ambas placas esta marcada con otro icono.
+
+
+    Simplemente elija las instrucciones que son relevantes a sus placa puntualmente, al identificar cualquiera
+de los iconos   | Zybo |   ó   | Zed |   y luego vea hacia adelante hasta encontrar el icono   | Ambas |   y 
+entonces continue allí su lectura.
+
+
+                                            Sistemas Operativos:
+    Los tutoriales del libro sobre Zynq han sido probados utilizando el sistema operativo de Microsoft
+Windows. Pero se espera que tambien funcionen en sistemas con kernel de Linux, sobre los cuales no han sido
+probados.
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                            Contenido
+
+ 1. Primer diseño en Zynq                                                           1
+    Creando el primer diseño integrador de Cores de I.P.   ......................   4
+    Creando un sistema Zynq en Vivado   .........................................  12
+    Creando una programa en el SDK   ............................................  24
+
+ 2. Paso siguiente para el diseño de SoC con Zynq                                  35
+    Ampliando el diseño integrador basico de Cores de I.P.   ....................  38
+    Creando un sistema Zynq con interrupciones dentro de Vivado    ..............  42
+    Creando una programa en el SDK  .............................................  55
+    Añadiendo más fuentes de interrupcion  ......................................  61
+
+ 3. Diseñando con Vivado HLS                                                       67
+    Creando proyectos en Vivado HLS .............................................  70
+    Optimización de Diseño en Vivado HLS   ......................................  77
+    Interfaz de sintesis   ......................................................  88
+
+ 4. Creación de Cores de I.P.                                                      91
+    Creando Cores de I.P. en HDL  ...............................................  94
+    Creando Cores de I.P. en HDL con la herramienta de "MathWorks"   ............ 118
+    Creando Cores de I.P. con Vivado HLS   ...................................... 128
+
+ 5. Aventuras con el creador de Cores de I.P.                                     137
+    Importando Cores de I.P. al catálogo de Cores de I.P. de Vivado   ........... 140
+    Audio con el integrador de Cores de I.P. de Vivado   ........................ 150
+    Creando un programa de audio en el SDK   .................................... 166
+
+
+
+
+
+
+
+
+
+
+                                            Introducción:
+    Éste tutorial lo guiará a travez del proceso de creación de su primer diseño en Zynq utilizando el IDE Vivado
+y le introducirá con el ambiente integrador de Cores de I.P. para la generación de un diseño de procesador Zynq
+ simple que será implementado en una placa de desarrollo Zynq. El Equipo para desarrollo 
+ (SDK - Software Development Kit) será utilizado para crear un programa simple que se ejecutará en el sistema de
+ procesamiento ARM de Zynq (PS - Software Processor) para controlar el hardware que se implementa en seccion
+programable (PL - Programmable Logic).
+
+
+    Éste tutorial esta separado en tres ejercicios y se organiza como sigue:
+
+ Ejercicio 1A - Éste ejercicio lo guiará a travez del proceso de lanzado del IDE de Vivado (abrir Vivado),
+así como crear un proyecto por primera vez. Las distintas etapas del "wizard" de creación de un proyecto nuevo será
+introducido.
+
+ Ejercicio 1B - En éste ejercicio usaremos el proyecto que fue creado en el Ej. 1A para construir un sistema embebido
+ Zynq simple con la herramienta gráfica, el Integrador de Cores de I.P., e incorporar Cores de I.P. del catálogo de 
+Cores de I.P. de Vivado. Una cantidad de diseños de ayuda serán utilizados a travez de éste ejercicio, tales como la 
+característica de automatización de placa que automatiza la personalización de modulos de Cores de I.P. para un 
+dispositivo ó placa especificada. La característica de asistencia de diseñador, la que asiste con el proceso de 
+conectado entre la seccion de PS de Zynq y el modulo de Cores de I.P. en la seccion PL que será demostrada.
+
+    Una vez que se finaliza el diseñado, una cantidad de etapas serán subseleccionadas (undertaken) para completar
+el sistema hardware y generar el "bitstream" (trama binaria) para la implementacion en la seccion de PL. El diseño
+ de hardware completado entonces será exportado al Equipo de desarrollo (SDK) para el desarrollo de un programa 
+simple en el Ej 1C.
+
+ Ejercicio 1C - En éste ejercicio, el tercero pero pequeño, el Equipo de desarrollo (SDK) será introducido y un 
+programa simple será creado para permitir al procesador de Zynq interactuar con el Core de I.P. en la seccion de PL.
+Una conección al hardware sirve para que permita al SDK comunicar con el procesador Zynq que será establecido. Los
+controladores software que son automaticamente creados por el IDE Vivado para modulos de Cores de I.P. será explorado
+e integrado al programa, antes de que termine la construccion y ejecución sobre la Zynq.
+
+
+        Nota:  A lo largo de todo el ejercicio del tutorial practico será utilizado "C:/Zynq_Book" como el directorio
+(carpeta) de trabajo. Si no esta provisto asi, puede sustituirlo por la ubicacion y carpeta que usted elija, pero
+se advierte que se requerirá alterar algunos archivos fuentes para completar los ejercicios exitosamente.
