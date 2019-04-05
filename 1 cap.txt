@@ -23,10 +23,10 @@ se implementa en seccion programable (PL - Programmable Logic).
 
     Una vez que ha finalizado el diseñado, se seguirá unos cuantos pasos más para completar el sistema hardware
  y generar el "bitstream" (trama binaria), de ahora en más "el binario"; que será implementado en la seccion programable.
- El diseño hardware finalizado será exportado al Equipo de desarrollo de controladores (SDK) para el desarrollo de
+ El diseño hardware finalizado será exportado al Equipo de desarrollo de controladores [SDK] para el desarrollo de
  su, rudimentario, controlador  en el Ej 1C.
 
- Ejercicio 1C - En éste ejercicio, el tercero pero pequeño, el Equipo de desarrollo de controladores (SDK) será
+ Ejercicio 1C - En éste ejercicio, el tercero pero pequeño, el Equipo de desarrollo de controladores [SDK] será
  introducido y un sencillo controlador será creado para permitir al procesador de Zynq interactuar con el modulo en la
  seccion programable. Una conexión al hardware sirve de vinculo para que el SDK pueda establecer comunicación con el
  procesador Zynq. Los controladores que son automaticamente creados por el IDE Vivado para modulos construidos, serán
@@ -46,44 +46,55 @@ se advierte que se requerirá alterar algunos archivos fuentes para completar lo
 1                            Primer Diseño en Zynq
 
 
- Ejercicio 1A - Creando el primer diseño integrador de Cores de I.P.
+ Ejercicio 1A - Mi primer diseño en el ambiente de integracion
 
 
-    Éste ejercicio crearermos un proyecto nuevo en el IDE Vivado al desplazarse a travez de las etapas del
-"wizard" de creación de un proyecto nuevo.
+    En éste ejercicio crearemos un proyecto nuevo en el IDE Vivado recorriendo las etapas del
+asistente de "creación de un proyecto nuevo".
 
 
 
-| Zybo | La placa Zybo requiere un paso adicional para establecer la seccion predeterminada correctamente.
+| Zybo | La placa Zybo requiere un paso adicional para establecer el componente predeterminado correctamente.
 Éste es necesario porque Vivado 2015.1 no contiene las componentes para la placa de desarrollo Zybo. Si ya tiene
 configurado Vivado 2015.1 con los componentes para la placa de desarrollo Zybo, usted puede saltar este
-procedimiento y comenzar en desde el paso (a).
+procedimiento y comenzar en el paso (a).
 
-        Abra el navegador (explorador) de ventanas y navege hasta la siguiente ubicacion con los archivos fuentes
-del libro de Zynq:
-        "C:/Zynq_Book/sources/zybo/setup/board_part"
+        Una vez que halla copiado los archivos fuente a "C:/Zynq_Book", valla a la carpeta:
+            "C:/Zynq_Book/sources/zybo/setup/board_part"
         En esta carpeta verá un archivo nombrado como "zybo". Este contiene los componentes de la placa para la
-Rev. B3 de la placa de desarrollo Zybo. Tambien usted puede verificar la revision de su Zybo al inspeccionar el 
+Rev. B3 de la placa de desarrollo ZYBO. Tambien usted puede verificar la revision de su ZYBO al inspeccionar el 
 botón debajo de su placa. Actualizar los componentes de placa puedes adquirirse desde el sitio de internet de 
 Digilent utilizando el siguiente enlaze:
         "https://reference.digilentinc.com/vivado:boardfiles"
         Copie el archivo "zybo" con click derecho (desde el mouse) sobre el archivo y seleccionando "Copiar" como
 se muestra debajo:
+
+                |  fig1.png  |
     
-        Abra una segunda ventana con el navegador (explorador) de ventanas y navege hasta la siguiente ubicacion
+        Abra una segunda ventana ventana y navege hasta la siguiente ubicacion
 en la carpeta de instalación de Vivado 2015.1:
+
+    Nota: Por defecto los programas se instalan en la carpeta "C:\archivos de programa" o "C:\programs files" o
+"C:\programs files (x86)", puede buscar alli. Otro modo de averiguar donde se instalo es hacer click derecho
+(con el mouse) en el acceso directo de Vivado que se creo al instalarlo en su escritorio, luego seleccione la
+opcion "Abrir Ubicacion" como la que esta en la figura (dependiendo de la version de su sistema operativo esta
+opcion puede aparecer arriba o abajo):
+
+                |  fig2 (a).png  |         |  fig2 (b).png  |
+
         ** "{ Carpeta de instalación de Vivado }/2015.1/data/boards/board_part/zynq"
 
-        Ésta carpeta es responsable de todos los componentes de placas de las diferentes placas Zynq para que 
-puedan ser utilizadas en Vivado 2015.1 Desing Suite ( Satisfaccion de Diseño de Vivado ). Ahora se añadirá a la
- placa de desarrollo Zybo a la carpeta. Podrá encontrar que el archivo llamado zybo ya existe, ignorelo y sigua
-con el siguiente procedimiento. Tecla derecha del mouse sobre un espacio vacio dentro de la carpeta ** y 
-seleccione "Pegar" como se ve debajo:
+        Ésta carpeta es la responsable de que todos los componentes de placas de las diferentes placas Zynq
+puedan ser utilizadas en Vivado 2015.1 Desing Suite. Ahora se añadirá la placa de desarrollo ZYBO a esta carpeta.
+Podrá encontrar que el archivo llamado zybo ya existe, ignorelo y sigua con el siguiente procedimiento. Tecla
+derecha del mouse sobre un espacio vacio dentro de la carpeta ** y seleccione "Pegar" como se ve debajo:
+
+                |  fig3.png  |
 
         Una ventana de diálogo puede aparecer preguntando si desea combinar/reemplazar la carpeta "zybo", si es
 que ya existe esa carpeta en **. Seleccione Si/Yes.
 
-        Ahora usted ha añadido exitosamente el componente de placa para Zybo a Vivado 2015.1 Desing Suite.
+        Ahora usted ha añadido exitosamente el componente de placa para ZYBO a Vivado 2015.1 Desing Suite.
 
 
 | Ambas | Comenzaremos abriendo el IDE Vivado.
@@ -93,70 +104,71 @@ Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
     
     (b) Cuando cargue Vivado le presentará una pantalla de bienvenida tal como la figura 1.1:
 
-    (c) Seleccione la opcion create new project ( crear proyecto nuevo ) y el "wizard" de "new project"
-( proyecto nuevo ) se abrirá, tal como la figura 1.2:
+    (c) Seleccione la opcion "crear proyecto nuevo" [create new project] y el asistente de "proyecto nuevo"
+[new project] se abrirá, tal como la figura 1.2:
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
     (d) En el diálogo de nombre de proyecto, ingrese primer_construccion_zynq como nombre de proyecto,
-del campo Project name, y la ruta "C:/Zynq_Book" en ubicacion de proyecto, del campo Project location.
+(Project name), y la ruta "C:/Zynq_Book" en ubicacion de proyecto [Project location].
 
-    Asegurese de que halla seleccionado la opcion "create project subdirectory" ( crear subcarpeta de 
-proyecto ), todas las opciones deben ser las mismas que las mostradas debajo:
+    Asegurese de que halla seleccionado la opcion "crear subcarpeta de proyecto" [create project subdirectory],
+todas las opciones deben ser las mismas que las mostradas debajo:
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
     Una carpeta llamada Zynq_Book se creará en "C:/" si es que "C:/Zynq_Book" NO fué creada.
 
-    (e) En el diálogo de tipo de proyecto, del ingles Project type, seleccione proyecto RTL y asegurese
-de que la opcion "Do not specify sources at this time" ( No especificar archivos fuentes esta vez) se 
+    (e) En el diálogo de tipo de proyecto [Project type] seleccione proyecto RTL y asegurese
+de que la opcion "No especificar archivos fuentes esta vez" [Do not specify sources at this time] se 
 encuentre desmarcada, es decir que NO este seleccionada:
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
-    (f) Dentro del diálogo añadir fuentes, del ingles Add Sources, seleccione VHDL como lenguaje de 
-utilizado, en el campo target languaje, y como Simulador a Mixto ( Mixed ), en el campo Simulator 
+    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como el lenguaje de implementacion
+elegido, en el campo target languaje, y como Simulador a Mixto [Mixed], en el campo Simulator 
 Languaje.
 
     Si existen archivos fuente del tipo HDL ó archivos netlist para añadir al proyecto, se los puede 
 añadir en ésta etapa.
 
-    Como NO hemos tenido que añadir ningun archivo fuente al proyecto, seleccionamos siguiente (Next).
+    Como NO hemos tenido que añadir ningun archivo fuente al proyecto, seleccionamos siguiente [Next].
 
-    (g) Añadir Cores de I.P. existentes (opcional), al seleccionarlo se abrirá dicho diálogo.
+    (g) Añadir modulos existentes (opcional) al seleccionarlo se abrirá una ventana de diálogo.
 
-    Si existen archivos fuente de Cores de I.P. para añadir al proyecto, se los puede añadir aqui.
+    Si existen archivos fuente de modulos que utilize el proyecto, se los puede añadir aqui.
 
-    Como NO hemos tenido que añadir ningun archivo fuente de Cores de I.P. al proyecto, seleccionamos 
-siguiente (Next).
+    Como NO hemos tenido que añadir ningun archivo fuente de ningun modulo al proyecto, seleccionamos 
+siguiente [Next].
 
-    (h) Añadir restriciones (opcional), al seleccionarlo se abrirá dicho diálogo.
+    (h) Añadir restriciones (opcional), al seleccionarlo se abrirá una ventana de diálogo.
 
-    Ésta es la etapa donde cualquier archivo de restriciones (CONSTRAINTS) físicas o de temporizado
+    Ésta es la etapa donde cualquier archivo de restriciones [CONSTRAINTS] físicas o de temporizado
 se puede añadir al proyecto.
 
     Como NO hemos tenido que añadir ningun archivo de restriciones (CONSTRAINTS) al proyecto, seleccionamos 
-siguiente (Next).
+siguiente [Next].
 
     (i) Desde la ventana de diálogo de la parte predeterminada:
 
- | Zed | Seleccione placas (boards) desde el diálogo selector, luego seleccione ZedBoard Zynq Evaluation and
- Development Kit (Equipo de Evaluacion y desarrollo ZedBoard de Zynq), del campo nombre exhivido, del ingles
- display name, elija All (Todos) de la lista de revisión de la placa, tal y como se muetra en la figura 1.3:
+ | Zed | Seleccione placas [boards] desde el diálogo selector, luego luego de la lista de nombres exhividos
+[display name] seleccione ZedBoard Zynq Evaluation and Development Kit (Equipo de Evaluacion y desarrollo
+ZedBoard de Zynq), despues en la lista de revisión de la placa elija Todos [All], tal y como se muetra en
+la figura 1.3:
     Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.D).
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
-| Zybo | Seleccione placas (boards) desde el diálogo selector, luego seleccione Zybo del campo nombre 
-exhivido, del ingles display name, elija All (Todos) de la lista de revisión de la placa, tal y como se 
+| Zybo | Seleccione placas [boards] desde el diálogo selector, luego de la lista de nombres exhividos
+[display name] seleccione ZYBO, despues en la lista de revisión de la placa elija Todos [All], tal y como se 
 muetra en la figura 1.4:
     Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.B.3).
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
 
-| Ambas | (j) En el diálogo de resumen del proyecto nuevo (New Project Summary), revise las opciones 
-elegidas y seleccione finalizar (Finish) para crear el nuevo proyecto.
+| Ambas | (j) En el diálogo de "resumen del proyecto nuevo" [New Project Summary], revise las opciones 
+elegidas y seleccione finalizar [Finish] para crear el proyecto nuevo.
 
 -----------------------------------------------------------------------------------------------------------
 
@@ -166,7 +178,7 @@ diseño de sistema embebido de Zynq.
     Antes de hacer ésto, se debe hacer introduccion a la capa de herramientas del IDE Vivado. Se 
 muestra la capa del ambiente del IDE Vivado en la figura 1.5, otras capas pueden ser elegidas al 
 seleccionar las diferentes perspectivas. Ésta capa esta especificamente dirigida para la ZedBoard. Si
-usted esta utilizando Zybo, verá una capa ligeramente diferente.
+usted esta utilizando ZYBO, verá una capa ligeramente diferente.
 
     Con referencia a las etiquetas numeradas en la figura 1.5 los componentes principales del IDE 
 Vivado son:
@@ -190,8 +202,8 @@ de ventana amplio y para aquellos con interfaz gráfica, tales como:
 
     5. Navegador de flujo - Éste navegador le provee un facil acceso a las herramientas y comandos
  que son necesarios para guiar su diseño de principo a fin, comenzando con la seccion del 
- administrador de proyecto con un campo de diseño y finalizando con el generador del bitstream
- ( ó la trama de bits ), en la seccion de Programa y depuración. Ejecutar comandos esta disponible
+ administrador de proyecto con un campo de diseño y finalizando con el generador "Binario"
+ [bitstream] en la seccion de Programa y depuración. Ejecutar comandos esta disponible
  en la seccion de simulación, sintesis e implementación, para simular, sintetizar e implementar
 el diseño que esta activo.
 
@@ -204,7 +216,7 @@ recursos del dispositivo.
     *Ventana Netlist - Le provee una vista jerárquica sobre el diseño logico que se elaboro ó
 sintetizo.
 
-    *Ventana de archivos fuente - Muestra los archivos fuente de Cores de I.P., jerárquicamente, 
+    *Ventana de archivos fuente - Muestra los archivos fuente de modulos, jerárquicamente, 
 librerías y vistas de las ordenes de la compilación.
 
     7. Barra de estado global - Ésta barra exhive una variedad de información incluyendo:
@@ -319,7 +331,7 @@ el la creación del proyecto, Vivado configurará en consecuencia el bloque del 
 
 | Zybo | la figura 1.16.
 
-    Como la plataforma Zybo es la placa de desarrollo destino, y esta fue especificada
+    Como la plataforma ZYBO es la placa de desarrollo destino, y esta fue especificada
 el la creación del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
 
 
@@ -550,7 +562,7 @@ seleccione el botón navegar/explorar (browse).
 
     La carpeta de archivos fuente dependerá de la placa de desarrollo Zynq que este
 en uso. Si esta utilizando ZedBoard, explore hasta 
-"C:/Zynq_Book/sources/zedboard/primer_construccion_zynq", Si esta utilizando Zybo, explore
+"C:/Zynq_Book/sources/zedboard/primer_construccion_zynq", Si esta utilizando ZYBO, explore
 hasta "C:/Zynq_Book/sources/zybo/primer_construccion_zynq".
 
     Seleccione Ok.
@@ -579,9 +591,9 @@ a '0' son salidas y los que estan en '1' son entradas. Como hay 8 leds en la Zed
 configurar la direccion del canal del LED a un  valor de 0x00 (hexa) ó 0b00000000 (binario), 
 estamos configurando los 8 leds como salida, lo cual por logica es correcto.
 
-    Similarmente como hay 4 leds en la placa Zybo, al configurar la direccion del canal LED
+    Similarmente como hay 4 leds en la placa ZYBO, al configurar la direccion del canal LED
 un valor de 0x0 (hexa) ó 0b0000 (binario) estamos configurando solo 4 leds como salida,
-recordar que solo tenemos 4 leds en la Zybo a diferencia de la ZedBoard que solo tiene 8.
+recordar que solo tenemos 4 leds en la ZYBO a diferencia de la ZedBoard que solo tiene 8.
 
     Más información de los controladores perisfericos se puede encontrar al seleccionar la
 pestaña system.mss . Se provee una lista de todos los perisfericos en el sistema. Junto con
@@ -602,7 +614,7 @@ sitema.
  configurada, ver figura 1.34. Ésta configuración habilita el modo JTAG.
 
 
-| Zybo | Un único puente en la placa de desarrollo Zybo. Adicionalmente la fuente de 
+| Zybo | Un único puente en la placa de desarrollo ZYBO. Adicionalmente la fuente de 
 alimentacion de la placa es establecida utilizando un puente con la posibilidad de recibir
 energía desde el USB, el cargador ó batería. Ambas configuraciones de los puentes de JTAG y
 de energía son establecidos en la figura 1.35. La placa ha sido configurada para ser 
@@ -616,7 +628,7 @@ el archivo bitstream correcto, como en la figura 1.36.
 
     
         Nota: Una vez que el dispositivo ha sido exitosamente programado, el led HECHO (DONE)
-sobre la ZedBoard debe ponerse en azul. Similarmente en la Zybo el led Hecho (DONE) debe ponerse
+sobre la ZedBoard debe ponerse en azul. Similarmente en la ZYBO el led Hecho (DONE) debe ponerse
 verde.
 
     Con la seccion de PL de la Zynq correctamente configurada con el archivo de bitstream, ahora
@@ -630,7 +642,7 @@ ejecutar como > Lanzar en Hardware (GDB), (Run As > Launch in Hardware (GDB)), v
  estados resaltados en la figura 1.38.
 
 
-| Zybo | Los leds en la Zybo deben comenzar a destellar entre los estados resaltados en la figura
+| Zybo | Los leds en la ZYBO deben comenzar a destellar entre los estados resaltados en la figura
 1.39.
 
 
