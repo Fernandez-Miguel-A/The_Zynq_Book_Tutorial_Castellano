@@ -90,7 +90,7 @@ detalle las diferencias particulares de estas placas.
 --------------------------------------------------------------------------------------------------------------------
     Nota: La gran mayoria de la bibliografia hace referencia a IP, Core IP, IP CORE, se optó por asumir como
  traduccion a la palabra modulo, la cual engloba y delimita más refinadamente, para no caer en ambiguismos.
- Pero cuando se desee referenciar a los Procesadores Software, Software Processor, (IP CORE), a diferencia del Procesador empotrado/en silicio.
+ Pero cuando se desee referenciar a los Procesadores Software, Software Processor, [IP CORE], a diferencia del Procesador empotrado/en silicio.
 
  seccion programable (PL - Programmable Logic)
  seccion de procesamiento (PS - Processing System)
