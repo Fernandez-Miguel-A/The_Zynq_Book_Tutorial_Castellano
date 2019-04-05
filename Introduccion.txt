@@ -34,7 +34,7 @@ Agosto 2015.
 
                                             Como utilizar éste libro:
     Archivos de ejemplo y libros en su version electrónica.
-    Para seguir los tutoriales del libro sobre Zynq, debe descargar un conjunto de archivos preparados del sitio de 
+    Para seguir los tutoriales del libro sobre Zynq, debe descargar un conjunto de archivos preparados del sitio de
 internet del libro:         www.zynqbook.com
 
     Una version libro digital (PDF  NO-Imprimible) de este conjunto de tutoriales tambien se puede descargar del
@@ -131,44 +131,3 @@ detalle las diferencias particulares de estas placas.
 
 
 
-
-
-
-
-                                            Introducción:
-    Éste tutorial lo guiará a travez del proceso de creación de su primer diseño en Zynq utilizando el IDE Vivado
-y le introducirá con el ambiente integrador de Cores de I.P. para la generación de un diseño de procesador Zynq
- simple que será implementado en una placa de desarrollo Zynq. El Equipo para desarrollo 
- (SDK - Software Development Kit) será utilizado para crear un programa simple que se ejecutará en el sistema de
- procesamiento ARM de Zynq (PS - Software Processor) para controlar el hardware que se implementa en seccion
-programable (PL - Programmable Logic).
-
-
-    Éste tutorial esta separado en tres ejercicios y se organiza como sigue:
-
- Ejercicio 1A - Éste ejercicio lo guiará a travez del proceso de lanzado del IDE de Vivado (abrir Vivado),
-así como crear un proyecto por primera vez. Las distintas etapas del "wizard" de creación de un proyecto nuevo será
-introducido.
-
- Ejercicio 1B - En éste ejercicio usaremos el proyecto que fue creado en el Ej. 1A para construir un sistema embebido
- Zynq simple con la herramienta gráfica, el Integrador de Cores de I.P., e incorporar Cores de I.P. del catálogo de 
-Cores de I.P. de Vivado. Una cantidad de diseños de ayuda serán utilizados a travez de éste ejercicio, tales como la 
-característica de automatización de placa que automatiza la personalización de modulos de Cores de I.P. para un 
-dispositivo ó placa especificada. La característica de asistencia de diseñador, la que asiste con el proceso de 
-conectado entre la seccion de PS de Zynq y el modulo de Cores de I.P. en la seccion PL que será demostrada.
-
-    Una vez que se finaliza el diseñado, una cantidad de etapas serán subseleccionadas (undertaken) para completar
-el sistema hardware y generar el "bitstream" (trama binaria) para la implementacion en la seccion de PL. El diseño
- de hardware completado entonces será exportado al Equipo de desarrollo (SDK) para el desarrollo de un programa 
-simple en el Ej 1C.
-
- Ejercicio 1C - En éste ejercicio, el tercero pero pequeño, el Equipo de desarrollo (SDK) será introducido y un 
-programa simple será creado para permitir al procesador de Zynq interactuar con el Core de I.P. en la seccion de PL.
-Una conección al hardware sirve para que permita al SDK comunicar con el procesador Zynq que será establecido. Los
-controladores software que son automaticamente creados por el IDE Vivado para modulos de Cores de I.P. será explorado
-e integrado al programa, antes de que termine la construccion y ejecución sobre la Zynq.
-
-
-        Nota:  A lo largo de todo el ejercicio del tutorial practico será utilizado "C:/Zynq_Book" como el directorio
-(carpeta) de trabajo. Si no esta provisto asi, puede sustituirlo por la ubicacion y carpeta que usted elija, pero
-se advierte que se requerirá alterar algunos archivos fuentes para completar los ejercicios exitosamente.
