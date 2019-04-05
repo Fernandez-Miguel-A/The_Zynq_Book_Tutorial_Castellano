@@ -34,7 +34,7 @@ Agosto 2015.
 
                                             Como utilizar éste libro:
     Archivos de ejemplo y libros en su version electrónica.
-    Para seguir los tutoriales del libro sobre Zynq, debe descargar un conjunto de archivos preparados del sitio de 
+    Para seguir los tutoriales del libro sobre Zynq, debe descargar un conjunto de archivos preparados del sitio de
 internet del libro:         www.zynqbook.com
 
     Una version libro digital (PDF  NO-Imprimible) de este conjunto de tutoriales tambien se puede descargar del
