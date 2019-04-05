@@ -1,7 +1,4 @@
-Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
-"El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
 
-ip => Cores de I.P. => bloques predefinidos => bloques prediseñados
 
 
 
@@ -9,11 +6,11 @@ ip => Cores de I.P. => bloques predefinidos => bloques prediseñados
     Ésta es una nueva versión de los tutoriales que acompañan al libro sobre Zynq. Ésta basada en Vivado
 2015.1 y ahora soporta a las dos placas de desarrollo, Zybo y ZedBoard.
 
-    Una cantidad valuable/Valiosísima de gente contribuyo en respuesta (realimentacion) al conjunto de
-tutoriales original,  sobre la que se baso Austin Lesea y Y. C. Wang en la prueba de los tutoriales de 
-Xilinx en una etapa preliminar a su creación. Y obtubieron varias sugerencias útiles. En la universidad de
-Strathclyde, Iain Chalmers, Sarunas Kalade, Damien Muir y Craig Ramsay tambien han sido muy utiles 
-trabajando atravez de varias versiones de los tutoriales asi como al comentarnos sus experiencias. 
+    Una valiosísima cantidad de gente contribuyo en respuesta al grupo de tutoriales original, sobre los que
+se baso Austin Lesea y Y. C. Wang en la prueba de los tutoriales de Xilinx en una etapa preliminar a su
+creación. Y obtubieron varias sugerencias útiles. En la universidad de Strathclyde, Iain Chalmers, Sarunas
+Kalade, Damien Muir y Craig Ramsay tambien han sido muy utiles trabajando en las varias de las versiones de
+los tutoriales asi como al comentarnos sus experiencias.
 
     Otra vez, nuestro más sincero agradecimiento debe ir a Cathal McCabe del programa de la universidad de
 Xilinx. Quien no solo brindo comentarios vitales y soporte en la creación del material del tutorial, sino
@@ -46,21 +43,21 @@ enlace de arriba.
 
 
                         Instrucciones para las placas de desarrollo Zybo y ZedBoard:
-    Como usted lee atravez de los tutoriales, notara que ciertos procesos tienen diferentes variaciones dependiendo
-de la placa de desarrollo que se este utilizando. En donde una secuencia de instrucciones es específica a una placa
-(Zybo ó ZedBoard), el comienzo de la secuencia esta (precededido) indicado por un iconico bloque coloreado 
+    Mientras usted lea los tutoriales, notara que ciertos procesos tienen variaciones que dependen
+de la placa de desarrollo que se este utilizando. En donde un grupo de instrucciones es específico a una placa
+(Zybo ó ZedBoard), se indica el comienzo de un grupo con un bloque coloreado
 localizado en el margen izquierdo:
 
- | Zed |            Para ZedBoard.
+ | Zed |            Especifico para ZedBoard.
 
-| Zybo |            Para Zybo.
+| Zybo |            Especifico para Zybo.
 
 
 | Ambas |   La reanudación a las instrucciones comunes para ambas placas esta marcada con otro icono.
 
 
-    Simplemente elija las instrucciones que son relevantes a sus placa puntualmente, al identificar cualquiera
-de los iconos   | Zybo |   ó   | Zed |   y luego vea hacia adelante hasta encontrar el icono   | Ambas |   y 
+    Simplemente elija las instrucciones que son relevantes para su placa en particular, al identificar alguno
+de los iconos   | Zybo |   ó   | Zed |   y luego adelante su lectura llendo al icono   | Ambas |   y
 entonces continue allí su lectura.
 
 
@@ -73,24 +70,45 @@ probados.
 
 
 
+Importante:
+    Actualmente Existen 3 (Tres) variantes de la placa de desarrollo "zybo":
+         * ZYBO (la primera, en mayusculas)  ver fig 1.
+         * Zybo Z7-10.
+         * Zybo Z7-20.
+    La primera fué descontinuada en favor de sus 2 predecesoras, las cuales cuentan sutiles agregados. Ver fig2.
+    Salvo mencion explicita, se considerará a la etiqueta Zybo como la ZYBO (original), si desea utilizar
+alguna de las variantes mas nuevas puede consultar la "Guia de Migracion Zybo z7"(*) para examinar más en
+detalle las diferencias particulares de estas placas.
 
 
 
 
+
+(*) https://reference.digilentinc.com/reference/programmable-logic/zybo-z7/migration-guide?_ga=2.256682184.2144655732.1554305550-1853632959.1554203379
+
+
+--------------------------------------------------------------------------------------------------------------------
+    Nota: La gran mayoria de la bibliografia hace referencia a IP, Core IP, IP CORE, se optó por asumir como
+ traduccion a la palabra modulo, la cual engloba y delimita más refinadamente, para no caer en ambiguismos.
+ Pero cuando se desee referenciar a los Procesadores Software, Software Processor, (IP CORE), a diferencia del Procesador empotrado/en silicio.
+
+ seccion programable (PL - Programmable Logic)
+ seccion de procesamiento (PS - Processing System)
+--------------------------------------------------------------------------------------------------------------------
 
 
 
                                                                             Contenido
 
  1. Primer diseño en Zynq                                                           1
-    Creando el primer diseño integrador de Cores de I.P.   ......................   4
+    Mi primer diseño en el ambiente de integracion   ............................   4
     Creando un sistema Zynq en Vivado   .........................................  12
-    Creando una programa en el SDK   ............................................  24
+    Creando un programa controlador en el SDK   .................................  24
 
  2. Paso siguiente para el diseño de SoC con Zynq                                  35
-    Ampliando el diseño integrador basico de Cores de I.P.   ....................  38
+    Profundizando en el ambiente de integracion   ...............................  38
     Creando un sistema Zynq con interrupciones dentro de Vivado    ..............  42
-    Creando una programa en el SDK  .............................................  55
+    Ampliando el programa controlador con el SDK  ...............................  55
     Añadiendo más fuentes de interrupcion  ......................................  61
 
  3. Diseñando con Vivado HLS                                                       67
@@ -98,15 +116,15 @@ probados.
     Optimización de Diseño en Vivado HLS   ......................................  77
     Interfaz de sintesis   ......................................................  88
 
- 4. Creación de Cores de I.P.                                                      91
-    Creando Cores de I.P. en HDL  ...............................................  94
-    Creando Cores de I.P. en HDL con la herramienta de "MathWorks"   ............ 118
-    Creando Cores de I.P. con Vivado HLS   ...................................... 128
+ 4. Creación de Modulos                                                            91
+    Creando modulos en HDL  .....................................................  94
+    Creando modulos en HDL con la herramienta de "MathWorks"   .................. 118
+    Creando modulos con Vivado HLS   ............................................ 128
 
- 5. Aventuras con el creador de Cores de I.P.                                     137
-    Importando Cores de I.P. al catálogo de Cores de I.P. de Vivado   ........... 140
-    Audio con el integrador de Cores de I.P. de Vivado   ........................ 150
-    Creando un programa de audio en el SDK   .................................... 166
+ 5. Aventuras con el creador de modulos                                           137
+    Importando modulos al catálogo de Vivado   .................................. 140
+    Audio con el integrador de modulos de Vivado   .............................. 150
+    Creando un programa controlador para audio en el SDK   ...................... 166
 
 
 
