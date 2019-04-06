@@ -19,10 +19,11 @@ se implementa en seccion programable (PL - Programmable Logic).
  catálogo de Vivado. Serán utilizados varios componentes auxiliares de diseño en éste ejercicio, como por ejemplo
  el asistente de "Automatización de placa" que automatiza la personalización de modulos para un dispositivo ó placa
  especificada. Así como el componente de "Asistencia al diseñador", que le ayuda con el proceso de conexionado
- entre la seccion de procesamiento de Zynq y el modulo de la seccion programable, lo cual será desarrollado más abajo.
+ entre la seccion de procesamiento Zynq y el modulo de la seccion programable, lo cual será desarrollado más abajo.
 
     Una vez que ha finalizado el diseñado, se seguirá unos cuantos pasos más para completar el sistema hardware
- y generar el "bitstream" (trama binaria), de ahora en más "el binario"; que será implementado en la seccion programable.
+ y generar el "bitstream" (trama binaria), de ahora en más el "Archivo Binario"; que será implementado en la seccion
+ programable.
  El diseño hardware finalizado será exportado al Equipo de desarrollo de controladores [SDK] para el desarrollo de
  su, rudimentario, controlador  en el Ej 1C.
 
@@ -85,7 +86,7 @@ opcion puede aparecer arriba o abajo):
         ** "{ Carpeta de instalación de Vivado }/2015.1/data/boards/board_part/zynq"
 
         Ésta carpeta es la responsable de que todos los componentes de placas de las diferentes placas Zynq
-puedan ser utilizadas en Vivado 2015.1 Desing Suite. Ahora se añadirá la placa de desarrollo ZYBO a esta carpeta.
+puedan ser utilizadas en Vivado 2015.1 Design Suite. Ahora se añadirá la placa de desarrollo ZYBO a esta carpeta.
 Podrá encontrar que el archivo llamado zybo ya existe, ignorelo y sigua con el siguiente procedimiento. Tecla
 derecha del mouse sobre un espacio vacio dentro de la carpeta ** y seleccione "Pegar" como se ve debajo:
 
@@ -94,7 +95,7 @@ derecha del mouse sobre un espacio vacio dentro de la carpeta ** y seleccione "P
         Una ventana de diálogo puede aparecer preguntando si desea combinar/reemplazar la carpeta "zybo", si es
 que ya existe esa carpeta en **. Seleccione Si/Yes.
 
-        Ahora usted ha añadido exitosamente el componente de placa para ZYBO a Vivado 2015.1 Desing Suite.
+        Ahora usted ha añadido exitosamente el componente de placa para ZYBO a Vivado 2015.1 Design Suite.
 
 
 | Ambas | Comenzaremos abriendo el IDE Vivado.
@@ -109,8 +110,8 @@ Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
 
     Seleccione siguiente [Next].
 
-    (d) En el diálogo de nombre de proyecto, ingrese primer_construccion_zynq como nombre de proyecto,
-(Project name), y la ruta "C:/Zynq_Book" en ubicacion de proyecto [Project location].
+    (d) En el diálogo de nombre de proyecto, ingrese primer_construccion_zynq como nombre de proyecto
+[Project name] y la ruta "C:/Zynq_Book" en ubicacion de proyecto [Project location].
 
     Asegurese de que halla seleccionado la opcion "crear subcarpeta de proyecto" [create project subdirectory],
 todas las opciones deben ser las mismas que las mostradas debajo:
@@ -125,8 +126,8 @@ encuentre desmarcada, es decir que NO este seleccionada:
 
     Seleccione siguiente [Next].
 
-    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como el lenguaje de implementacion
-elegido, en el campo target languaje, y como Simulador a Mixto [Mixed], en el campo Simulator 
+    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como su lenguaje de
+implementacion, en el campo target languaje, y como Simulador a Mixto [Mixed], en el campo Simulator 
 Languaje.
 
     Si existen archivos fuente del tipo HDL ó archivos netlist para añadir al proyecto, se los puede 
@@ -159,7 +160,7 @@ la figura 1.3:
 
     Seleccione siguiente [Next].
 
-| Zybo | Seleccione placas [boards] desde el diálogo selector, luego de la lista de nombres exhividos
+| Zybo | Seleccione Placas [Boards] desde el diálogo selector, luego de la lista de nombres exhividos
 [display name] seleccione ZYBO, despues en la lista de revisión de la placa elija Todos [All], tal y como se 
 muetra en la figura 1.4:
     Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.B.3).
@@ -172,12 +173,12 @@ elegidas y seleccione finalizar [Finish] para crear el proyecto nuevo.
 
 -----------------------------------------------------------------------------------------------------------
 
-    Ahora ya hemos creado nuestro primer proyecto en el IDE Vivado, podemos ir a crear nuestro primer
-diseño de sistema embebido de Zynq.
+    Ahora ya hemos creado nuestro primer proyecto en el IDE Vivado, ya podemos comenzar con la creacion
+de nuestro primer diseño de sistema embebido Zynq.
 
     Antes de hacer ésto, se debe hacer introduccion a la capa de herramientas del IDE Vivado. Se 
-muestra la capa del ambiente del IDE Vivado en la figura 1.5, otras capas pueden ser elegidas al 
-seleccionar las diferentes perspectivas. Ésta capa esta especificamente dirigida para la ZedBoard. Si
+muestra la capa del ambiente del IDE Vivado en la figura 1.5 (otras capas pueden ser elegidas al 
+seleccionar las diferentes perspectivas). Ésta capa esta especificamente dirigida para la ZedBoard. Si
 usted esta utilizando ZYBO, verá una capa ligeramente diferente.
 
     Con referencia a las etiquetas numeradas en la figura 1.5 los componentes principales del IDE 
@@ -202,64 +203,64 @@ de ventana amplio y para aquellos con interfaz gráfica, tales como:
 
     5. Navegador de flujo - Éste navegador le provee un facil acceso a las herramientas y comandos
  que son necesarios para guiar su diseño de principo a fin, comenzando con la seccion del 
- administrador de proyecto con un campo de diseño y finalizando con el generador "Binario"
- [bitstream] en la seccion de Programa y depuración. Ejecutar comandos esta disponible
- en la seccion de simulación, sintesis e implementación, para simular, sintetizar e implementar
-el diseño que esta activo.
+ Administrador de Proyecto con un campo de diseño y finalizando con la generación del "Archivo
+Binario" [bitstream], en la seccion de Programa y Depuración [Program and Debug]. Los comandos para
+la ejecución estan disponible en la seccion de "Simulación, Sintesis e Implementación"; para simular,
+sintetizar e implementar el diseño que este activo.
 
     6. Ventana de datos - Aquí, de forma predeterminada, se exhive información relativa a los datos
 de diseño y los archivos fuente, incluyendo:
 
-    *Ventana de atributos - Muetra información sobre los objetos logicos seleccionados y los 
+    *Ventana de Atributos - Muetra información sobre los objetos logicos seleccionados o los 
 recursos del dispositivo.
 
-    *Ventana Netlist - Le provee una vista jerárquica sobre el diseño logico que se elaboro ó
+    *Ventana Netlist - Le provee una vista jerárquica del diseño logico que se elaboro ó
 sintetizo.
 
-    *Ventana de archivos fuente - Muestra los archivos fuente de modulos, jerárquicamente, 
-librerías y vistas de las ordenes de la compilación.
+    *Ventana de archivos fuente - Muestra los archivos fuente de modulos, jerarquias, 
+librerías y vistas de las ordenes de compilación.
 
     7. Barra de estado global - Ésta barra exhive una variedad de información incluyendo:
 
     *Información detallada con respecto a la barra de menues y de los comandos de la barra de 
-herramientas. Todo será exhivido el la esquina inferior izquierda cuando el comando es accedido.
+herramientas. Todo será exhivido el la esquina inferior izquierda cuando el comando sea accedido.
 
     *Al pasar el mouse por encima de un objeto en la ventana esquemática, el detalle del objeto
 aparecerá en ésta barra.
 
-    *Al restringir (constraints) y alojar la creación en la ventana de paquete y dispositivo,
+Durante la creacion de una restriccion y un 
+    *Al aplicar restricciones [constraints] y alojar la creación en la ventana de paquete y dispositivo,
 validación y tipo de restricción será exhivido del lado izquiedo de esta barra. Pero del lado 
 derecho las coordenadas del sitio y el tipo.
 
-    *La barra de progreso de la tarea en proceso se ubica del lado derecho de la barra de estado
+    *La barra de progreso de una tarea en proceso será reubicada del lado derecho de la barra de estado
 global, cuando se selecciona el botón "background" ( fondo ).
 
 
-    8. Ventana de Resultados de Area - La ventana de resultados muestra el estado y resultado de
-los comandos en un conjunto de ventanas agrupadas abajo del ambiente del IDE Vivado. Asi como
-el progreso de comandos, se generan mensajes mientras que se crean los archivos de seguimiento 
-(log files) y los reportes. La información relativa a ésto se muestra aquí, las ventanas 
-predeteerminadas son:
+    8. Ventana de Resultados - La ventana de resultados muestra el estado y resultado de los comandos
+en un grupo de ventanas agrupadas abajo del ambiente del IDE Vivado. Asi como el progreso de comandos,
+mensajes generados, archivos de seguimiento [log files] y reportes. Toda la información relativa a ésto
+se muestra allí. Las ventanas predeterminadas son:
 
     *Mensajes - Muestra todos los mensajes para el diseño activo.
 
-    *Consola Tcl - Se pueden ingresar comandos Tcl aquí y un historial de comandos previos y
-mensajes de salida estan disponibles.
+    *Consola Tcl - Se pueden ingresar comandos Tcl aquí y un historial de comandos previos,
+mensajes de salida tambien estan disponibles.
 
     *Reportes - Se provee acceso rápido a los reportes generados a travez del flujo de diseño.
 
     *Información de seguimiento (Log) - Muestra a los archivos de seguimiento generados por el
- proceso de simulación, síntesis e implementación.
+ proceso de "Simulación, Síntesis e Implementación".
 
     *Ejecución de diseño - Administra la ejecución del proyecto actual.
 
-    Pueden aparecer ventanas adicionales en ésta área cuando así se la requiera, Ventana del
+    Pueden aparecer ventanas adicionales en ésta área cuando así se las requieran, Ventana del
 resultado de busquedas, ventanas de resultados de temporizado y ventana de los pines del paquete.
 
 
 
-    Hecha la debida introduccion a la Capa del ambiente del IDE Vivado, ahora sí podemos ir a 
-crear nuestro sistema Zynq.
+    Hecha la debida introduccion a la Capa del ambiente del IDE Vivado, ahora sí podemos
+comenzar con la creacion de nuestro sistema Zynq.
 
 
 
@@ -271,95 +272,99 @@ crear nuestro sistema Zynq.
 Ejercicio 1B - Creando un sistema Zynq en Vivado
 
     En éste ejercicio crearemos un sistema embebido Zynq simple que implemente un controlador de
-los pines de entrada/salida en la seccion de logica programable del dispositivo Zynq. El 
-controlador de GPIO se conecta a los leds. Tambien se puede conectar al procesador Zynq via 
-conexión de un bus AXI, permitiendo que los leds sean controlados por programa, lo cual se 
-creará en el Ej 1C.
+pines de entrada/salida en la seccion programable de nuestro dispositivo Zynq. El controlador
+de GPIO (General Purpose Input/Output - Entrada/salida tradicional o de propósito general) se
+conecta a los leds. Tambien se puede conectar al procesador Zynq mediante la conexión de un bus
+AXI, permitiendo así que los leds sean controlados por programa, lo cual crearemos en el Ej 1C.
 
-    Se provee una representación gráfica del diseño embebido de Zynq en la figura 1.7:
+    Se provee una representación gráfica del diseño embebido Zynq en la figura 1.7:
 
-    Comenzaremos por crear un diseño por bloques nuevo en el IDE Vivado.
+    Comenzaremos por crear un nuevo diseño por bloques en el IDE Vivado.
 
-    (a) En la ventana de navegación de flujo, seleccionamos 'crear un diseño por bloques' de la
-seccion del integrador de Cores de I.P., tal y como se muestra en la figura 1.8:
+    (a) En la ventana de navegación de flujo [Flow Navigator], seleccionamos 'crear un diseño
+por bloques' [Create Block Design] de la seccion del integrador de modulos, tal y como se muestra
+en la figura 1.8:
 
-    La ventana de diálogo para crear un diseño por bloques se abrirá.
+    Se abrirá la ventana de diálogo para crear un diseño por bloques.
 
-    (b) Ingrese primer_sistema_zynq en el bloque del nombre del diseño, ver figura 1.9:
+    (b) Ingrese primer_sistema_zynq en el campo "Nombre de diseño" [Design name], ver figura 1.9:
 
-    Seleccione Ok. El ambiente del diagrama integrador de Cores de I.P. de Vivado se abrirá en
+    Seleccione Ok. Se abrirá la vista esquemática del integrador de modulos de Vivado en
 el espacio de trabajo.
 
-    El primer bloque que añadiremos a nuestro diseño será el sistema de procesamiento Zynq.
+    El primer bloque que añadiremos a nuestro diseño será el sistema de procesamiento Zynq, es
+decir que le diremos a Vivado que utilizaremos el procesador empotrado que contiene nuestra Zynq.
 
-    (c) En el ambiente del diagrama integrador, haga click derecho con el mouse y seleccione
-añadir Cores de I.P. (add IP), tal y como en la figura 1.10.
+    (c) En la vista esquemática del integrador, haga click derecho con el mouse y seleccione
+añadir modulo [Add IP], tal y como en la figura 1.10.
 
-    Alternativamente, seleccione el botón añadir Cores de I.P. (add IP) en la barra de herramientas
-a la izquierda del ambiente, asi como en la figura 1.11.
+    Alternativamente, seleccione el botón añadir modulo [Add IP] en la barra de herramientas
+a la izquierda del ambiente, como se muestra en la figura 1.11.
 
-    Se abrirá la ventana flotante del catalogo de Cores de I.P., ver figura 1.12.
+    Se abrirá la ventana flotante del catalogo de modulos, ver figura 1.12.
 
     (d) Ingrese "zynq" en el campo de busqueda y seleccione "ZYNQ7 Processing System", figura 1.13.
 Preste atención de NO seleccionar la version ".. BMF", luego presione Enter en su teclado.
 
     Usted debe ver un mensaje similar al siguiente en la ventana de la consola de Tcl para 
-confirmar que el proceso tubo (indeed) ha sido añadido al diseño correctamente:
+confirmar que el 'sistema de procesamiento' realmente haya sido añadido al diseño correctamente:
 
     "create_bd_cell ‐type ip ‐vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0"
 
     Mensajes como este se exhiviran en la ventana de la consola de Tcl para todas las acciones
-realizadas en el bloque integrado de Cores de I.P. .
+realizadas en el bloque Integrador de Modulos [IP Integrator].
 
-    El siguiente paso es conectar los puertos de la interfaz, DDR y FIXED_IO en la seccion de PS
-de la Zynq a los puertos de la interfaz de más alto nivel sobre el diseño.
+    El siguiente paso es conectar los puertos de la interfaz, DDR y FIXED_IO de la seccion de
+procesamiento Zynq a los puertos de la interfaz de más alto nivel de nuestro diseño.
 
-    (e) Seleccione la opcion de ejecución de automatización del bloque (Run Block Automation),
-del mensaje del asitente de diseño, en la parte superior de la ventana de diagrama, ver
-figura 1.14. 
+    (e) Seleccione la opcion "Realizar Automatización del Bloque" [Run Block Automation],
+que esta dentro del mensaje de "Asistencia al diseñador", en la parte superior de la vista 
+esquemática, ver figura 1.14. 
 
-    En el diálogo de ejecución de automatización del bloque (Run Block Automation), 
-asegurese de que la opción "Apply Board Preset" este seleccionada, entonces seleccione OK.
-Las conecciones externas para las dos interfaces, DDR y FIXED_IO ahora serán generadas.
+    En el diálogo de "Automatización del Bloque" [Run Block Automation], asegurese de que la
+opción "Apply Board Preset" (Aplicar -...-) este seleccionada, entonces seleccione OK.
+Ahora se generarán las conecciones externas para las dos interfaces, DDR y FIXED_IO.
 
     Su diagrama de bloque ahora debe parecerse a:
 
  | Zed | la figura 1.15.
 
     Como la plataforma ZedBoard es la placa de desarrollo destino, y esta fue especificada
-el la creación del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
+el la creación del proyecto, en consecuencia Vivado configurará el bloque del procesador Zynq
+conforme a la ZedBoard.
 
 | Zybo | la figura 1.16.
 
     Como la plataforma ZYBO es la placa de desarrollo destino, y esta fue especificada
-el la creación del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
+el la creación del proyecto, en consecuencia Vivado configurará el bloque del procesador Zynq
+conforme a la ZYBO.
 
 
-| Ambas | Ahora que la seccion de PS de la Zynq ha sido añadido y configurado a nuestro diseño, ahora 
-podemos añadir más bloques que serán alojados en la seccion de PL de la Zynq para añadir funcionalidad
-al sitema. En éste caso solo añadiremos un único bloque, AXI GPIO, que nos permitirá acceder a 
-los leds en la placa de desarrollo.
+| Ambas | Ahora que la seccion de procesamiento Zynq ha sido añadida y configurada a nuestro
+diseño, estamos en condiciones de poder agregar más bloques a la seccion programable para añadir
+funcionalidad al sistema. En éste caso solo añadiremos un único bloque, AXI
+GPIO, que nos permitirá acceder a los leds en la placa de desarrollo.
 
-    (f) Haga click derecho en un lugar vacio dentro de la ventana de Diagramas y seleccione añadir
-Cores de I.P. (add IP). Ingrese GPIO en el campo de busqueda y añada la instancia de AXI GPIO.
+    (f) Haga click derecho en un lugar vacio dentro de la vista esquemática y seleccione añadir
+modulo [Add IP]. Ingrese GPIO en el campo de busqueda y añada la instancia de AXI GPIO.
 
-    Ahora utilizaremos la herramienta el asistente de diseño integrador de Cores de I.P. para
-automatizar la conexión del bloque AXI GPIO al "ZYNQ7 Processing System" (Sistema de procesamiento
-de Zynq septima generacion).
+    Ahora utilizaremos el "Integrador de Modulos" la herramienta de "Asistencia al diseñador"
+[IP Integrator Designer Assistanse] para automatizar la conexión del bloque AXI GPIO al
+"ZYNQ7 Processing System" (Sistema de procesamiento de Zynq septima generacion).
 
-    (g) Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama, y seleccione
+    (g) Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática, y seleccione
 /axi_gpio_0/S_AXI, ver figura 1.17.
 
     Ésto automatizará el proceso de conexión del GPIO al puerto AXI y automaticamente instanciará
 dos bloques más:
 
-    *Modulo de reinicio del sistema procesador (Processor System Reset Module) - Que proveerá de 
-un reinicio personalizado para un sistema de procesamiento completo, incluyendo los perisféricos,
+    *Modulo de Reinicio del Sistema Procesador [Processor System Reset Module] - Que proveerá de 
+un reinicio personalizado para todo un sistema de procesamiento, incluyendo los perisféricos,
 conexiónes y el propio procesador.
 
-    *Interconexión AXI (AXI Interconnect) - Provee una interconexión del tipo AXI para el sistema,
-permitiendo que más Cores de I.P. y perisféricos de la seccion de PL se comuniquen con el sitema
+    *Interconexión AXI [AXI Interconnect] - Provee una interconexión del tipo AXI para el sistema,
+permitiendo que más modulos y perisféricos de la seccion programable se comuniquen con el sistema
 de procesamiento principal.
 
     Seleccione OK.
@@ -370,128 +375,129 @@ de procesamiento principal.
 placa de desarrollo. ésto tambien se puede completar utilizando el asistente de diseño.
 
 
- | Zed | Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama. Se abrirá la
-ventana de ejecución de automatización de conexión, como muestra la figura 1.18:
+ | Zed | Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática. Se abrirá la
+ventana de "Realizar Automatización de Conexión", como muestra la figura 1.18:
 
     Seleccione /axi_gpio_0/GPIO.
 
-    Seleccione leds_8bits del menu desplegable en el campo 'seleccion de la interfaz de la placa'
-(Select board part interface). Y luego seleccione OK.
+    Seleccione leds_8bits del menu desplegable en el campo 'seleccion del componente de placa'
+[Select board part interface]. Y luego seleccione OK.
 
-    La interfaz de gpio del bloque AXI GPIO ahora se conectará a los leds de la placa de desarrollo
-y su diseño completo se debe parecer al de la figura 1.19:
+    La interfaz de gpio del bloque AXI GPIO ahora se conectará a los leds de la placa de desarrollo.
+Su diseño final se debe parecer al de la figura 1.19:
 
     Las posiciones de los bloques individuales de su diseño pueden variar ligeramente a la figura
-1.19, pero los bloques y las conexiónes deben ser las mismas.
+1.19, pero los bloques y las conexiónes tienen que ser las mismas.
 
 
-| Zybo | Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama. Se abrirá la
-ventana de ejecución de automatización de conexión, como muestra la figura 1.20:
+| Zybo | Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática. Se abrirá la
+ventana de "Realizar Automatización de Conexión", como muestra la figura 1.20:
 
     Seleccione /axi_gpio_0/GPIO.
 
-    Seleccione leds_4bits del menu desplegable en el campo 'seleccion de la interfaz de la placa'
-(Select board part interface). Y luego seleccione OK.
+    Seleccione leds_4bits del menu desplegable en el campo 'seleccion del componente de placa'
+[Select board part interface]. Y luego seleccione OK.
 
-    La interfaz de gpio del bloque AXI GPIO ahora se conectará a los leds de la placa de desarrollo
-y su diseño completo se debe parecer al de la figura 1.21:
+    La interfaz de gpio del bloque AXI GPIO ahora se conectará a los leds de la placa de desarrollo.
+Su diseño final se debe parecer al de la figura 1.21:
 
     Las posiciones de los bloques individuales de su diseño pueden variar ligeramente a la figura
-1.21, pero los bloques y las conexiónes deben ser las mismas.
+1.21, pero los bloques y las conexiónes tienen que ser las mismas.
 
 
-| Ambas | El integrador de Cores de I.P. automaticamente asignará un ruteo de memoria para todos
-los Cores de I.P. que estan presentes en el diseño. No cambiaremos el ruteo de memoria en este
-tutorials, pero para referencias futuras hecharemos un vistaso al editor de direcciones.
+| Ambas | El integrador de modulos asignará automaticamente un ruteo de memoria para todos
+los modulos que estan presentes en el diseño. No cambiaremos el ruteo de memoria en este
+tutorial, pero para referencias futuras hecharemos un vistaso al editor de direcciones.
 
-    (i) Seleccione la pestaña del editor de direcciones en la parte superior de la ventana de 
-la ventana del espacio de trabajo, como se ve en la figura 1.22, una vez allí abra el elemento
-'+ Data' (datos) para ver más detalles.
+    (i) Seleccione la pestaña del Editor de Direcciones en la parte superior de la ventana del
+Espacio de Trabajo, como se ve en la figura 1.22, una vez allí abra el elemento '+ Data' (datos)
+para ver más detalles.
 
-    Podrá ver que el integrador de Cores de I.P. ya ha asignado un rute de memoria (el ruteo
+    Podrá ver que el integrador de modulos ya ha asignado un ruteo de memoria (el ruteo
 de las secciones especificas de memoria a los registros de memoria-ruteada de los bloques de
-los Cores de I.P. en la seccion de PL) a la interfaz AXI GPIO y que es del rango de los 64K.
+su modulo en la seccion programable) a la interfaz AXI GPIO y que es del rango de los 64K.
 
-    Ahora que su sitema esta completo, debemos primero validar el diseño antes de generar los
-archivos de diseños HDL.
+    Ahora que su sistema esta terminado, debemos validar el diseño antes de generar los
+archivos de diseño HDL.
 
-    (j) Guarde su diseño al seleccionar Archivo > Guardar bloque de diseño,
- (File > Save Block Desing), de la barra de menues.
+    (j) Guarde su diseño al seleccionar Archivo > Guardar Diseño por Bloques,
+ [File > Save Block Design], de la barra de menues.
 
-    (k) Valide el diseño al seleccionar Herramientas > Validar Diseño,
-(Tools > Validate Desing), de la barra de menues. Ésto ejecutará el verificado de reglas de diseño
-(Desing-Rules-Check ó  DRC).
-                                                           __
-    Alternativamente, seleccione el botón validar diseño, |./|, de la barra de herramientas
-                                                           ¯¯
-principal, ó haga click derecho dentro del ambiente de Diagramas y seleccione validar diseño.
+    (k) Valide el diseño al seleccionar Herramientas > Validar Diseño, [Tools > Validate Design],
+de la barra de menues. Ésto ejecutará el Verificado de Reglas de Diseño
+(Design-Rules-Check ó  DRC).
+                                                                       __
+    De manera alternativa, puede seleccionar el botón Validar Diseño, |./|, de la barra de
+                                                                       ¯¯
+herramientas principal, ó bien haga click derecho dentro de la vista esquemática y seleccione
+Validar Diseño.
 
-    (l) Debe aparecer un diálogo de validación de diseño, para confirmar que la validación del
-diseño ha sido exitosa. Seleccione OK para descartar el mensaje.
+    (l) Debe aparecer un diálogo de Valiación de Diseño [Validate Design], para confirmar que
+la validación del diseño ha sido exitosa. Seleccione OK para descartar el mensaje.
 
-    Con el diseño correctamente validado, podemos ir a la generación de archivos HDL para el
-sistema.
+    Con el diseño correctamente validado, ya podemos comenzar con la generación de archivos HDL
+para el sistema.
 
-    (m) Cambie a la pestaña Archivos Fuente (SOURCES), al seleccionar ventana > archivos fuente,
-(Window > Sources), de la barra de menues.
+    (m) Cambie a la pestaña Archivos Fuente [SOURCES], al seleccionar Ventana > Archivos Fuente,
+[Window > Sources] de la barra de menues.
 
-    (n) En la ventana Archivos Fuente, haga click derecho sobre el diseño de sistema de alto nivel,
-que en este caso el primer_sistema_zynq y seleccione crear vinculador HDL, (Create HDL Wrapper),
-tal y como en la figura 1.23.
+    (n) En la ventana Archivos Fuente, haga click derecho sobre el componente de más alto nivel
+de nuestro diseño, que en este caso es primer_sistema_zynq y seleccione Crear Vinculador HDL
+[Create HDL Wrapper] tal y como en la figura 1.23.
 
-    Se abrirá el diálogo de creación del vinculador HDL. Seleccione Permitir a Vivado administralo
-y actualizarlo automaticamente, (Let Vivado manage wrapper and auto-update), Seleccione OK.
+    Se abrirá el diálogo de Creación del Vinculador HDL. Seleccione "Permitir que Vivado administre
+y actualize automaticamente" [Let Vivado manage wrapper and auto-update], Seleccione OK.
 
     Ésto generará el vinculador HDL de alto nivel para su sistema.
 
-    Todos los archivos fuente para el bloque de Cores de I.P. que fueron usados en el diagrama de
-bloques del integrador de Cores de I.P., así como cualquier archivo de restricción, se generará
-durante el proceso de sintesis. Como hemos especificado VHDL como el lenguaje de descripción a 
-utilizar en el Ej 1A, todos los archivos generados serán en VHDL.
+    Todos los archivos fuente que fueron usados para los bloques del modulo en el diagrama de
+bloques del Integrador de Modulos, así como cualquier archivo de restricción, se generará
+durante el proceso de sintesis. Como hemos especificado VHDL como su lenguaje de implementacion,
+ver Ej 1A, todos los archivos generados serán en VHDL.
 
     Con todos los archivos de diseño generados, el siguiente paso es implementar nuestro diseño y
-generar el archivo bitstream (trama de bits).
+generar el Archivo Binario [bitstream].
 
-    (ñ) En el navegador de flujo, (Flow Navigator), seleccione generar trama de bits, (generate bitstream), de la
-seccion Programa y depuración (Program and Debug). Si la ventana de diálogo aparece para guardar
-su diseño, seleccione guardar (Save).
+    (ñ) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate
+Bitstream] de la seccion Programa y depuración [Program and Debug]. Si aparece una ventana de
+diálogo para guardar su diseño, seleccione Guardar [Save].
 
-    (o) La ventana de diálogo se abrirá advirtiendole que esta lanzando implementación y sintesis
-antes de comenzar el proceso de generación del bitstream. Seleccione SI/Yes para llevar a cabo
+    (o) La ventana de diálogo se abrirá advirtiendole que esta lanzando Implementación y Sintesis
+antes de comenzar el proceso de generación del Archivo Binario. Seleccione SI [Yes] para llevar a cabo
 el proceso.
     
-    La combinacion de ejecución de sistesis, implementación y generación del bitstream uno tras
-otro tomará unos cuantos minutos, dependiendo del desempeño de su computadora.
+    La combinacion de ejecución de Sistesis, Implementación y Generación de archivo binario uno
+tras otro tomará unos cuantos minutos, dependiendo del desempeño de su computadora.
 
-    (p) Una vez que la generación del bitstream finalizo, otra ventana de diálogo se abrirá
+    (p) Una vez que la generación del Archivo Binario finalizo, otra ventana de diálogo se abrirá
 confirmandole que el proceso a sido completado existosamente. Ver figura 1.24.
 
-    Seleccione abrir diseño implementado, (Open Implemented Desing), y seleccione OK.
+    Seleccione Abrir Diseño Implementado [Open Implemented Design] y seleccione OK.
 
-    En este punto se le presentará la vista de diseño, donde puede ver los recursos de la 
-seccion de PL que han sido utilizados por el diseño. Con el esquema de colores predeterminado
+    En este punto se le presentará la vista del dispositivo, donde puede ver los recursos de la 
+seccion programable que han sido utilizados por el diseño. Con el esquema de colores predeterminado
 se muestra en celeste.
 
-    Con el bitstream generado, la construccion de la imagen hardware esta completa. Ahora
-la debe exportar a un ambiente software donde se construira un programa para controlar e 
-interactuar con el hardware personalizado.
+    Con el Archivo Binario generado, la construccion de la imagen hardware esta completa. Ahora
+la debe exportar a un ambiente software donde se construya un programa para controlar e 
+interactuar con su diseño hardware.
 
-    El paso final en Vivado es de exportar el diseño al SDK, donde se creará el programa que 
-le permitirá al la seccion de PS de la Zynq controlar los leds en la placa de desarrollo.
+    El paso final en Vivado es exportar el diseño al SDK, donde se creará el programa que 
+le permitirá al la seccion de procesamiento Zynq controlar los leds en la placa de desarrollo.
 
-    (q) Seleccione Archivo > Exportar > Exportar hardware, (File>Export>Export hardware), 
+    (q) Seleccione Archivo > Exportar > Exportar hardware [File>Export>Export hardware] 
 desde la barra de menues.
 
-    (r) La ventana de diálogo de exportación de hardware se abrirá. Asegurese de que la opcion
-incluir bitstream, (include bitstream), esta seleccionada, tal y como la figura 1.25. Luego 
+    (r) Se abrirá la ventana de diálogo de exportación de hardware. Asegurese de que la opcion
+incluir Archivo Binario [include bitstream] esta seleccionada, tal y como la figura 1.25. Luego 
 seleccione OK.
 
-        Nota: Para que la opcion incluir bitstream se habilite, debe de estar activo un
+        Nota: Para que la opcion incluir Archivo Binario se habilite, debe de estar activo un
 diseño implementado. Por esta razón es que se abrio el diseño implementado en el paso (p).
 
-    (s) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK, (File> Launch SDK), desde
+    (s) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK [File> Launch SDK] desde
 la barra de menues y seleccione OK.
 
     Ésto concluye los pasos que son requeridos en el IDE Vivado. Todos los componentes
@@ -506,58 +512,57 @@ un componente de software ( ó programa ) simple, el cual controlará el sistema
  Ejercicio 1C - Creando un programa en el SDK
 
     En éste ejercicio crearemos un programa simple que controlará los leds sobre la placa
-de desarrollo de Zynq. El programa se ejecutará en el sistema de procesamiento Zynq,
-osea en el procesador empotrado en silicio que trae el chip de Zynq, y a su vez se 
-comunicará con el bloque AXI GPIO que se ejecutará en la seccion de PL. Echaremos un vistaso
-a los controladores software que se crearon por el integrador de Cores de I.P. para cada
-uno de los modulos de Cores de I.P., antes de contruir y ejecutar el programa sobre la placa
+de desarrollo de Zynq. El programa se ejecutará en el Sistema de Procesamiento Zynq,
+es decir, en el procesador empotrado en silicio que trae el chip de Zynq, y a su vez se 
+comunicará con el bloque AXI GPIO que se ejecutará en la seccion programable. Echaremos un
+vistaso a los controladores software que creó el Integrador de Modulos para cada
+uno de nuestros modulos, antes de contruir y ejecutar el programa sobre la placa
 de desarrollo.
 
     Debió haber abierto el SDK luego de la conclusion del ejercicio 1B. Si no lo abrio,
-usted puede abrir el SDK explorando Inicio > Todos los Programas > Xilinx Desing Tools >
+usted puede abrir el SDK explorando Inicio > Todos los Programas > Xilinx Design Tools >
 SDK 2015.1 > Xilinx SDK 2015.1.
 
-    Al abrir el SDK desde el menu de inicio, usted necesitará especificar el espacio
-de trabajo que fue creado cuando el diseño integrador de Cores de I.P. de Vivado ha
-exportado en el Ej 1B. El cual debe ser:
+    Al abrir el SDK desde el menu de inicio, usted necesitará especificar la ruta donde se
+guardo el archivo de proyecto que fue creado en el Ej 1 y que luego importo cuando utilizo
+el Integrador de Modulos en el Ej 1B, ver fig -agregar-. El cual debe ser:
 
     "C:/Zynq_Book/primer_construccion_zynq/primer_construccion_zynq.sdk"
 
-    Ingrese esto en el campo del espacio de trabajo en la ventana de diálogo del lanzador
-del espacio de trabajo, tal y como la figura 1.26.
+    Ingrese esto en el campo del Espacio de Trabajo [Workspace] en la ventana de diálogo del
+lanzador del Espacio de Trabajo  [Workspace Launcher], tal y como la figura 1.26.
 
     Con el SDK abierto, podemos comenzar la creación de nuestro programa. Usted ya es capaz
 de ver el proyecto de la plataforma hardware, que será automaticamente creado y abierto.
 Ahora es necesario añadir un proyecto de programa y un paquete de soporte de placa.
 
-    (a) Seleccione Archivo > Nuevo > Proyecto de Aplicación, (File>New>Application Project),
+    (a) Seleccione Archivo > Nuevo > Proyecto de Aplicación [File>New>Application Project]
 de la barra de menues.
 
     (b) Se abrirá la ventana de diálogo de proyecto nuevo. Ingrese prueba_LED en el campo
-de nombre de proyecto. Ver figura 1.27. Manteniendo a todas las demás opciones con los
-valores predeterminados. Seleccione siguiente (next), preste atención de no presionar
-finalizar (Finish).
+de Nombre de proyecto [Project name]. Ver figura 1.27. Manteniendo a todas las demás opciones
+con sus valores predeterminados. Seleccione siguiente [Next], preste atención de NO presionar
+finalizar [Finish].
 
-    (c) Una vez en la pantalla de plantillas de proyecto nuevo seleccione, aplicación
-en blanco/ vacía, (Empty Application), figura 1.28, y aqui sí seleccione finalizar (Finish)
-para crear el proyecto.
+    (c) Una vez en la pantalla de Plantillas de Nuevo Proyecto [New Project Templates]
+seleccione, aplicación en blanco [Empty Application] figura 1.28, y aqui sí seleccione
+finalizar [Finish] para crear el proyecto.
 
         Nota: El proyecto nuevo debe abrirse automaticamente. Si no lo hace podría
 necesitar cerrar la pestaña de bienvenida para ver el proyecto.
 
-    Con el proyecto de aplicación nuevo creado, ahora podemos importar algunos codigos
+    Con el Nuevo Proyecto de Aplicación creado, ya podemos importar algunos codigos
 fuente preconstruidos para la aplicación.
 
-    (d) En el panel Explorador de proyecto, (Project Explorer), abra el elemento prueba_LED,
-verá que hay un elemento nombrado 'src'con un icono de una carpeta, seleccionelo
-(hagale click izquierdo con el mouse), luego tecla derecha con el mouse
-encima de la carpeta y seleccione Importar... (Import...), ver figura 1.29.
+    (d) En el panel Explorador de proyecto [Project Explorer] abra el elemento prueba_LED,
+verá que hay un elemento nombrado 'src'con un icono de una carpeta, con el mouse encima de
+la carpeta toque el boton derecho y seleccione Importar... [Import...], ver figura 1.29.
 
     (e) Se abrirá la ventana de importación. Abra la opcion General y haga click izquierdo
- con el mouse sobre Sistema de archivos, (File System), ver figura 1.30, entonces seleccione
-siguiente (next).
+ con el mouse sobre Sistema de archivos [File System], ver figura 1.30, entonces seleccione
+siguiente [Next].
 
-    (f) En la ventana de diálogo de 'importación' del sistema de archivos, (Import File System),
+    (f) En la ventana de diálogo de 'Importación de Archivos' [Import File System]
 seleccione el botón navegar/explorar (browse).
 
     La carpeta de archivos fuente dependerá de la placa de desarrollo Zynq que este
@@ -567,17 +572,17 @@ hasta "C:/Zynq_Book/sources/zybo/primer_construccion_zynq".
 
     Seleccione Ok.
 
-    (g) Seleccione "prueba_LED_tut_1C.c", como en la figura 1.31, Seleccione finalizar (Finish).
+    (g) Seleccione "prueba_LED_tut_1C.c", como en la figura 1.31, Seleccione finalizar [Finish].
 
     El archivo fuente C se exportará y el proyecto se debería construir automaticamente, usted
 debería de ver un mensaje similar al de la figura 1.32 en la ventana de Consola.
 
     (h) Abra el archivo fuente importado al expandir la carpeta 'src' y hacer doble seleccion
-sobre "prueba_LED_tut_1C.c", luego explore el codigo.
+sobre "prueba_LED_tut_1C.c", luego vea el codigo.
 
-    Note la instrucción XGpio_Initialize(&Gpio, GPIO_DEVICE_ID); ésta es una función provista
-por el controlador de dispositivo de GPIO en el archivo de cabecera xgpio.h . Inicializa la
-instancia de XGpio, Gpio, con el unico ID del dispositivo por GPIO_DEVICE_ID.
+    Note la instrucción 'XGpio_Initialize(&Gpio, GPIO_DEVICE_ID);' ésta es una función provista
+por el controlador de dispositivo de GPIO en el archivo de cabecera xgpio.h . Dicha funcion
+inicializa una instancia XGpio, nombrada Gpio, con el unico ID del dispositivo por GPIO_DEVICE_ID.
 
     Si usted ve hacia arriba en el archivo fuente verá que GPIO_DEVICE_ID está definido como
 XPAR_AXI_GPIO_0_DEVICE_ID. El valor de este se puede encontrar al abrir el archivo de cabecera
@@ -586,27 +591,27 @@ hardware al SDK. Éste contiene definiciones de todos los paramentros de hardwar
 
     La función XGpio_SetDataDirection(&Gpio, LED_CHANNEL, 0x0); tambien es provista por el 
 controlador de dispositivo de GPIO y establece la direccion del puerto GPIO especificado. Como
-estamos especificando en este caso los LEDs, esta especificando una salida. Bits establecidos
+en este caso estamos especificando los LEDs, esta especificando una salida. Bits establecidos
 a '0' son salidas y los que estan en '1' son entradas. Como hay 8 leds en la ZedBoard al
 configurar la direccion del canal del LED a un  valor de 0x00 (hexa) ó 0b00000000 (binario), 
 estamos configurando los 8 leds como salida, lo cual por logica es correcto.
 
     Similarmente como hay 4 leds en la placa ZYBO, al configurar la direccion del canal LED
 un valor de 0x0 (hexa) ó 0b0000 (binario) estamos configurando solo 4 leds como salida,
-recordar que solo tenemos 4 leds en la ZYBO a diferencia de la ZedBoard que solo tiene 8.
+recordar que solo tenemos 4 leds en la ZYBO a diferencia de la ZedBoard que tiene 8.
 
     Más información de los controladores perisfericos se puede encontrar al seleccionar la
 pestaña system.mss . Se provee una lista de todos los perisfericos en el sistema. Junto con
 enlaces a documentación disponible y ejemplos, tal como muestra la figura 1.33.
 
-    El siguiente paso es programar la seccion de PL de la Zynq con el archivo bitstream que fué
+    El siguiente paso es programar la seccion programable Zynq con el Archivo Binario que fué
 generado en el Ej 1B.
 
     (i) Asegurese de que la placa de desarrollo de Zynq esta encendida y que el puerto JTAG
-está conectado a la computadora mediante el cable USB-USB. Adicionalmente los puentes en la
-placa tambien deben estar correctamente posicinados y asi habilitar el modo JTAG, el cual
+está conectado a la computadora mediante el cable USB-USB. Además los puentes en la
+placa tambien deben estar correctamente posicionados y asi habilitar el modo JTAG, el cual
 le permite al hardware ser programado y accedido por las herramientas de depuración del
-sitema.
+sistema.
 
 
 
@@ -614,28 +619,28 @@ sitema.
  configurada, ver figura 1.34. Ésta configuración habilita el modo JTAG.
 
 
-| Zybo | Un único puente en la placa de desarrollo ZYBO. Adicionalmente la fuente de 
-alimentacion de la placa es establecida utilizando un puente con la posibilidad de recibir
-energía desde el USB, el cargador ó batería. Ambas configuraciones de los puentes de JTAG y
-de energía son establecidos en la figura 1.35. La placa ha sido configurada para ser 
-alimentada/energizada via USB.
+| Zybo | Un único puente en la placa de desarrollo ZYBO. Además el tipo de fuente de alimentacion
+de la placa es establecida utilizando un puente con la posibilidad de recibir energía desde el
+USB, un cargador ó una batería, usted puede selecionar UNO de los tres tipos.
+    Ambas configuraciones de los puentes JTAG y energía son establecidos en la figura 1.35.
+    La placa ha sido configurada para ser alimentada/energizada via USB.
 
 
-| Ambas | (j) Descarge el bitstream a la seccion de PL de la Zynq al selecionar Harramientas de
-Xilinx > Programar FPGA, (Xilinx Tools > Program FPGA), desde la barra de menues. La ventana
-de Programación de la FPGA aparecerá. El campo del bitstream ya debe estar completado con
-el archivo bitstream correcto, como en la figura 1.36.
+| Ambas | (j) Descarge el Archivo Binario a la seccion programable Zynq al selecionar Herramientas
+de Xilinx > Programar FPGA [Xilinx Tools > Program FPGA] desde la barra de menues. La ventana
+de Programación de la FPGA aparecerá. El campo del Archivo Binario ya debe estar completado con
+el Archivo Binario correcto, como en la figura 1.36.
 
     
-        Nota: Una vez que el dispositivo ha sido exitosamente programado, el led HECHO (DONE)
-sobre la ZedBoard debe ponerse en azul. Similarmente en la ZYBO el led Hecho (DONE) debe ponerse
-verde.
+        Nota: Una vez que el dispositivo ha sido exitosamente programado, el led de carga Exitosa
+[DONE] sobre la ZedBoard debe ponerse en azul. Similarmente en la ZYBO el led de carga Exitos
+[DONE] debe ponerse verde.
 
-    Con la seccion de PL de la Zynq correctamente configurada con el archivo de bitstream, ahora
-podemos lanzar nuestro programa sobre la seccion de PS de la Zynq.
+    Con la seccion programable Zynq correctamente configurada con el Archivo de Binario, ahora
+podemos lanzar nuestro programa sobre la seccion de procesamiento Zynq.
 
     (k) Seleccione el proyecto prueba_LED en el explorador de proyecto. Click derecho y seleccione
-ejecutar como > Lanzar en Hardware (GDB), (Run As > Launch in Hardware (GDB)), ver figura 1.37.
+ejecutar como > Lanzar en Hardware (GDB) [Run As > Launch in Hardware (GDB)] ver figura 1.37.
 
 
  | Zed | Luego de unos pocos segundos los leds en la ZedBoard deben comenzar a destellar entre los
@@ -652,7 +657,6 @@ sistema de procesamiento Zynq.
     
     Como resumen un controlador GPIO ha sido implementado existosamente en el genero FPGA de
 dispositivos Zynq, formando una coneccion entre el sistema de procesamiento Zynq y los leds
-de la placa de desarrollo via una interfaz AXI. El sistema de procesamiento Zynq fué entonces
-programado para controlar los leds por medio de un programa de ejecución unitaria (aplicación
-software standalone) con la capacidad de interfacear con el controlador de GPIO en el 
-genero de FPGA.
+de la placa de desarrollo mediante una interfaz AXI. El sistema de procesamiento Zynq fué
+entonces programado para controlar los leds por medio de un sencillo programa con la capacidad
+de comunicarce con el controlador de GPIO en el genero de FPGA.
