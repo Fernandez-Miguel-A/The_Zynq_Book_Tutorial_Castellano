@@ -9,10 +9,10 @@ ejecutará en el sistema de procesamiento ARM de Zynq (PS - Processing System) p
 se implementa en seccion programable (PL - Programmable Logic).
 
 
-    Éste tutorial esta separado en tres ejercicios y se organiza como sigue:
+    Éste tutorial esta dividido en tres ejercicios y se organiza como sigue:
 
  Ejercicio 1A - Éste ejercicio lo guiará para que pueda iniciar el IDE de Vivado, así como para crear su primer
- proyecto. Además se explicarán las distintas etapas del asistente de "creación de un proyecto nuevo".
+ proyecto. Además se explicarán las distintas etapas del asistente de "Creación de un Proyecto Nuevo".
 
  Ejercicio 1B - En éste ejercicio usaremos el proyecto que fue creado en el Ej. 1A para construir un sencillo
  sistema embebido Zynq, con la herramienta gráfica "Integrador de modulos", e incorporar algunos de los modulos del
@@ -51,7 +51,7 @@ se advierte que se requerirá alterar algunos archivos fuentes para completar lo
 
 
     En éste ejercicio crearemos un proyecto nuevo en el IDE Vivado recorriendo las etapas del
-asistente de "creación de un proyecto nuevo".
+asistente de "Creación de un Proyecto Nuevo".
 
 
 
@@ -93,7 +93,7 @@ derecha del mouse sobre un espacio vacio dentro de la carpeta ** y seleccione "P
                 |  fig3.png  |
 
         Una ventana de diálogo puede aparecer preguntando si desea combinar/reemplazar la carpeta "zybo", si es
-que ya existe esa carpeta en **. Seleccione Si/Yes.
+que ya existe esa carpeta en **. Seleccione SI [Yes].
 
         Ahora usted ha añadido exitosamente el componente de placa para ZYBO a Vivado 2015.1 Design Suite.
 
@@ -105,7 +105,7 @@ Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
     
     (b) Cuando cargue Vivado le presentará una pantalla de bienvenida tal como la figura 1.1:
 
-    (c) Seleccione la opcion "crear proyecto nuevo" [create new project] y el asistente de "proyecto nuevo"
+    (c) Seleccione la opcion "Crear Proyecto Nuevo" [create new project] y el asistente de "Proyecto Nuevo"
 [new project] se abrirá, tal como la figura 1.2:
 
     Seleccione siguiente [Next].
@@ -147,7 +147,7 @@ siguiente [Next].
     Ésta es la etapa donde cualquier archivo de restriciones [CONSTRAINTS] físicas o de temporizado
 se puede añadir al proyecto.
 
-    Como NO hemos tenido que añadir ningun archivo de restriciones (CONSTRAINTS) al proyecto, seleccionamos 
+    Como NO hemos tenido que añadir ningun archivo de restriciones [Constraints] al proyecto, seleccionamos 
 siguiente [Next].
 
     (i) Desde la ventana de diálogo de la parte predeterminada:
@@ -168,7 +168,7 @@ muetra en la figura 1.4:
     Seleccione siguiente [Next].
 
 
-| Ambas | (j) En el diálogo de "resumen del proyecto nuevo" [New Project Summary], revise las opciones 
+| Ambas | (j) En el diálogo de "Resumen del Proyecto Nuevo" [New Project Summary], revise las opciones 
 elegidas y seleccione finalizar [Finish] para crear el proyecto nuevo.
 
 -----------------------------------------------------------------------------------------------------------
@@ -282,7 +282,7 @@ AXI, permitiendo así que los leds sean controlados por programa, lo cual creare
     Comenzaremos por crear un nuevo diseño por bloques en el IDE Vivado.
 
     (a) En la ventana de navegación de flujo [Flow Navigator], seleccionamos 'crear un diseño
-por bloques' [Create Block Design] de la seccion del integrador de modulos, tal y como se muestra
+por bloques' [Create Block Design] de la seccion del Integrador de Modulos, tal y como se muestra
 en la figura 1.8:
 
     Se abrirá la ventana de diálogo para crear un diseño por bloques.
@@ -315,7 +315,7 @@ confirmar que el 'sistema de procesamiento' realmente haya sido añadido al dise
 realizadas en el bloque Integrador de Modulos [IP Integrator].
 
     El siguiente paso es conectar los puertos de la interfaz, DDR y FIXED_IO de la seccion de
-procesamiento Zynq a los puertos de la interfaz de más alto nivel de nuestro diseño.
+procesamiento Zynq a los puertos del componente de más alto nivel de nuestro diseño.
 
     (e) Seleccione la opcion "Realizar Automatización del Bloque" [Run Block Automation],
 que esta dentro del mensaje de "Asistencia al diseñador", en la parte superior de la vista 
@@ -346,7 +346,7 @@ funcionalidad al sistema. En éste caso solo añadiremos un único bloque, AXI
 GPIO, que nos permitirá acceder a los leds en la placa de desarrollo.
 
     (f) Haga click derecho en un lugar vacio dentro de la vista esquemática y seleccione añadir
-modulo [Add IP]. Ingrese GPIO en el campo de busqueda y añada la instancia de AXI GPIO.
+modulo [Add IP]. Ingrese GPIO en el campo de busqueda y añada una instancia del modulo AXI GPIO.
 
     Ahora utilizaremos el "Integrador de Modulos" la herramienta de "Asistencia al diseñador"
 [IP Integrator Designer Assistanse] para automatizar la conexión del bloque AXI GPIO al

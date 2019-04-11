@@ -8,13 +8,13 @@ Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
 
 
         Introducción
-    Éste tutorial presenta una introducción de sintesis de alto nivel, (High Level Synthesis - HLS),
+    Éste tutorial presenta una introducción de Sintesis de Alto Nivel, (High Level Synthesis - HLS),
 utilizando el ambiente de Vivado HLS. Será cubierta la creación de proyectos manualmente a travez de la
 GUI y la automatización a travez de GUIONES (Scripts). El proceso de simulación, sintesis y análisis de
 un diseño HLS de Vivado será explorado, con optimizaciones de diseño y comparación de solución mediante
 un modo.
 
-    Éste tutorial esta separado en cuatro ejercicios y se organiza como sigue:
+    Éste tutorial esta dividido en cuatro ejercicios y se organiza como sigue:
 
  Ejercicio 3A - Éste ejercicio concierne en la creación de proyectos utilizando ambos métodos, Diseño a
  travez de la GUI de Vivado HLS y el uso de GUIONADO (Scripting) Tcl. Detalla la inclución de
@@ -39,7 +39,7 @@ diseño a travez de la GUI de Vivado HLS y el uso de GUIONADO (Scripting) Tcl pa
     (a) Antes de comenzar es necesario copiar los archivos desde "C:/Zynq_Book/sources/hls" a una nueva
 carpeta "C:/Zynq_Book/HLS".
 
-    (b) Abra la GUI de HLS de Vivado explorando Inicio > Todos los Programas > Xilinx Desing Tools >
+    (b) Abra la GUI de HLS de Vivado explorando Inicio > Todos los Programas > Xilinx Design Tools >
 Vivado 2015.1 > Xilinx HLS 2015.1 .
 
     (c) Cuando la GUI de Vivado HLS inicie, se encontrará con la pantalla de bienvenida. Ver figura 3.1.
@@ -49,7 +49,7 @@ Vivado 2015.1 > Xilinx HLS 2015.1 .
     (e) En el diálogo de nombre de proyecto ingrese proy_mult_matriz en el campo Nombre De Proyecto,
 (Project Name), y en Ubicación De Proyecto, (Project Location), ingrese "C:/Zynq_Book/HLS/tut3A".
     
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
     (f) Ahora se le exhivirá una ventana para añadir y/o remover archivos fuente para el proyecto. Todos
 los archivos C de este tutorial han sido creados en avanzado, como intentamos guiarlo a travez del flujo
@@ -57,8 +57,8 @@ de diseño en lugar de la propia programación. Seleccione añadir archivos..., 
 hasta "C:/Zynq_Book/HLS/tut3A".
 
     Seleccione los archivos mult_matriz.cpp y mult_matriz.h (mantenga presionado la tecla 'Ctrl'- Control
-de su teclado para seleccionar varios archivos) y seleccione abrir (Open). En el campo función superior,
-(Top function), defina a mult_matriz, tal como en la figura 3.2. Seleccione siguiente (Next).
+de su teclado para seleccionar varios archivos) y seleccione abrir [Open]. En el campo función superior,
+(Top function), defina a mult_matriz, tal como en la figura 3.2. Seleccione siguiente [Next].
 
     (g) Ahora se le exhivirá una ventana para añadir un archivo de banco de pruebas ('testbench') para
 probar el diseño. Una vez más seleccione añadir archivos... y explore en la carpeta anterior pero
@@ -76,7 +76,7 @@ de seleccion de partes.
     En la seccion Seleccionar (Select), seleccione Placas (Boards), y entonces filtre las partes de placas
 utilizando el filtro con menu desplegable como el de la figura 3.4. Seleccione ZedBoard Zynq Evaluation and
 Development Kit (ZedBoard Equipo Zynq de evaluacion y desarrollo) y seleccione OK. Seleccione Finalizar
-(Finish).
+[Finish].
 
 
 
@@ -88,7 +88,7 @@ utilizando el filtro con menu desplegable como el de la figura 3.5. La parte req
 al inspeccionar el chip Zynq sobre Zybo, la placa de desarrollo Zynq. Se debe seleccionar el chip de Zynq
  'Z7010' con encapsulado clg400. Seleccione OK. 
 
-    Seleccione Finalizar (Finish).
+    Seleccione Finalizar [Finish].
 
 
 
@@ -111,7 +111,7 @@ creación del mismo proyecto utilizando el antes mencionado GUIONADO (Scripting)
 
     (i) Primero, cierre la GUI HLS de Vivado. Ahora abriremos la ventana de comandos de Vivado HLS.
 
-    Abra la ventana de comandos al explorar Inicio > Todos los Programas > Xilinx Desing Tools >
+    Abra la ventana de comandos al explorar Inicio > Todos los Programas > Xilinx Design Tools >
 Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
 
     (j) Observe que la ruta de la carpeta predeterminada para los comandos es la carpeta de instalación
@@ -190,7 +190,7 @@ de ciclos iterativos que recorren por las filas y columnas para calcular el prod
 dadas utilizando ambas, solución de Hardware HLS y el programa comparandolas a las dos para asegurar
 de una operación exitosa.
     
-    (c) Haga Click en el botón de ejecución simulación en C, (Run C Simulation), de la barra de herramientas
+    (c) Haga Click en el botón de ejecución simulación en C [Run C Simulation] de la barra de herramientas
 para realizar una simulación en codigo C de la solución. Ignore las opciónes predeterminadas (sin
 bloques de verificación ni argumentos de entrada) y seleccione OK. Una vez que la simulación complete
 se mostrará el mensaje "Test Passed!", en la consola debajo de la pantalla. Ver figura 3.8.
@@ -222,9 +222,9 @@ fuente C++.
 
     (e) Cree una solución nueva para el diseño desde cualquier medio, seleccionando el botón Solución Nueva
 |+[<>]| (New Solution), en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
-(Project > New Solution). Seleccione Finalizar (Finish), para aceptar por defecto los de la solución2.
+(Project > New Solution). Seleccione Finalizar [Finish], para aceptar por defecto los de la solución2.
 
-    (f) Haga doble seleccion (Double Click) sobre mult_matriz.cpp de la seccion Archivos Fuentes, (Sources),
+    (f) Haga doble seleccion (Double Click) sobre mult_matriz.cpp de la seccion Archivos Fuentes, [Sources],
 de la pestaña Explorador (Explorer), para asegurar que el codigo es visible en el espacio de trabajo,
 ahora insertaremos una directiva que paralelizará los bucles anidados del codigo de la multiplicación de
 matrices. Ésto ejecutará bucles planos, removiendo la necesidad para transiciones de bucles.   <=== ???
@@ -282,7 +282,7 @@ tiempo. Por lo tanto establecer II a 2 permite que la operación de escritura se
 comience la operación de lectura de la siguiente iteracion.
 
     (j) Regrese a la Perspectiva de Sintesis por Defecto al seleccionar Ventana > Perspectiva de Sintesis,
-(Window > Synthesis Perspective). Seleccione SI/Yes si una ventana de dialogo aparece.
+(Window > Synthesis Perspective). Seleccione SI [Yes] si una ventana de dialogo aparece.
 
     Ahora crearemos una solución nueva que paralelizará al bucle Columna, desenvolviendo al bucle Producto,
 para eliminar la dependencia de iteración anidada pero a costa de incrementar operadores y por lo tanto
@@ -292,7 +292,7 @@ a coste de hardware.
 |+[<>]| (New Solution), en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
 (Project > New Solution). Desde el menu desplegable asegurese que esta seleccionada solución1 como esta
 no tiene directivas ni restricciones.
-    Seleccione Finalizar (Finish), para crear la solución.
+    Seleccione Finalizar [Finish], para crear la solución.
 
     (l) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor, en la pestaña
 Directivas tecla derecha de mouse sobre el bucle Columna y seleccione Insertar Directiva, (Insert
@@ -321,7 +321,7 @@ el codigo fuente.
     (o) Regrese a la Perspectiva de Sintesis al seleccionar | >_< |. Cree una nueva solución para el
 diseño desde cualquier medio, seleccionando el botón Solución Nueva |+[<>]| (New Solution), en la barra de
 herramientas ó desde la opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione 
-Finalizar (Finish), para aceptar por defecto los de la solución4. Note que las directivas serán copiadas
+Finalizar [Finish], para aceptar por defecto los de la solución4. Note que las directivas serán copiadas
 de la solución3.
 
     Para ésta solución redimencionaremos los arreglos de entrada utilizando directivas. El bucle Producto
@@ -350,7 +350,7 @@ es por consiguiente justificado por las 25 veces más la latencia de 9. 25 + 9 =
     (s) La optimizacion final en éste ejercicio es paralelizar la función, en lugar de los bucles con que
 la función para comparación <==== ~~~~ +-+-. Cree una nueva solución para el diseño desde cualquier medio,
 seleccionando el botón Solución Nueva |+[<>]| (New Solution), en la barra de herramientas ó desde la
-opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione Finalizar (Finish), para
+opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione Finalizar [Finish], para
 aceptar por defecto los de la solución5. 
 
     (t) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor y abra la pestaña
@@ -414,7 +414,7 @@ función de multiplicación de matrices de los dos ejercicios anteriores.
 
  Ejercicio 3C - Interfaz de sintesis
 
-    (a) Abra la ventana de comandos al explorar Inicio > Todos los Programas > Xilinx Desing Tools >
+    (a) Abra la ventana de comandos al explorar Inicio > Todos los Programas > Xilinx Design Tools >
 Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
 
     (b) Cambie la carpeta de trabajo a "C:/Zynq_Book/HLS/tut3C". Ésta carpeta
@@ -440,7 +440,7 @@ el cual utilizaremos en el siguiente ejercicio.
 
 
 
-    (e) Abra el archivo mult_matriz.cpp desde la seccion Archivos Fuentes, (Sources), de la pestaña
+    (e) Abra el archivo mult_matriz.cpp desde la seccion Archivos Fuentes, [Sources], de la pestaña
 Explorador (Explorer), y seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL.
 Cuando el reporte de sintesis abra, desplasece hasta la seccion interfaz.
 

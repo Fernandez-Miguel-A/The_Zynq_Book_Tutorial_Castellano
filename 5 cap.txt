@@ -4,36 +4,36 @@
 
 
 
- 5                             Aventuras con el creador de Cores de I.P.
+ 5                             Aventuras con el creador de modulos
 
 
 
         Introducción
     Én este tutorial usted unirá a todos los modulos de IP personalizados que creó en el conjunto de
-ejercicios practicos previos, hacia adelante con otro Core de IP desde el catálogo IP de Vivado, para crear
-un sistema DSP a implementarse sobre una placa de desarrollo Zynq (note que todos los Cores de IP
-requeridos por éste diseño tambien son provistos separadamente). Será introducido un Core de IP para el
+ejercicios practicos previos, hacia adelante con otro modulo desde el catálogo IP de Vivado, para crear
+un sistema DSP a implementarse sobre una placa de desarrollo Zynq (note que todos los modulos
+requeridos por éste diseño tambien son provistos separadamente). Será introducido un modulo para el
 control de un codec de audio sobre la placa de desarrollo Zynq y todas la modificaciones para el diseño
-con el Integrador de IP, se desarrollaran a continuación. Un programa (aplicación software), será
+con el Integrador de Modulos, se desarrollaran a continuación. Un programa (aplicación software), será
 desarrollado en el SDK que configurará todo sobre los modulos de IP y sobre el control de interacciónes
-entre ellos y la seccion de PS.
+entre ellos y la seccion de procesamiento.
 
-    Éste tutorial esta separado en tres ejercicios y se organiza como sigue:
+    Éste tutorial esta dividido en tres ejercicios y se organiza como sigue:
 
 
  Ejercicio 5A - Éste se enfoca en la importación de TODOS los modulos de IP personalizados al catálogo IP
-de Vivado para la inclución de estos a un diseño DSP en el Integrador de IP. Será explorado el bloque IP
+de Vivado para la inclución de estos a un diseño DSP en el Integrador de Modulos Será explorado el bloque IP
 individual, adelante con sus parámentros personalizados. 
 
 
  Ejercicio 5B - Será introducido en éste ejercicio el codec de audio de Analog Devices ADAU1761 sobre la
 ZedBoard y el codec de audio SSM2603 sobre la Zybo, con la inclución de algunos IP pre-empaquetados. Ambos
 IPs implementan comunicación serie I2S para el envio y recepción de muestras de audio desde/hacia el codec
-de audio. Las muestras de audio son tranferidas entre la seccion de PL y la seccion de PS mediante una
-conexión AXI-Lite estandard. Para usar el codec de audio, se deben de hacer una variedad de modificaciones
-a la seccion de PS de la Zynq, tales como la inclución de un relog secundario para dirijir el codec y
-tambien la habilitación de la interfaz I2C para la comunicación de las señales de control entre la seccion
-de PS y el codec.
+de audio. Las muestras de audio son tranferidas entre la seccion programable y la seccion de procesamiento
+mediante una conexión AXI-Lite estandard. Para usar el codec de audio, se deben de hacer una variedad de
+modificaciones a la seccion de procesamiento Zynq, tales como la inclución de un relog secundario para
+dirijir el codec y tambien la habilitación de la interfaz I2C para la comunicación de las señales de
+control entre la seccion de procesamiento y el codec.
     Para vincular las interfaces externas del diseño a los pines físicos sobre el dispositivos Zynq, un
 archivo de restriciones de diseño Xilinx, (Xilinx Design Constraints file - XDC), se debe crear e incluir
 en el diseño, éste le informa al proceso de Síntesis e Implementación en Vivado a donde rutear las señales
@@ -43,11 +43,11 @@ diseño que ha sido terminado.
 
  Ejercicio 5C - En éste ejercicio final, será exportado el diseño el diseño terminado del EJ 5B al SDK para
 desarrollar una aplicación. Aquí será creada la aplicación que controlará las interacciónes entre varios
-modulos IP personalizados, la seccion de PS y el codec de audio. Los distintos archivos controladores de
+modulos IP personalizados, la seccion de procesamiento y el codec de audio. Los distintos archivos controladores de
 software tambien serán explorados antes de construir y ejecutar la aplicación sobre la placa de desarrollo
 Zynq para pruebas.
     
-        Nota: El EJ 5C requiere que usted sea capaz de enviar comandos desde el teclado a la seccion de PS
+        Nota: El EJ 5C requiere que usted sea capaz de enviar comandos desde el teclado a la seccion de procesamiento
 de la Zynq mediante la consola UART. Para hacer ésto, es necesario utilizar un programa de terceros. En
 éste tutorial debemos utilizar PuTTY que puede ser descargado libremente desde el siguiente enlaze:
 
@@ -61,72 +61,72 @@ Binarios (Binaries).
 
 
 
- Ejercicio 5A - Importando Cores de I.P. al catálogo de Cores de I.P. de Vivado
+ Ejercicio 5A - Importando modulos al catálogo de Vivado
 
-    En éste ejercicio nos concentraremos en la importación de Cores de IP personalizados al catálogo IP de
+    En éste ejercicio nos concentraremos en la importación de modulos personalizados al catálogo IP de
 Vivado. Exportaremos varios bloques IP que hemos creado en El Libro de Tutoriales de Zynq: Creación de
-Cores de I.P.
+Modulos.
 
     Comenzaremos creando un proyecto nuevo en el IDE Vivado.
 
     (a) Abra Vivado 2015.1 y cree un proyecto RTL nuevo llamado aventuras_con_ip en la carpeta
 "C:/Zynq_Book", asegurandose de que halla seleccionado la opción "create project subdirectory" ( crear 
-subcarpeta de proyecto ). Seleccione VHDL como lenguaje utilizado, (target languaje), así como las partes
-apropiadas para su placa de desarrollo Zynq.
+subcarpeta de proyecto ). Seleccione VHDL como su lenguaje de implementacion [Target Languaje]
+así como las partes apropiadas para su placa de desarrollo Zynq.
 
-    (b) En la ventana del Navegador de Flujo, (Flow Navigator), seleccione Catálogo IP, (IP Catalog), desde
-la seccion del administrador de Proyecto, (Project Manager).
+    (b) En la ventana del Navegador de Flujo [Flow Navigator] seleccione Catálogo de Modulos [IP Catalog], desde
+la seccion del administrador de Proyecto [Project Manager].
 
     Se abrirá la ventana de diálogo en el Espacio de Trabajo, como puede ver en la figura 5.1. Note la
 posición el botón características de IP que necesitaremos brevemente.
 
-    Para Importar nuestro Core de IP personalizado al catálogo IP, debemos añadir un repositorio software
+    Para Importar nuestro modulo personalizado al catálogo IP, debemos añadir un repositorio software
 nuevo al catálogo IP. Crearemos una carpeta nueva para que actue como nuestro repositorio IP y todos 
-nuestros archivos fuente de los Cores de IP los pondremos dentro.
+nuestros archivos fuente de los modulos los pondremos dentro.
 
     (c) En el explorador de ventanas, dirijase a la ubicación "C:/Zynq_Book/repo_ip". Éste es el
 repositorio IP que creamos en el tutorial 4.
 
     Ahora debemos añadir a cada uno de los archivos fuente que creamos en El Libro de Tutoriales de Zynq:
-Creación de Cores de I.P. a nuestro repositorio.
+Creación de modulos a nuestro repositorio.
 
     Como el controlador led ya está presente en el repositorio IP, no necesitaremos añadirlo.
 
     (d) Abra otra ventana del explorador de ventanas, dirijase a la ubicación
-"C:/Zynq_Book/generador_hdl_lms/pry_hdl/coreip/pcore_lms_v1_00_a". Copie el archivo ZIP del Core de IP,
+"C:/Zynq_Book/generador_hdl_lms/pry_hdl/coreip/pcore_lms_v1_00_a". Copie el archivo ZIP del modulo,
 ac.uk_user_lms_pcore_1.0.zip a la carpeta repo_ip.
 
     (e) En la segunda ventana, dirijase a "C:/Zynq_Book/sources/hls_nco/solucion1/impl/ip" y copie el
-archivo ZIP del Core de IP, xilinx_com_lms_nco_1_0.zip a la carpeta repo_ip.
+archivo ZIP del modulo, xilinx_com_lms_nco_1_0.zip a la carpeta repo_ip.
 
-    Que completa el copiado de nuestros archivos fuente de Cores de IP a nuestro repositorio IP creado
+    Que completa el copiado de nuestros archivos fuente de modulos a nuestro repositorio IP creado
 recientemente.
 
-    (f) Ahora añadiremos un archivo fuente de Core de IP más a nuestro repositorio, un bloque IP existente
+    (f) Ahora añadiremos un archivo fuente de modulo más a nuestro repositorio, un bloque IP existente
 que controla el codec de audio sobre la placa de desarrollo Zynq.
 
 
 
  | Zed | En el explorador de ventanas, dirijase a "C:/Zynq_Book/sources/zedboard/aventuras_con_ip/ip" y
-copie el archivo ZIP del Core de IP, ctrl_audio_zed.zip a la carpeta repo_ip que está alojado en paso (c).
+copie el archivo ZIP del modulo, ctrl_audio_zed.zip a la carpeta repo_ip que está alojado en paso (c).
 
-    Si no ha completado el tutorial previo, un conjunto maestro de archivos fuente de Cores de IP está
+    Si no ha completado el tutorial previo, un conjunto maestro de archivos fuente de modulos está
 contenido en "C:/Zynq_Book/sources/zedboard/aventuras_con_ip/ip" que usted puede copiar adentro de la
 carpeta para uso es éste tutorial.
 
 
 
 | Zybo | En el explorador de ventanas, dirijase a "C:/Zynq_Book/sources/zybo/aventuras_con_ip/ip" y
-copie el archivo ZIP del Core de IP, ctrl_audio_zed.zip a la carpeta repo_ip que está alojado en paso (c).
+copie el archivo ZIP del modulo, ctrl_audio_zed.zip a la carpeta repo_ip que está alojado en paso (c).
 
-    Si no ha completado el tutorial previo, un conjunto maestro de archivos fuente de Cores de IP está
+    Si no ha completado el tutorial previo, un conjunto maestro de archivos fuente de modulos está
 contenido en "C:/Zynq_Book/sources/zybo/aventuras_con_ip/ip" que usted puede copiar adentro de la
 carpeta para uso es éste tutorial.
 
 
 
-| Ambas | Ahora que hemos creado el repositorio IP y añadimos todos nuestros archivos fuente de los Cores
-de IP, ahora podemos añadir el repositorio al catálogo IP.
+| Ambas | Ahora que hemos creado el repositorio IP y añadimos todos nuestros archivos fuente de los
+modulos, ahora podemos añadir el repositorio al catálogo IP.
 
 
 
@@ -142,9 +142,9 @@ resalta en la figura 5.1.
     Usted debe ver que el Controlador Led IP ya está presente en el bloque IP de Repositorio
 Seleccionado, como este no esta en un formato comprimido.
 
-    (i) Ahora debemos añadir otro archivo fuente de Core de IP al repositorio al descomprimirlos. En el
+    (i) Ahora debemos añadir otro archivo fuente de modulo al repositorio al descomprimirlos. En el
 panel Repositorio Seleccionado, (Selected Repository), ver figura 5.2, seleccione el símbolo + para añadir
-el Core de IP.
+el modulo.
 
 
 
@@ -154,7 +154,7 @@ como en la figura 5.3.
     Seleccione ac.uk_user_lms_pcore_1.0.zip y seleccione OK. Ésto extraerá los archivos fuente del Core de
 IP comprimido, a un formato utilizable en el repositorio.
 
-    Repita éste procedimiento para los archivos fuente de Cores de IP restantes:
+    Repita éste procedimiento para los archivos fuente de modulos restantes:
 
         * xilinx_com_lms_nco_1_0.zip
 
@@ -170,10 +170,10 @@ figura 5.4.
 | Zybo | Se abrirá la ventana Seleccione IP para Añadir al Repositorio, (Select IP TO Add To Repository),
 como en la figura 5.5.
 
-    Seleccione ac.uk_user_lms_pcore_1.0.zip y seleccione OK. Ésto extraerá los archivos fuente del Core de
-IP comprimido, a un formato utilizable en el repositorio.
+    Seleccione ac.uk_user_lms_pcore_1.0.zip y seleccione OK. Ésto extraerá los archivos fuente del modulo
+comprimido, a un formato utilizable en el repositorio.
 
-    Repita éste procedimiento para los archivos fuente de Cores de IP restantes:
+    Repita éste procedimiento para los archivos fuente de modulos restantes:
 
         * xilinx_com_lms_nco_1_0.zip
 
@@ -186,22 +186,22 @@ figura 5.6.
 
 
 
-| Ambas | Con todos nuestros Cores de IP ahora importandos al catálogo IP, ahora podemos crear un Diseño
-por Bloques de un Integrador de IP que incorpore todos los bloques Cores de IP.
+| Ambas | Con todos nuestros modulos ahora importandos al catálogo IP, ahora podemos crear un Diseño
+por Bloques de un Integrador de Modulos que incorpore todos los bloques modulos.
 
     
 
 
-    (j) En la ventana del Navegador de Flujo, (Flow Navigator), seleccione crear diseño en bloques, (Create
- Block Desing).
+    (j) En la ventana del Navegador de Flujo [Flow Navigator] seleccione crear diseño por bloques, (Create
+ Block Design).
 
-    (k) En la ventana crear diseño en bloques, (Create Block Desing).Ingrese diseño_ip en el campo de
-nombre de diseño, (Desing Name), y seleccione OK.
+    (k) En la ventana crear diseño por bloques[Create Block Design].Ingrese diseño_ip en el campo de
+nombre de diseño, (Design Name), y seleccione OK.
     
-    (l) En el diseño por bloques de la ventana de diagrama, tecla derecha del mouse y seleccione Añadir IP.
+    (l) En el diseño por bloques de la vista esquemática, tecla derecha del mouse y seleccione Añadir IP.
 
     En el campo de busqueda, ingrese controlador_led y haga selección doble sobre "controlador_led_v1_0"
-para añadir una instancia del Core de IP del Controlador Led a el diseño.
+para añadir una instancia del modulo del Controlador Led a el diseño.
 
     (m) Repita el paso (l) buscando:
 
@@ -209,14 +209,14 @@ para añadir una instancia del Core de IP del Controlador Led a el diseño.
 
         * lms y haga selección doble en pcore_lms_v1_00.
 
-    Ahora hemos añadido todos los Cores de IP personalizados que hemos creado en el tutorial previo. En
-éste punto es donde añadiremos el Core de IP Controlador de audio, como es el foco del ejercicio siguiente.
+    Ahora hemos añadido todos los modulos personalizados que hemos creado en el tutorial previo. En
+éste punto es donde añadiremos el modulo Controlador de audio, como es el foco del ejercicio siguiente.
 
-    Para conectar y controlar a todos los Core de IP, ahora debemos añadir una instancia de un procesador
+    Para conectar y controlar a todos los modulos, ahora debemos añadir una instancia de un procesador
 Zynq.
 
-    (n) En la ventana de diagramas de Diseño por Bloques, tecla derecha de mouse y seleccione añadir Core de
-I.P., (Add IP).
+    (n) En la vista esquemática de Diseño por Bloques, tecla derecha de mouse y seleccione añadir modulo
+[Add IP].
 
     En el campo de busqueda, ingrese zynq, y haga selección doble sobre "ZYNQ7 Processing System".
 
@@ -225,8 +225,8 @@ I.P., (Add IP).
 
 
 
- | Zed | Seleccione ejecución de automatización del bloque, (Run Block Automation), desde el
- mensaje del Asistente de Diseño por encima de la ventana del diagrama. Seleccione OK, asegurándose de que
+ | Zed | Seleccione ejecución de automatización del bloque [Run Block Automation] desde el
+ mensaje del Asistente de Diseño por encima de la vista esquemática. Seleccione OK, asegurándose de que
 la opción "Apply Board Preset" este seleccionada, para generar las conexiónes externas para las dos 
 interfaces, DDR y FIXED_IO; y ahora aplique los presets relevantes/que interesan de la placa.
 
@@ -239,8 +239,8 @@ del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
 
 
 
-| Zybo | Seleccione ejecución de automatización del bloque, (Run Block Automation), desde el
- mensaje del Asistente de Diseño por encima de la ventana del diagrama. Seleccione OK, asegurándose de que
+| Zybo | Seleccione ejecución de automatización del bloque [Run Block Automation] desde el
+ mensaje del Asistente de Diseño por encima de la vista esquemática. Seleccione OK, asegurándose de que
 la opción "Apply Board Preset" este seleccionada, para generar las conexiónes externas para las dos 
 interfaces, DDR y FIXED_IO; y ahora aplique los presets relevantes/que interesan de la placa.
 
@@ -250,8 +250,8 @@ interfaces, DDR y FIXED_IO; y ahora aplique los presets relevantes/que interesan
 del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
 
 
-| Ambas | Ejecute ejecución de automatización del bloque, (Run Block Automation), para cada uno de los tres
-bloques de Cores de IP, para conectarlos al bloque Sistema de procesamiento de Zynq septima generacion,
+| Ambas | Ejecute ejecución de automatización del bloque [Run Block Automation] para cada uno de los tres
+bloques de modulos, para conectarlos al bloque Sistema de procesamiento de Zynq septima generacion,
 mediante un bloque de interconexión AXI.
 
     Seleccione Automatizar Todos, (All Automation), como en la figura 5.9 y seleccione OK.
@@ -267,7 +267,7 @@ en su teclado.
     Advierta que el bloque pcore_lms_0 presenta dos pines de entrada desconectados, como se resalta en la
 figura 5.10.
 
-    Éstos son los puertos clk y reset del Core de IP, y se deben conectar para que el Core de IP sea
+    Éstos son los puertos clk y reset del modulo, y se deben conectar para que el modulo sea
 funcional.
 
     (o) Posicione el mouse sobre la interfaz CLK_COREIP sobre el bloque pcore_lms_0, hasta que el
@@ -291,15 +291,15 @@ conecta a la interfaz ARESETN_AXI_Lite.
 
 
 
-| Ambas | En ésta etapa debemos añadir y configurar el Core de IP Controlador de los Leds, así que
-concluiremos éste primer ejercicio sobre la importación de Cores de IP personalizados al Catálogo IP de
+| Ambas | En ésta etapa debemos añadir y configurar el modulo Controlador de los Leds, así que
+concluiremos éste primer ejercicio sobre la importación de modulos personalizados al Catálogo IP de
 Vivado. Ahora usted debe estar familiarizado con:
         
     * Incorporación de un repositorio de IP al Catálogo IP de Vivado.
 
-    * Importar y añadir archivos de Cores de IP comprimidos a un repositorio de IP personalizado.
+    * Importar y añadir archivos de modulos comprimidos a un repositorio de IP personalizado.
 
-    * Insertar Cores de IP personalizados a un diseño por bloques de un Integrador de IP.
+    * Insertar modulos personalizados a un diseño por bloques de un Integrador de Modulos.
 
         Nota: No cierre el proyecto Vivado actual, seguiremos utilizandolo nuevamente en el ejercicio
 siguiente.
@@ -320,27 +320,27 @@ siguiente.
 
 
 
- Ejercicio 5B - Audio con el integrador de Cores de I.P. de Vivado
+ Ejercicio 5B - Audio con el integrador de modulos de Vivado
 
 
-    En éste ejemplo nos ennfocaremos en añadir una instancia de Core IP controlador de audio a un diseño
-existente de Integrador de IP de Vivado, y las modificaciones que debemos hacer al bloque procesador de
+    En éste ejemplo nos ennfocaremos en añadir una instancia de modulo controlador de audio a un diseño
+existente de Integrador de Modulos de Vivado, y las modificaciones que debemos hacer al bloque procesador de
 Zynq para utilizar el codec de audio sobre la placa de desarrollo Zynq. Tales modificaciones incluyen la
-inserción de un segundo relog en la seccion de PL y habilitar la interfaz I2C para comunicación de señales
-de control entre la seccion de PS de la Zynq y el codec.
+inserción de un segundo relog en la seccion programable y habilitar la interfaz I2C para comunicación de señales
+de control entre la seccion de procesamiento Zynq y el codec.
 
-    (a) Comenzaremos con insertar una instancia del Core IP controlador de audio al diseño por bloques.
+    (a) Comenzaremos con insertar una instancia del modulo controlador de audio al diseño por bloques.
 
 
 
- | Zed | En la ventana de diagramas de diseño por bloques del integrador de IP de Vivado, tecla derecha del
-mouse y seleccione Añadir Core IP.
+ | Zed | En la vista esquemática de diseño por bloques del Integrador de Modulos de Vivado, tecla derecha del
+mouse y seleccione Añadir modulo.
     
     Busque audio y haga selección doble sobre ctrl_audio_zed, para añadir una instancia al diseño por bloques.
-El bloque ctrl_audio_zed_0 ahora estará visible sobre la ventana de diagramas, cfomo muestra la figura 5.14.
+El bloque ctrl_audio_zed_0 ahora estará visible sobre la vista esquemática, cfomo muestra la figura 5.14.
 
-    Haga la conexión inicial entre la seccion de PS de la Zynq y el bloque ctrl_audio_zed_0 al hacer click en
-Ejecución de Automatización de Conexión, (Run Connection Automation) y seleccione OK.
+    Haga la conexión inicial entre la seccion de procesamiento Zynq y el bloque ctrl_audio_zed_0 al hacer click en
+"Realizar Automatización de Conexión" [Run Connection Automation] y seleccione OK.
 
     Advierta que aún existen cuatro puertos desconectados. Se necesita convertir a éstos en conexiónes
 externas para conectarlos a los pines físicos del codec de audio de la ZedBoard.
@@ -352,14 +352,14 @@ Alternativamente, seleccione la interfaz y pulse "Ctrl+T" en su teclado.
 
 
 
-| Zybo | En la ventana de diagramas de diseño por bloques del integrador de IP de Vivado, tecla derecha del
-mouse y seleccione Añadir Core IP.
+| Zybo | En la vista esquemática de diseño por bloques del Integrador de Modulos de Vivado, tecla derecha del
+mouse y seleccione Añadir modulo.
     
     Busque audio y haga selección doble sobre ctrl_audio_zybo, para añadir una instancia al diseño por bloques.
-El bloque ctrl_audio_zybo_0 ahora estará visible sobre la ventana de diagramas, cfomo muestra la figura 5.14.
+El bloque ctrl_audio_zybo_0 ahora estará visible sobre la vista esquemática, cfomo muestra la figura 5.14.
 
-    Haga la conexión inicial entre la seccion de PS de la Zynq y el bloque ctrl_audio_zybo_0 al hacer click en
-Ejecución de Automatización de Conexión, (Run Connection Automation) y seleccione OK.
+    Haga la conexión inicial entre la seccion de procesamiento Zynq y el bloque ctrl_audio_zybo_0 al hacer click en
+"Realizar Automatización de Conexión" [Run Connection Automation] y seleccione OK.
 
     Advierta que aún existen cuatro puertos desconectados. Se necesita convertir a éstos en conexiónes
 externas para conectarlos a los pines físicos del codec de audio de la Zybo.
@@ -370,15 +370,15 @@ Alternativamente, seleccione la interfaz y pulse "Ctrl+T" en su teclado.
 
 
 
-| Ambas | El siguiente paso es hacer las modificaciones necesarias al bloque de la seccion de PS de la Zynq7.
+| Ambas | El siguiente paso es hacer las modificaciones necesarias al bloque de la seccion de procesamiento Zynq7.
 
 
 
     (b) Haga selección doble sobre el bloque "ZYNQ7 Processing System" (bloque Sistema de procesamiento
- de Zynq septima generacion) para abrir la ventana de repersonalización de Core IP, como en la figura 5.16.
+ de Zynq septima generacion) para abrir la ventana de repersonalización de modulo, como en la figura 5.16.
 
-    Ésta vista le permite hacer cambios en la configuración de la seccion de PS de la Zynq. Como el
-Integrador de IP es "conciente de la placa", todas las características básicas que aplican a muchas placas
+    Ésta vista le permite hacer cambios en la configuración de la seccion de procesamiento Zynq. Como el
+Integrador de Modulos es "conciente de la placa", todas las características básicas que aplican a muchas placas
 de desarrollo Zynq ya han sido configuradas de forma automática para usted. Sin embargo, hay unos pocos
 cambios que necesitan hacerse cuando se trata de utilizar un codec de audio.
 
@@ -389,9 +389,9 @@ audio.
 (Configuration Clock) desde la izquierda de la ventana.
 
 --------------------*************
-    Abra Trama de relog en la seccion de PL.... tejer hilar..
+    Abra Trama de relog en la seccion programable.... tejer hilar..
 *************--------------------
-    Abra Género de Relog sobre la seccion de PL, (PL Fabric clocks), en el panel de Configuración de Relog
+    Abra Género de Relog sobre la seccion programable, (PL Fabric clocks), en el panel de Configuración de Relog
 y habilite FCLK_CLK1.
 
 
@@ -406,18 +406,18 @@ figura 5.18.
 
 
 
-| Ambas | Debemos habilitar una de las interfaces de comunicación I2C de la seccion de PS de la Zynq, para
-permitir que la seccion de PS se comunique con el codec de audio.
+| Ambas | Debemos habilitar una de las interfaces de comunicación I2C de la seccion de procesamiento Zynq, para
+permitir que la seccion de procesamiento se comunique con el codec de audio.
 
 
 
     (d) Seleccione la Configuración MIO, (MIO Configuration), (Multiplexed Input/Output - Entrada/Salida
 Multiplexada) desde el panel de Navegador de Página, (Navigator Page).
 
-    Ésta vista de comunicación nos permite habilitar/deshabilitar los perisféricos de la seccion de PS,
+    Ésta vista de comunicación nos permite habilitar/deshabilitar los perisféricos de la seccion de procesamiento,
 éstos perisféricos se pueden rutear/direccionar/unir/vincular/enlazar a travéz de un Multiplexor de
 Entrada/Salida dedicado (siglas en ingles MIO) sobre el dispositivo, ó a travéz Multiplexor de Entrada/
-Salida Extendido (siglas en ingles EMIOs) que rutear/direccionar/unir/vincular/enlazar a la seccion de PL.
+Salida Extendido (siglas en ingles EMIOs) que rutear/direccionar/unir/vincular/enlazar a la seccion programable.
 
     Como queremos comunicarnos con el codec de audio (que está conectardo a los pines del dispositivo Zynq)
 será rutear/direccionar/unir/vincular/enlazar (do) a la señal I2C a travéz de EMIOs.
@@ -427,14 +427,14 @@ Configuración MIO, (MIO Configuration).
 
     EMIO debe ser seleccionado automáticamente para Entrada/Salida (IO), como en la figura 5.19.
 
-    No se requieren más cambios a la seccion de la PS de la Zynq.
+    No se requieren más cambios a la seccion de procesamiento Zynq.
 
-    (f) Cierre la ventana de repersonalización de Core IP y aplique los cambios a la seccion de PS al
+    (f) Cierre la ventana de repersonalización de modulo y aplique los cambios a la seccion de procesamiento al
 seleccionar OK.
 
 
 
- | Zed | La ventana de diagramas del Integrador de IP se debe actualizar, y el bloque "ZYNQ7 Processing
+ | Zed | La vista esquemática del Integrador de Modulos se debe actualizar, y el bloque "ZYNQ7 Processing
 System" (bloque Sistema de procesamiento de Zynq septima generacion), ahora se debe ver como en la figura
 5.20.
 
@@ -449,7 +449,7 @@ Alternativamente, seleccione la interfaz y pulse "Ctrl+T" en su teclado.
 
 
 
-| Zybo | La ventana de diagramas del Integrador de IP se debe actualizar, y el bloque "ZYNQ7 Processing
+| Zybo | La vista esquemática del Integrador de Modulos se debe actualizar, y el bloque "ZYNQ7 Processing
 System" (bloque Sistema de procesamiento de Zynq septima generacion), ahora se debe ver como en la figura
 5.21.
 
@@ -475,16 +475,16 @@ interrupturas para la entrada de usuario.
 
     Primero añadiremos el GPIO monocanal para controlar al codec de la placa de desarrollo.
 
-    (i) Haga click derecho en la ventana de Diagramas de diseño por bloques del Integrador de IP y
-seleccione añadir Cores de I.P. (add IP). Ingrese GPIO y haga doble click sobre AXI_GPIO para añadir una
+    (i) Haga click derecho en la vista esquemática de diseño por bloques del Integrador de Modulos y
+seleccione añadir modulo [Add IP]. Ingrese GPIO y haga doble click sobre AXI_GPIO para añadir una
 instancia al diseño por bloques.
 
-    (j) Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) para la interfaz
-/axi_gpio_0/S_AXI, para conectar el controlador GPIO a la seccion de PS de la Zynq mediante la
-interconexión AXI, (AXI Interconect), (NO realice la Ejecución de Automatización de Conexión para la
+    (j) Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para la interfaz
+/axi_gpio_0/S_AXI, para conectar el controlador GPIO a la seccion de procesamiento Zynq mediante la
+Interconexión AXI [AXI Interconect] (NO realice la "Realizar Automatización de Conexión" para la
 interfaz de salida de la GPIO).
 
-    (k) Abra la ventana de repersonalización de Core IP al hacer selección doble sobre el bloque
+    (k) Abra la ventana de repersonalización de modulo al hacer selección doble sobre el bloque
 axi_gpio_0, se abrirá una ventana como la de la figura 5.22.
 
     (l) Seleccione la pestaña Configuración de IP, (IP Configuration).
@@ -509,15 +509,15 @@ al seleccionar OK.
 
     Necesitamos añadir una segunda instancia del Controlador de GPIO AXI.
 
-    (n) Añada una instancia de un Core de IP GPIO al diseño por bloques y haga click en Ejecución de
-Automatización de Conexión, (Run Connection Automation) para S_AXI, para conectar el controlador GPIO nuevo
-a la seccion de PS de la Zynq mediante la interconexión AXI, (AXI Interconect), (NO realice la Ejecución de
+    (n) Añada una instancia de un modulo GPIO al diseño por bloques y haga click en Ejecución de
+Automatización de Conexión [Run Connection Automation] para S_AXI, para conectar el controlador GPIO nuevo
+a la seccion de procesamiento Zynq mediante la interconexión AXI [AXI Interconect] (NO realice la Ejecución de
 Automatización de Conexión para la interfaz de salida de la GPIO).
 
     (ñ) Ahora debemos configurar el bloque GPIO AXI recientemente creado para permitir la operación de
 canal dual/doble.
 
-    Haga selección doble sobre el bloque axi_gpio_1 para abrir la ventana de repersonalización de Core IP.
+    Haga selección doble sobre el bloque axi_gpio_1 para abrir la ventana de repersonalización de modulo.
     
     En la pestaña Configuración de IP, (IP Configuration), seleccione la opción Habilitar canal dual y 
 luego seleccione OK.
@@ -528,14 +528,14 @@ luego seleccione OK.
  | Zed | Ested debe ver que el bloque axi_gpio_1 ahora tiene dos puertos, 1 para conectar al los pulsadores,
 (push buttons), y otro para las llavecitas interrupturas, (slide switches), sobre la ZedBoard.
 
-    Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) para
-/axi_gpio_0/GPIO y seleccione btns_5bits en el campo 'seleccion de la interfaz de la placa'
+    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
+/axi_gpio_0/GPIO y seleccione btns_5bits en el campo 'seleccion del componente de placa'
 (Select board interface). 
 
     Seleccione OK.
 
-    Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) para
-/axi_gpio_1/GPIO2 y seleccione sws_8bits en el campo 'seleccion de la interfaz de la placa'
+    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
+/axi_gpio_1/GPIO2 y seleccione sws_8bits en el campo 'seleccion del componente de placa'
 (Select board interface). 
 
     Seleccione OK.
@@ -546,22 +546,22 @@ luego seleccione OK.
 | Zybo | Ested debe ver que el bloque axi_gpio_1 ahora tiene dos puertos, 1 para conectar al los pulsadores,
 (push buttons), y otro para las llavecitas interrupturas, (slide switches), sobre la ZedBoard.
 
-    Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) para
-/axi_gpio_0/GPIO y seleccione btns_4bits en el campo 'seleccion de la interfaz de la placa'
+    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
+/axi_gpio_0/GPIO y seleccione btns_4bits en el campo 'seleccion del componente de placa'
 (Select board interface). 
 
     Seleccione OK.
 
-    Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) para
-/axi_gpio_1/GPIO2 y seleccione sws_4bits en el campo 'seleccion de la interfaz de la placa'
+    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
+/axi_gpio_1/GPIO2 y seleccione sws_4bits en el campo 'seleccion del componente de placa'
 (Select board interface). 
 
     Seleccione OK.
 
 
 
-| Ambas | (o) La dirección del Sistema de procesamiento de Zynq, (ZYNQ Processing System), de cada Core de
-IP ahora será reconfigurada para incrementar su eficiencia y reducir el espacio de direcciones NO
+| Ambas | (o) La dirección del Sistema de procesamiento Zynq [ZYNQ Processing System] de cada modulo
+ahora será reconfigurada para incrementar su eficiencia y reducir el espacio de direcciones NO
 utilizado.
 
 
@@ -595,22 +595,22 @@ puede éste paso e ir al paso (p).
 
 
 
-| Ambas | (p) Regrese al diseño por bloques al seleccionar a la pestaña Diagramas (Diagram) de la ventana
-del Integrador de IP.
+| Ambas | (p) Regrese al diseño por bloques al seleccionar a la pestaña de la vista esquemática (Diagram)
+de la ventana del Integrador de Modulos.
 
     
 
     (q) Haga click en el botón Regenerar Capa, (Regenerate Layout), |<.( ).>|, para regenerar la capa de
-varios de los bloques de Cores de IP y hacer el diseño por bloques facil de seguir.
+varios de los bloques de modulos y hacer el diseño por bloques facil de seguir.
 
 
 
- | Zed | Su diseño por bloques completo ahora debería parecerse al de la figura 5.27.
+ | Zed | Su diseño por bloques final ahora debería parecerse al de la figura 5.27.
 
 
 
 
-| Zybo | Su diseño por bloques completo ahora debería parecerse al de la figura 5.28.
+| Zybo | Su diseño por bloques final ahora debería parecerse al de la figura 5.28.
 
 
 
@@ -621,7 +621,7 @@ archivos RTL para nuestro diseño por bloques.
 
 
     (s) Genere el vinculador HDL de alto nivel para su sistema, al hacer click derecho del mouse sobre
-diseño_ip en la pestaña Archivos Fuente (Sources) y seleccione crear vinculador HDL, (Create HDL Wrapper).
+diseño_ip en la pestaña Archivos Fuente [Sources] y seleccione crear vinculador HDL [Create HDL Wrapper].
 
     Seleccione Permitir a Vivado administralo y actualizarlo automaticamente,
 (Let Vivado manage wrapper and auto-update), Seleccione OK.
@@ -630,15 +630,15 @@ diseño_ip en la pestaña Archivos Fuente (Sources) y seleccione crear vinculado
 añadir un archivo de restriciones que vincule las interfaces externas de nuestro diseño a los pines
 especificos sobre el dispositivo Zynq.
 
-    (t) En la ventana del Navegador de Flujo, (Flow Navigator), seleccione añadir Archivos fuente,
-(Add Sources), desde la seccion del administrador de Proyecto, (Project Manager) y seleccione OK.
+    (t) En la ventana del Navegador de Flujo [Flow Navigator] seleccione añadir Archivos fuente,
+[Add Sources] desde la seccion del administrador de Proyecto [Project Manager] y seleccione OK.
 
 
-    En la ventana añadir Archivos fuente, (Add Sources), seleccione Añadir ó Crear Archivo de Restriciones,
+    En la ventana añadir Archivos fuente, [Add Sources] seleccione Añadir ó Crear Archivo de Restriciones,
 (Add or Create Constraints), y luego seleccione OK.
 
-    En la ventana Añadir ó Crear Archivo de Restriciones, (Add or Create Constraints), seleccione el
-simbolo | + | y entonces seleccione Añadir Archivos.., (Add Files..).
+    En la ventana Añadir ó Crear Archivo de Restriciones [Add or Create Constraints] seleccione el
+simbolo | + | y entonces seleccione Añadir Archivos.. [Add Files..].
 
 
 
@@ -654,11 +654,11 @@ simbolo | + | y entonces seleccione Añadir Archivos.., (Add Files..).
 
 
 
-| Ambas | Seleccione finalizar (Finish) para cerrar la ventana añadir Archivos fuente, (Add Sources), e
+| Ambas | Seleccione finalizar [Finish] para cerrar la ventana añadir Archivos fuente, [Add Sources] e
 importar el archivo de restriciones.
 
-    (u) Abra el archivo de restriciones al abrir/expandir la seccion Restriciones (Constraints), de la 
-pestaña Archivos Fuente (Sources), y haga seleccion doble en aventuras_con_ip.xdc.
+    (u) Abra el archivo de restriciones al abrir/expandir la seccion Restriciones [Constraints], de la 
+pestaña Archivos Fuente [Sources], y haga seleccion doble en aventuras_con_ip.xdc.
 
     La sección superior del archivo de restriciones que vincula a los bits individuales de la interfaz
 salida_LEDs a los pines correspondientes del dispositivo Zynq, usted ya ha visto esto antes del primer
@@ -667,13 +667,13 @@ ejercicio del tutorial previo.
 
 
  | Zed | La sección inferior del archivo, como se muestra en la figura 5.29, contiene las Restriciones,
-(Constraints), que vinculan varios puertos externos del diseño relativos al codec de audio a sus
+[Constraints], que vinculan varios puertos externos del diseño relativos al codec de audio a sus
 correspondientes pines sobre el dispositivo Zynq.
 
 
 
 | Zybo | La sección inferior del archivo, como se muestra en la figura 5.30, contiene las Restriciones,
-(Constraints), que vinculan varios puertos externos del diseño relativos al codec de audio a sus
+[Constraints], que vinculan varios puertos externos del diseño relativos al codec de audio a sus
 correspondientes pines sobre el dispositivo Zynq.
 
 
@@ -681,18 +681,18 @@ correspondientes pines sobre el dispositivo Zynq.
 | Ambas | A continuación crearemos un bitstream así que podemos programar la sección de PL del dispositivo
 Zynq con nuestro diseño.
     
-    (v) En el navegador de flujo, (Flow Navigator), seleccione generar trama de bits, (generate bitstream),
+    (v) En el navegador de flujo [Flow Navigator] seleccione generar trama de bits, (generate bitstream),
 de la seccion Programa y depuración (Program and Debug). En la ventana Implementación Sin Resultado
-Disponible, (No Implementation Result Available), seleccione SI/Yes para lanzar Síntesis e Implementación.
+Disponible, (No Implementation Result Available), seleccione SI [Yes] para lanzar Síntesis e Implementación.
 
     La ventana de diálogo se abrirá advirtiendole que esta lanzando Implementación y Sintesis antes de
-comenzar el proceso de generación del bitstream. Seleccione SI/Yes para llevar a cabo el proceso. Ésto
+comenzar el proceso de generación del bitstream. Seleccione SI [Yes] para llevar a cabo el proceso. Ésto
 tomará unos cuantos minutos, dependiendo del desempeño de su computadora. Una vez que la generación del
-bitstream finalizo, seleccione Abrir Diseño Implementado, (Open Implemented Desing), en la ventana
+bitstream finalizo, seleccione Abrir Diseño Implementado, (Open Implemented Design), en la ventana
 Generación Completada, (Generation Completed), y seleccione OK.
 
     Finalmente, podremos exportar el Hardware al SDK, donde se creará el programa que le permitirá a la
-seccion de PS de la Zynq controlar el sistema del siguiente ejercicio.
+seccion de procesamiento Zynq controlar el sistema del siguiente ejercicio.
 
     (w) Seleccione Archivo > Exportar > Exportar hardware, (File>Export>Export hardware), 
 desde la barra de menues.
@@ -700,19 +700,19 @@ desde la barra de menues.
     Asegurese de que la opcion Incluir Bitstream, (Include Bitstream), esta seleccionada, luego seleccione
 OK.
 
-    (x) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK, (File> Launch SDK), desde la barra de
+    (x) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK [File> Launch SDK] desde la barra de
 menues y seleccione OK.
 
     Ésto concluye éste ejercicio de audio sobre la placa de desarrollo Zynq. Ahora usted debe estar
 familiarizado con:
         
-    * Realizar los cambios necesarios en la seccion de PS de la Zynq para utilizar el codec de audio
+    * Realizar los cambios necesarios en la seccion de procesamiento Zynq para utilizar el codec de audio
 sobre la ZedBoard y/o Zybo.
 
     * Realizar las conexiónes externas requeridas para permitir que la sección de PL de la Zynq sea
 conectada al codec de audio mediante los pines externos del dispositivo Zynq.
 
-    * Utilizar un archivo de Restriciones (Constraints) para vincular las interfaces externas del diseño
+    * Utilizar un archivo de Restriciones [Constraints] para vincular las interfaces externas del diseño
 relativas al codec de audio, los pines correspondientes del dispositivo Zynq.
 
 
@@ -731,24 +731,24 @@ relativas al codec de audio, los pines correspondientes del dispositivo Zynq.
  Ejercicio 5C - Creando un programa de audio en el SDK
 
     En éste ejercicio final crearemos un programa (aplicación software) que encierre todos los modulos de
-Cores de IP juntos que hemos creado, para crear un sistema orientado a DSP. Tambien serán introducido el
+modulos juntos que hemos creado, para crear un sistema orientado a DSP. Tambien serán introducido el
 procedimiento de configuración de los codecs de audio de la ZedBoard y Zybo mediante registros hardware.
 
     Una vez que el SDK se ha lanzado desde el ejercicio previo, podemos comenzar por crear una aplicación
 nueva.
 
 
-    (a) Seleccionar Archivo > Abrir SDK, (File> Launch SDK), desde la barra de menues.
+    (a) Seleccionar Archivo > Abrir SDK [File> Launch SDK] desde la barra de menues.
 
-    En el diálogo de proyecto nuevo, (new Project), ingrese aventuras_con_ip en el campo Nombre De
-Proyecto, (Project Name).
+    En el diálogo Nuevo Proyecto [new Project] ingrese aventuras_con_ip en el campo Nombre De
+Proyecto [Project Name].
 
     Por defecto la opción para crear paquetes de soporte de placa nuevo está seleccionado.
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
-    (b) En el diálogo Plantilla (Templates), seleccione Aplicación vacia, (Empty Application), y
-seleccione finalizar (Finish).
+    (b) En el diálogo Plantilla [Templates] seleccione aplicación en blanco [Empty Application] y
+seleccione finalizar [Finish].
 
     Usted debe recordar que cuando creabamos al perisférico en las etapas previas de este ejercicio,
 que eran generados un conjunto de archivos controladores. Ahora debemos poner en el SDK aquellos archivos
@@ -756,14 +756,14 @@ controladores. Ésto es hecho al añadir un nuevo repositorio al proyecto SDK.
 
     (c) Explore en Xilinx Tools> Repositorios en la barra de herramientas.
 
-    En la ventana de preferencias del repositorio, (Repositories Preferences), seleccione en nuevo (new),
+    En la ventana de Preferencias del Repositorio [Repositories Preferences] seleccione en Nuevo [New],
 tal como en la figura 5.31.
 
     (d) Añada los controladores del Controlador de Leds al explorar en el directorio:
     
     "C:/Zynq_Book/ip_repo/controlador_led_1.0" y seleccione OK.
 
-    (e) Seleccione nuevo (new).
+    (e) Seleccione Nuevo [New].
 
     Añada los controladores de NCO al explorar en el directorio:
 
@@ -779,7 +779,7 @@ perisférico correspondiente.
 
 
     (f) La pestaña system.mss debe estar abierta en el Espacio de Trabajo. Si NO es así, abrala desplegando
-aventuras_con_ip en el explorador de proyecto, (project explorer), y haciendo seleccion doble sobre
+aventuras_con_ip en el explorador de proyecto [project explorer] y haciendo seleccion doble sobre
 system.mss.
 
     (g) En la esquina superior izquierda de la pestaña system.mss, seleccione Modificar éstas
@@ -796,11 +796,11 @@ componente nco_0, como se resalta en la figura 5.32.
 
     Ahora el proyecto se reconstruirá.
 
-    El Core de IP LMS que hemos creado con el generador de codigo HDL de MathWorks y el codec IP de audio
+    El modulo LMS que hemos creado con el generador de codigo HDL de MathWorks y el codec IP de audio
 tambien tiene controladores software, pero debido a que su estructura de carpeta, debemos importar sus
 controladores al Espacio de Trabajo en lugar de utilizar un repositorio.
 
-    (i) En el Explorador de Proyecto, (Project Explorer), abra aventuras_con_ip y tecla derecha del
+    (i) En el Explorador de Proyecto [project explorer] abra aventuras_con_ip y tecla derecha del
 mouse sobre src y seleccione Importar (Import).
 
     La ventana de Importación, abra General y haga seleccion doble sobre Sistema de Archivo, (File System).
@@ -811,7 +811,7 @@ mouse sobre src y seleccione Importar (Import).
 
     Seleccione OK para importar el controlador IP LMS.
     
-    En el panel de mano izquierda seleccione "pcore_lms_direc.h" y seleccione finalizar (Finish).
+    En el panel de mano izquierda seleccione "pcore_lms_direc.h" y seleccione finalizar [Finish].
 
         Nota: Éste directorio solo está disponible si usted ha completado el EJ 4B del tutorial 4. Si usted
 no ha completado éste ejercicio, usted puede obtener "pcore_lms_direc.h" desde la carpeta ZedBoard:
@@ -864,33 +864,33 @@ nuestra aplicación.
     
 
     (l) Abra el archivo de cabecera aventuras_con_ip.h al hacerle seleccion doble en el Explorador de
-Proyecto, (Project Explorer).
+Proyecto [project explorer].
 
     Éste es el archivo de cabecera principal (main), para el programa, (la aplicación software). Arriba en
 el archivo usted debe de ver una lista de archivos de cabecera incluidos, los cuales definen una variedad
 de funciones que son utilizadas en el programa.
 
-    Más abajo en el archivo debe de ver la inclución de archivos de cabecera de los Cores de IP
+    Más abajo en el archivo debe de ver la inclución de archivos de cabecera de los modulos
 personalizados que hemos importando recientemente:
 
-    Como ejemplo de uno de los archivos de cabecera hemos creado durante el proceso de creación de Cores de
-IP, se abrirá la cabecera para el Code de IP LMS.
+    Como ejemplo de uno de los archivos de cabecera hemos creado durante el proceso de creación de modulos,
+se abrirá la cabecera para el Code de IP LMS.
 
-    (m) En la pestaña Linea Saliente (Outline) de mano derecha de la ventana del SDK, haga selección doble
+    (m) En la pestaña Linea Saliente [Outline] de mano derecha de la ventana del SDK, haga selección doble
 sobre pcore_lms_direc.h.
 
     En el archivo de cabecera LMS, usted debe ver las siguientes definiciones:
 
     Éstos definen los Desplazamientos de Direcciones de la Memoria Vinculada, (Memory-Mapped Address
 Offsets), de varias señales del perisféricos LMS. Se puede tranferir datos entre el perisférico en la
-sección de PL y el programa en la sección de PS, mediante la escritura ó lectura de éstos Direcciones de
+sección programable y el programa en la seccion de procesamiento, mediante la escritura ó lectura de éstos Direcciones de
 Desplazamiento//. La dirección actual que sería utilizada para acceder a éstas señales sería DIRECCION
-BASE + DESPLAZAMIENTO, (BASE ADDRESS+ OFFSETS).
+BASE + DESPLAZAMIENTO [BASE ADDRESS+ OFFSETS].
 
-    Cada uno de los Cores de IP perisféricos que hemos añadido a nuestro diseño por bloques en el
-Integrador de IP es asignado automaticamente a una dirección base en memoria. Se pueden determinar éstas
+    Cada uno de los modulos perisféricos que hemos añadido a nuestro diseño por bloques en el
+Integrador de Modulos es asignado automaticamente a una dirección base en memoria. Se pueden determinar éstas
 direcciones desde el archivo de cabecera C de parámentros Xilinx, que es creado automaticamente al exportar
-un Diseño Integrador de IP que contiene un sistema de procesamiento Zynq. El archivo de cabecera se llama
+un Diseño Integrador de Modulos que contiene un sistema de procesamiento Zynq. El archivo de cabecera se llama
 parametrosx.h (xparamenters.h).
 
     Ahora debemos explorar el archivo de cabecera de parámentros Xilinx.
@@ -916,8 +916,8 @@ paso (o). El rango de direcciones fué establecido a un valor de 64KBytes. La di
 direcciones altas y las direcciones base es 0xFFFF, el perisférico LMS tiene un rango direccionable de
 65536 bits ó 64KBytes.
 
-    Volviendo atras a los Desplazamientos de Direcciones de la Memoria Vinculada, (Memory-Mapped Address
-Offsets), para el bloque LMS en el paso (m), si nosotros, por ejemplo, queremos escribir datos al puerto de
+    Volviendo atras a los Desplazamientos de Direcciones de la Memoria Vinculada [Memory-Mapped Address
+Offsets] para el bloque LMS en el paso (m), si nosotros, por ejemplo, queremos escribir datos al puerto de
 entrada x(k), haríamos esto al escribir el valor deseado DIRECCION BASE + DESPLAZAMIENTO, (BASE ADDRESS
 + OFFSETS), que en nuestro caso sería:
 
@@ -928,9 +928,9 @@ entrada x(k), haríamos esto al escribir el valor deseado DIRECCION BASE + DESPL
     Ahora hecharemos una miradita al archivo del programa principal (aplicación software).
 
     (p) Abra el archivo de cabecera aventuras_con_ip.c al hacerle seleccion doble en el Explorador de
-Proyecto, (Project Explorer).
+Proyecto [project explorer].
 
-    Éste archivo contiene la funcion principal (main) y otra función que implementa un menu interectivo
+    Éste archivo contiene la funcion principal [main] y otra función que implementa un menu interectivo
 que permite al usuario controlar el sistema utilizando comandos desde el teclado mediante una consola.
 
     Tomese un momento para revisar el archivo y notar las llamadas a función que se hacen.
@@ -941,7 +941,7 @@ establecer los codecs de audio. Éstas funciones están definidas en audio.c, la
     (q) Abra audio.c.
 
     Aquí tenemos las funciones que son llamadas para inicializar al codec de audio y la interfaz I2C
-requerida en la sección de PS de la Zynq.
+requerida en la sección de procesamiento Zynq.
 
     No queremos ahondar en grandes detalles sobre la funcionalidad aquí contenida, pero es términos básicos
 el propósito de estas funciones es configurar el codec de audio al escribir en los registros de control del
@@ -971,7 +971,7 @@ en la sección de PL.
 
     (s) Abra funciones_ip.h
 
-    Éste archivo contiene las funciones que controlan los perisféricos de Cores de IP, así como algunas
+    Éste archivo contiene las funciones que controlan los modulos perisféricos, así como algunas
 funciones de inicialización de controladores para el GPIO y NCO.
 
     Las tres funciones de interés son:
@@ -1004,7 +1004,7 @@ usuario verificar que el filtro LMS perisférico está removiendo el ruido.
     Ahora que ya hemos visto las funciones y definiciones contenidas en varios archivos fuente y archivos
 de cabecera, iremos a la diseño que realmente implemente el sistema sobre la placa de desarrollo Zynq.
 
-    Para comenzar, programaremos la sección de PL de Zynq con el bitstream que hemos generado en el
+    Para comenzar, programaremos la sección programable Zynq con el bitstream que hemos generado en el
 ejercicio previo.
 
         Nota: En ésta etapa asegurese de que la placa de desarrollo Zynq esté energizada y esten
@@ -1014,12 +1014,13 @@ para la UART.
 
     Tambien debe asegurarse de que la placa esté configurada para arrancar desde JTAG.
 
-    (t) Desde la barra de menues, seleccione Xilinx > Programar FPGA, (Xilinx Tools > Program FPGA). La
-ventana Programar FPGA, (Program FPGA), debe estar configurada como en la figura 5.33.
+    (t) Desde la barra de menues, seleccione Xilinx > Programar FPGA [Xilinx Tools > Program FPGA]. La
+ventana Programar FPGA [Program FPGA] debe estar configurada como en la figura 5.33.
 
-    Seleccione Programar (Program).
+    Seleccione Programar [Program].
 
-    Será configurada la sección de PL con el bitstream y el led Hecho (DONE) sobre la Zynq debe encender.
+    Será configurada la sección programable con el Archivo Binario y el led Hecho [DONE] sobre la Zynq
+debe encender.
 
     En ésta instancia debemos de invocar a PuTTY, el programa de consola, que debe haber descargado al
 comienzo de éste tutorial.
@@ -1030,39 +1031,39 @@ advertencia al seleccionar Ejecutar (Run).
 
     (v) Debe abrir la configuración de PuTTY, como en la figura 5.34.
 
-    (w) Seleccione Serie (Serial) como tipo de conexión, (Connection type), resaltado en la figura 5.34 y 
+    (w) Seleccione Serie [Serial] como tipo de conexión [Connection type] resaltado en la figura 5.34 y 
 configure las características como en la figura 5.35.
 
-        Nota: El valor del campo Linea Serie, (Serial Line), variará dependiendo donde esté conectado el
+        Nota: El valor del campo Linea Serie [Serial Line] variará dependiendo donde esté conectado el
 cable USB-UART.
 
     Para determinar éste valor sobre un sistema Windows, abra el Administrador de Dispositivos e
 Identifique el puerto COM que puede estar nombrado como "USB Serial Port" (Puerto Serie USB).
 
-    (x) Seleccione Abrir (Open) para abrir una conexión de consola. Se abrirá la ventana de consola de
+    (x) Seleccione Abrir [Open] para abrir una conexión de consola. Se abrirá la ventana de consola de
 PuTTY.
 
     Cuando la conexión de consola abra, el paso final es ejecutar el programa (aplicación software) sobre
-la sección de PS de la Zynq.
+la sección de procesamiento Zynq.
 
-    (y) En el explorador de proyecto, (project explorer), tecla derecha del mouse sobre aventuras_con_ip
-y seleccione ejecutar como > Lanzar en Hardware (GDB), (Run As > Launch in Hardware (GDB)).
+    (y) En el explorador de proyecto [project explorer] tecla derecha del mouse sobre aventuras_con_ip
+y seleccione ejecutar como > Lanzar en Hardware (GDB)  [Run As > Launch in Hardware (GDB)].
 
 
 
  | Zed | En la consola PuTTY usted debe ver la siguiente salida:
 
         Nota: En este punto usted debe conectar un cable de audio entre la salida de la computadora y entre
-el conector de entrada de linea de la placa (LINE IN). Tambien conectar auriculares al conector de salida
-de la placa (LINE OUT). Éstas conexiónes son resaltadas en la figura 5.36.
+el conector de entrada de linea de la placa [LINE IN]. Tambien conectar auriculares al conector de salida
+de la placa [LINE OUT]. Éstas conexiónes son resaltadas en la figura 5.36.
 
 
 
 | Zybo | En la consola PuTTY usted debe ver la siguiente salida:
 
         Nota: En este punto usted debe conectar un cable de audio entre la salida de la computadora y entre
-el conector de entrada de linea de la placa (LINE IN). Tambien conectar auriculares al conector de salida
-de la placa (HPH OUT). Éstas conexiónes son resaltadas en la figura 5.37.
+el conector de entrada de linea de la placa [LINE IN. Tambien conectar auriculares al conector de salida
+de la placa [HPH OUT]. Éstas conexiónes son resaltadas en la figura 5.37.
 
 
 
@@ -1089,7 +1090,7 @@ tonal_noise().
 
     Usted debe notar que actualmente no hay un tamaño de paso asignado para el NCO.
 
-    Ponga la llavecita interruptura 0 (SW0) en la posición de encendido. Usted debe ser capaz de escuchar
+    Ponga la llavecita interruptura 0 [SW0] en la posición de encendido. Usted debe ser capaz de escuchar
 un tono sinusoidal que ha sido añadido a la señal de audio. LED0 debe ser capaz de iluminar.
 
     Experimente con diferentes valores de tamaños de pasos al variar las posiciones de las llavecitas
@@ -1112,7 +1113,7 @@ familiarizado con:
     * Generar automaticamente el archivo de cabecera parametrosx.h, y su contenido.
 
     * Identificar direcciones base y de desplazamiento vinculadas a memoria, para la comunicación entre el
-programa ejecutandose sobre la sección de PS de Zynq y los perisféricos en la sección de PL.
+programa ejecutandose sobre la seccion de procesamiento Zynq y los perisféricos en la sección de PL.
 
     * El proceso de configurar codecs de audio ADAU1761 de la ZedBoard y SSM2603 de la Zybo mediante los
 direcciones de registros de control.
@@ -1120,5 +1121,5 @@ direcciones de registros de control.
     * Recibir y enviar muestras de audio desde/hacia el codec de audio mediante un bloque controlador de
 audio en la sección de PL.
 
-    * El proceso de comunicación con perisféricos personalizados en la sección de PL mediante controladores
+    * El proceso de comunicación con perisféricos personalizados en la sección programable mediante controladores
 generados.
