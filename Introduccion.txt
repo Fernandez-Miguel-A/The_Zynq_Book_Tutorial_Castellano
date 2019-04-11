@@ -75,7 +75,7 @@ Importante:
          * ZYBO (la primera, en mayusculas)  ver fig 1.
          * Zybo Z7-10.
          * Zybo Z7-20.
-    La primera fué descontinuada en favor de sus 2 predecesoras, las cuales cuentan sutiles agregados. Ver fig2.
+    La primera fué descontinuada en favor de sus 2 predecesoras, las cuales cuentan con sutiles agregados. Ver fig2.
     Salvo mencion explicita, se considerará a la etiqueta Zybo como la ZYBO (original), si desea utilizar
 alguna de las variantes mas nuevas puede consultar la "Guia de Migracion Zybo z7"(*) para examinar más en
 detalle las diferencias particulares de estas placas.

@@ -9,32 +9,32 @@ Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
 
         Introducción
     Éste tutorial lo guiará a travez del proceso de creación de un diseño Zynq utilizando interrupciones.
-Utilizando el IDE Vivado y el ambiente integrador de Cores de I.P., un diseño de procesador Zynq simple
-será implementado en una placa de desarrollo Zynq el cual sera generado desde lo basico. Entonces se usará
- el SDK para crear un programa (aplicación software) simple que se ejecutará sobre el sistema de 
-procesamiento ARM de Zynq de la seccion de PS para controlar el hardware que es implementado en la 
-logica programable PL. Éste tutorial toma el mando desde los capitulos previos, ampliando las destrezas
- adquiridas en todos estos.
+Por lo cual haremos uso del IDE Vivado y el ambiente integrador de modulos para generar un diseño de
+procesador Zynq simple que será implementado en una placa de desarrollo Zynq. Entonces se usará el SDK
+para crear un programa controlador simple que se ejecutará sobre el sistema de procesamiento ARM de Zynq
+de la seccion de procesamiento para controlar el hardware que es implementado en la logica programable
+(seccion programable). Éste tutorial retoma lo visto en el capitulo anterior enfocandose en ampliar las
+destrezas que han sido adquiridas.
 
-    Éste tutorial esta separado en cuatro ejercicios y se organiza como sigue:
+    Éste tutorial esta dividido en cuatro ejercicios y se organiza como sigue:
 
  Ejercicio 2A - Éste ejercicio le provee de una guia adicional al proceso de lanzado del IDE Vivado
- (abrir el IDE Vivado), así como la creación de un proyecto utilizando el "wizard" de proyecto nuevo, 
+ (abrir el IDE Vivado), así como la creación de un proyecto utilizando el asistente de proyecto nuevo, 
 (New Project).
 
- Ejercicio 2B - En éste ejercicio usaremos el proyecto creado en el Ej 2A para construir un sistema 
-embebido Zynq utilizando interrupciones con el integrador de Cores de I.P. e incorporando Cores de I.P.
-existentes en el Catálogo de Vivado. Éste ampliará el conocimiento previo ganado en la creación y
-conexión de un sistema basado en bloques en el integrador de Cores de I.P. . El diseño completo tendrá
-un bitstream generado asociado a éste, que será exportado al SDK de Xilinx para participar en el programa
+ Ejercicio 2B - En éste ejercicio usaremos el proyecto hemos creado en el Ej 2A para construir un sistema 
+embebido Zynq que utiliza interrupciones haciendo uso del integrador de modulos, incorporando modulos
+existentes en el Catálogo de Vivado. Éste ejercicio ampliará el conocimiento previo, ganado en la creación
+y conexión de un sistema basado en bloques en el integrador de modulos. El diseño finalizado tendrá un
+Archivo Binario generado asociado a éste, que será exportado al SDK de Xilinx para participar en el programa
 de prueba.
 
- Ejercicio 2C - En el SDK de Xilinx será creado y explicado un programa (aplicación software) de prueba 
-para el sistema hardware generado. Ejecutando esta aplicación sobre la placa de desarrollo de Zynq
-demostraremos la función de interrupcion y como es escrita la aplicación para utilizarla.
+ Ejercicio 2C - En el SDK de Xilinx será creado y explicado un programa de prueba para el sistema hardware
+generado. Ejecutando esta aplicación sobre la placa de desarrollo de Zynq demostraremos la función de
+interrupcion y como es escrita la aplicación para utilizarla.
 
  Ejercicio 2D - Finalmente retornaremos al sistema del Ej 2B e incluiremos un archivo fuente adicional
-de interrupcion, haciendo las conexiónes necesarias, generando el bitstream y exportandolo al SDK de
+de interrupcion, haciendo las conexiónes necesarias, generando el Archivo Binario y exportandolo al SDK de
 Xilinx. Modificaremos nuestro programa previo para inspeccionar la operacion del sistema modificado.
 
 
@@ -44,7 +44,7 @@ Xilinx. Modificaremos nuestro programa previo para inspeccionar la operacion del
 
 
 
- Ejercicio 2A - Ampliando el diseño integrador basico de Cores de I.P.
+ Ejercicio 2A - Profundizando en el ambiente de integracion
 
     En éste ejercicio ampliaremos sobre el proyecto previo en el IDE Vivado al añadir
 GPIO adicional y configurar el sistema para utilizar interrupciones. Para dar un golpe
@@ -53,74 +53,77 @@ vez más. Comienze con abrir el IDE Vivado.
 
 
 
-    (a) Abra Vivado al hacer doble click en el icono de Vivado del escritorio ó desde Inicio>Todos los 
+    (a) Para abrir Vivado haga doble click en el icono de Vivado del escritorio ó desde Inicio>Todos los 
 Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
-
+    
     (b) Cuando cargue Vivado le presentará una pantalla de bienvenida tal como la figura 2.1:
 
-    (c) Seleccione la opcion create new project ( crear proyecto nuevo ) tal como la figura 2.2:
+    (c) Seleccione la opcion "Crear Proyecto Nuevo" [Create New Project] y el asistente de "Proyecto Nuevo"
+[New Project] se abrirá, tal como la figura 2.2:
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
-    (d) En el diálogo de nombre de proyecto, ingrese interrupciones_zynq como nombre de proyecto,
-del campo Project name, y la ruta "C:/Zynq_Book" en ubicacion de proyecto, del campo Project location.
+    (d) En el diálogo de nombre de proyecto, ingrese primer_construccion_zynq como nombre de proyecto
+[Project name] y la ruta "C:/Zynq_Book" en ubicacion de proyecto [Project location].
 
-    Asegurese de que halla seleccionado la opcion "create project subdirectory" ( crear subcarpeta de 
-proyecto ), todas las opciones deben ser las mismas que las mostradas debajo:
+    Asegurese de que halla seleccionado la opcion "crear subcarpeta de proyecto" [create project subdirectory],
+todas las opciones deben ser las mismas que las mostradas debajo:
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
     Una carpeta llamada Zynq_Book se creará en "C:/" si es que "C:/Zynq_Book" NO fué creada.
 
-    (e) En el diálogo de tipo de proyecto, del ingles Project type, seleccione proyecto RTL y asegurese
-de que la opcion "Do not specify sources at this time" ( No especificar archivos fuentes esta vez) se 
+    (e) En el diálogo de tipo de proyecto [Project type] seleccione proyecto RTL y asegurese
+de que la opcion "No especificar archivos fuentes esta vez" [Do not specify sources at this time] se 
 encuentre desmarcada, es decir que NO este seleccionada:
 
-    Seleccione siguiente (Next).
+    Seleccione siguiente [Next].
 
-    (f) Dentro del diálogo añadir fuentes, del ingles Add Sources, seleccione VHDL como lenguaje 
-elegido, en el campo target languaje, y como Simulador a Mixto ( Mixed ), en el campo Simulator 
+    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como su lenguaje de
+implementacion, en el campo target languaje, y como Simulador a Mixto [Mixed], en el campo Simulator 
 Languaje.
 
     Si existen archivos fuente del tipo HDL ó archivos netlist para añadir al proyecto, se los puede 
 añadir en ésta etapa.
 
-    Como NO hemos tenido que añadir ningun archivo fuente al proyecto, seleccionamos siguiente (Next).
+    Como NO hemos tenido que añadir ningun archivo fuente al proyecto, seleccionamos siguiente [Next].
 
-    (g) Añadir Cores de I.P. existentes (opcional), al seleccionarlo se abrirá dicho diálogo.
+    (g) Añadir modulos existentes (opcional) al seleccionarlo se abrirá una ventana de diálogo.
 
-    Si existen archivos fuente de Cores de I.P. para añadir al proyecto, se los puede añadir aqui.
+    Si existen archivos fuente de modulos que utilize el proyecto, se los puede añadir aqui.
 
-    Como NO hemos tenido que añadir ningun archivo fuente de Cores de I.P. al proyecto, seleccionamos 
-siguiente (Next).
+    Como NO hemos tenido que añadir ningun archivo fuente de ningun modulo al proyecto, seleccionamos 
+siguiente [Next].
 
-    (h) añadir restriciones (opcional), al seleccionarlo se abrirá dicho diálogo.
+    (h) Añadir restriciones (opcional), al seleccionarlo se abrirá una ventana de diálogo.
 
-    Ésta es la etapa donde cualquier archivo de restriciones (CONSTRAINTS) físicas o de temporizado
+    Ésta es la etapa donde cualquier archivo de restriciones [CONSTRAINTS] físicas o de temporizado
 se puede añadir al proyecto.
 
-    Como NO hemos tenido que añadir ningun archivo de restriciones (CONSTRAINTS) al proyecto, seleccionamos 
-siguiente (Next).
+    Como NO hemos tenido que añadir ningun archivo de restriciones [Constraints] al proyecto, seleccionamos 
+siguiente [Next].
 
     (i) Desde la ventana de diálogo de la parte predeterminada:
 
- | Zed | Seleccione placas (boards) desde el diálogo selector, luego seleccione ZedBoard Zynq Evaluation and
- Development Kit (Equipo de Evaluacion y desarrollo ZedBoard de Zynq), del campo nombre exhivido, del ingles
- display name, elija All (Todos) de la lista de revisión de la placa, tal y como se muestra en la figura 2.3:
+ | Zed | Seleccione placas [boards] desde el diálogo selector, luego luego de la lista de nombres exhividos
+[display name] seleccione ZedBoard Zynq Evaluation and Development Kit (Equipo de Evaluacion y desarrollo
+ZedBoard de Zynq), despues en la lista de revisión de la placa elija Todos [All], tal y como se muetra en
+la figura 2.3:
     Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.D).
 
-    siguiente (Next).
+    Seleccione siguiente [Next].
 
-| Zybo | Seleccione placas (boards) desde el diálogo selector, luego seleccione Zybo del campo nombre 
-exhivido, del ingles display name, elija All (Todos) de la lista de revisión de la placa, tal y como se 
-muestra en la figura 2.4:
+| Zybo | Seleccione Placas [Boards] desde el diálogo selector, luego de la lista de nombres exhividos
+[display name] seleccione ZYBO, despues en la lista de revisión de la placa elija Todos [All], tal y como se 
+muetra en la figura 2.4:
     Seleccione la revisión apropiada para su placa en particular (en éste caso se ha seleccionado Rev.B.3).
 
-    siguiente (Next).
+    Seleccione siguiente [Next].
 
 
-| Ambas | (j) En el diálogo de resumen del proyecto nuevo (New Project Summary), revise las opciones 
-elegidas y seleccione finalizar (Finish) para crear el nuevo proyecto.
+| Ambas | (j) En el diálogo de "Resumen del Proyecto Nuevo" [New Project Summary], revise las opciones 
+elegidas y seleccione finalizar [Finish] para crear el proyecto nuevo.
+
 
 
     =====> hasta aca todo igual de (a) -> (j) de EJ 1A.   <=====
@@ -128,8 +131,8 @@ elegidas y seleccione finalizar (Finish) para crear el nuevo proyecto.
 ----------------------------------------------------------------------
 
 
-    Como en el tutorial previo, ahora crearemos un sistema embebido Zynq diseñado antes de añadir y
-configurar IP adicionales para utilizar interrupciones hardware.
+    Como en el tutorial previo, ahora crearemos un diseño de sistema embebido Zynq, antes de añadir y
+configurar modulos adicionales, para utilizar interrupciones hardware.
 
 
 
@@ -138,114 +141,113 @@ configurar IP adicionales para utilizar interrupciones hardware.
 
 
 
- Ejercicio 2B - Ampliando el diseño integrador basico de Cores de I.P.
+ Ejercicio 2B - Creando un sistema Zynq con interrupciones dentro de Vivado
 
     En éste ejercicio crearemos un sistema embebido Zynq simple que implementará dos controladores de
-propósito general de entrada/salida (GPIO) en la seccion de la PL del dispositivo Zynq, una de las cuales
+propósito general de entrada/salida [GPIO] en la seccion programable del dispositivo Zynq, uno de las cuales
 usa el pulsador de la placa de desarrollo Zynq para generar interrupciones. El otro controlador GPIO se
-conectará a los leds. Ambos tambien se conectarán al procesador Zynq mediante una conexión de bus AXI,
+conectará a los leds. Además ambos serán conectados al procesador Zynq mediante la conexión de un bus AXI,
 permitiendo a los leds ser controlados por programa el cual se creará en el EJ 2C.
 
-    (a) En la ventana del Navegador de Flujo, (Flow Navigator), seleccione crear diseño en bloques, (Create Block Desing),
-desde la seccion del integrador de Cores de I.P., ver figura 2.5:
+    (a) En la ventana del Navegador de Flujo [Flow Navigator] seleccione Crear Diseño por Bloques
+[Create Block Design] desde la seccion del Integrador de Modulos, ver figura 2.5:
 
-    Se abrirá el diálogo de creación de diseño en bloques.
+    Se abrirá el diálogo de creación de diseño por bloques.
 
-    (b) Ingrese sistema_interrupcion_zynq en el campo de nombre de diseño, (Desing Name), ver figura 2.6.
+    (b) Ingrese sistema_interrupcion_zynq en el campo de nombre de diseño [Design Name] ver figura 2.6.
 
-    Seleccione OK. Se abrirá el ambito de diagramas del integrador de Cores de I.P. de Vivado en el
+    Seleccione OK. Se abrirá la Vista Esquemática del Integrador de Modulos de Vivado en el
 espacio de trabajo.
 
     El primer bloque que añadiremos al diseño será el sistema de procesamiento Zynq.
 
-    (c) En el ambito de diagramas del integrador de Cores de I.P. de Vivado haga click derecho con el
-mouse y seleccione añadir Core de I.P., (Add IP), figura 2.7:
+    (c) En la Vista Esquemática del Integrador de Modulos de Vivado haga click derecho con el
+mouse y seleccione añadir modulo [Add IP], figura 2.7:
 
-    Alternativamente seleccione el botón añadir Core de I.P., (Add IP), en la barra de herramientas a la
+    Alternativamente seleccione el botón añadir modulo [Add IP] en la barra de herramientas a la
 izquierda del ambito. Ver figura 2.8.
 
-    Se abrirá la ventana del catálogo de Cores de I.P., como en la figura 2.9:
+    Se abrirá la ventana del catálogo de modulos, como en la figura 2.9:
 
     Ingrese zynq en el campo de busqueda y luego seleccione "ZYNQ7 Processing System", tal y como en la
 figura 2.10; despues seleccione enter en su teclado.
 
     (d) Como en el tutorial previo, el paso siguiente es conectar los puertos de la interfaz de la seccion
-de PS de Zynq a los puertos de interfaz de más alto nivel sobre el diseño.
+de procesamiento Zynq a los puertos del componente de más alto nivel sobre el diseño.
 
 
- | Zed | Seleccione la opción de ejecución de automatización del bloque (Run Block Automation), desde el
+ | Zed | Seleccione la opción de Ejecución de Automatización del Bloque [Run Block Automation] desde el
  mensaje del Asistente de Diseño por encima de la ventana del diagrama. Seleccione OK, asegurándose de que
 la opción "Apply Board Preset" este seleccionada, para generar las conexiónes externas para las dos 
 interfaces, DDR y FIXED_IO; y ahora aplique los presets relevantes/que interesan de la placa.
 
-    Su diagrama de bloque ahora debe parecerse a la figura 2.11.
+    Su diagrama de bloques ahora debe parecerse a la figura 2.11.
 
     Como la plataforma ZedBoard es la placa de desarrollo destino, y esta fue especificada
 el la creación del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
 
 
-| Zybo | Seleccione la opción de ejecución de automatización del bloque, (Run Block Automation), desde el
- mensaje del asistente de diseño por encima de la ventana del diagrama. Seleccione OK, asegurándose de que
+| Zybo | Seleccione la opción de Ejecución de Automatización del Bloque [Run Block Automation] desde el
+ mensaje del asistente de diseño por encima de la vista esquemática. Seleccione OK, asegurándose de que
 la opción "Apply Board Preset" este seleccionada y despues seleccione OK.
 
     Será generadas las conexiónes externas para las dos interfaces, DDR y FIXED_IO.
 
-    Su diagrama de bloque ahora debe parecerse a la figura 2.12.
+    Su diagrama de bloques ahora debe parecerse a la figura 2.12.
 
     Como la plataforma Zybo es la placa de desarrollo destino, y esta fue especificada
 el la creación del proyecto, Vivado configurará en consecuencia el bloque del procesador Zynq.
 
 
-| Ambas | Ahora que la seccion de PS de la Zynq ha sido añadido y configurado a nuestro diseño, ahora 
-podemos añadir más bloques que serán alojados en la seccion de PL de la Zynq para añadir funcionalidad
-al sitema. En éste caso requerimos un bloque AXI GPIO para los leds y otro para los pulsadores (push 
-button).
+| Ambas | Ahora que la seccion de procesamiento Zynq ha sido añadida y configurada a nuestro diseño, ahora 
+podemos añadir más bloques que serán alojados en la seccion programable Zynq para añadir funcionalidad
+al sistema. En éste caso requerimos un bloque AXI GPIO para los leds y otro para los pulsadores.
 
 
-    (e) Haga click derecho en un lugar vacio dentro de la ventana de Diagramas y seleccione añadir
-Cores de I.P. (add IP). Ingrese GPIO en el campo de busqueda y añada la instancia de AXI GPIO. Repita
+    (e) Haga click derecho en un lugar vacio dentro de la vista esquemática y seleccione añadir
+modulos [Add IP]. Ingrese GPIO en el campo de busqueda y añada una instancia del modulo AXI GPIO. Repita
 éste proceso y añada un segundo bloque AXI GPIO al diseño.
 
-    (f) Ahora utilizaremos la herramienta el asistente de diseño integrador de Cores de I.P. para
+    (f) Ahora utilizaremos la herramienta del Asistente de Diseño Integrador de Modulos para
 automatizar la conexión del bloque AXI GPIO al "ZYNQ7 Processing System" (Sistema de procesamiento
 de Zynq septima generacion).
 
 
 
- | Zed | Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama, y seleccione
+ | Zed | Haga click en "Realizar Automatización de Conexión", [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática, y seleccione
 /axi_gpio_0/S_AXI, ver figura 2.13.
 
-    Seleccione OK para asegurar la conexión del clock (relog) automatico, el cual añade al Modulo
-de Reinicio del sistema procesador y los bloques de Interconexión AXI.
+    Seleccione OK para realizar la conexión automatico de un clock (relog), el cual añade al Modulo
+de Reinicio del Sistema Procesador y los bloques de Interconexión AXI.
 
-    Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama. Seleccione 
+    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática. Seleccione 
 /axi_gpio_0/GPIO.
 
-    Se abrirá la ventana de ejecución de automatización de conexión, como muestra la figura 2.14.
-Seleccione btns_5bits del menu desplegable en el campo 'seleccion de la interfaz de la placa'
-(Select board part interface). Y luego seleccione OK.
+    Se abrirá la ventana de "Realizar Automatización de Conexión", como muestra la figura 2.14.
+Seleccione btns_5bits del menu desplegable en el campo 'Seleccion del Componente de Placa'
+[Select Board Part Interface]. Y luego seleccione OK.
 
     Repita el paso (f) para un segundo bloque GPIO, ésta vez seleccionando leds_8bits para
 /axi_gpio_1/GPIO. Ésto resultará en un sistema que es similar al de la figura 2.15.
 
 
 
-| Zybo | Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama, y seleccione
+| Zybo | Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática, y seleccione
 /axi_gpio_0/S_AXI, ver figura 2.16.
 
-    Seleccione OK para asegurar la conexión del clock (relog) automatico, el cual añade al Modulo
-de Reinicio del sistema procesador y los bloques de Interconexión AXI.
+    Seleccione OK para realizar la conexión automatico de un clock (relog), el cual añade al Modulo
+de Reinicio del Sistema Procesador y los bloques de Interconexión AXI.
 
-    Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama. Seleccione 
+    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática. Seleccione 
 /axi_gpio_0/GPIO.
 
-    Se abrirá la ventana de ejecución de automatización de conexión, como muestra la figura 2.17.
-Seleccione btns_4bits del menu desplegable en el campo 'seleccion de la interfaz de la placa'
-(Select board part interface). Y luego seleccione OK.
+    Se abrirá la ventana de "Realizar Automatización de Conexión", como muestra la figura 2.17.
+Seleccione btns_4bits del menu desplegable en el campo 'Seleccion del Componente de Placa'
+[Select board part interface]. Y luego seleccione OK.
 
     Repita el paso (f) para un segundo bloque GPIO, ésta vez seleccionando leds_4bits para
 /axi_gpio_1/GPIO. Ésto resultará en un sistema que es similar al de la figura 2.18.
@@ -253,15 +255,15 @@ Seleccione btns_4bits del menu desplegable en el campo 'seleccion de la interfaz
 
 
 | Ambas | Ahora necesitamos configurar el sistema para utilizar interrupciones por hardware desde
-los pulsadores a las funciones desencadenadoras en la seccion de PS de Zynq. Regresar al diagrama
-de bloques.
+los pulsadores a la correspondiente subrutina de interrupcion en la seccion de procesamiento Zynq.
+Regresar al diagrama de bloques.
 
-    (g) Selección doble (double-click) en el bloque axi_gpio_0, el cual se conecto a los pulsadores,
-para abrir la ventana de Reconfiguración de Cores de I.P. . Seleccione en la pestaña para
-reconfiguración de Cores de I.P., como se muestra debajo:
+    (g) Selección doble (double-click) en el bloque axi_gpio_0, el cual esta conectado a los pulsadores,
+para abrir la ventana de Reconfiguración de Modulos. Seleccione en la pestaña de configuración de modulo
+[IP Configuration], como se muestra debajo:
 
-    En la ventana de configuración de Cores de I.P., (IP Configuration), habilite a los pulsadores
-como interrupciones al seleccionar el verificador rectangular resaltado en la imagen de la figura 2.19
+    En la ventana de Configuración de Modulo [IP Configuration] habilite a los pulsadores
+como interrupciones, seleccionando en el resaltado en la imagen de la figura 2.19
 y seleccione OK.
 
 <------------- Por claridad defino que desde este bloque se "CREARÁ interrupciones". (*1)
@@ -269,18 +271,18 @@ y seleccione OK.
     Ésto añadirá un puerto de salida adicional para la consulta de interrupcion para el bloque
 GPIO como puede verse en la figura 2.20: 
 
-    Ahora debemos configurar la seccion de PS de Zynq para aceptar consultas de interrupcion.
+    Ahora debemos configurar la seccion de procesamiento Zynq para habilitar pedidos de interrupcion.
 
-    (h) Selección doble (double-click) en el bloque de la seccion de PS de Zynq, processing_system7_0,
-para abrir la ventana de Reconfiguración de Cores de I.P.
+    (h) Selección doble (double-click) en el bloque de la seccion de procesamiento Zynq,
+processing_system7_0, para abrir la ventana de Reconfiguración de Modulos.
 
-    (i) Seleccione interrupciones (Interrupts) desde el Navegador de Página, (Page Navigator), desde 
-la izquierda y abra el menu a su derecha como muestra la figura 2.21. Ya que queremos permitir las
+    (i) Seleccione interrupciones [Interrupts] desde el Navegador de Página [Page Navigator], ubicado a 
+la izquierda, y abra el menu a su derecha como muestra la figura 2.21. Ya que queremos permitir las
 interrupciones desde la lógica programable al sistema de procesamiento; marque la opción "Generos de
-interrupcion", (Fabric Interrupts), para habilitar éste campo, entonces marque donde diga
-puertos de interrupcion compartidos/direccionados, (shared interrupt port), que se habilitará
-al elegirlo, tal y como en la figura 2.21. De ésta manera la interrupcion de la seccion de PL
-se puede conectar al controlador de interrupciones de la seccion de PS de Zynq. Seleccione OK.
+interrupcion" [Fabric Interrupts] para habilitar éste campo, entonces marque donde diga Puertos de
+Interrupcion Compartidos/Direccionados [Shared Interrupt Port] que se habilitará al elegirlo, tal y
+como en la figura 2.21. De ésta manera la interrupcion de la seccion programable se puede conectar al
+controlador de interrupciones de la seccion de procesamiento Zynq. Seleccione OK.
 
 <------------- Con esto configuro el software para habilitar interrupciones. (*2)
 
@@ -291,18 +293,18 @@ y el bloque axi_gpio_0. Conecto --- (*1) con  (*2).
                                   |
                                 "\ /"
                                   ¯
-    Hago una conexión entre la consulta de interrupcion del bloque GPIO y el puerto de interrupciones
-creado recientemente de la seccion de PS de Zynq, tal y como se resalta en:
+    Hago una conexión entre la fuente de interrupcion del bloque GPIO y el puerto de interrupciones
+creado recientemente de la seccion de procesamiento Zynq, tal y como se resalta en:
 
 
 
  | Zed |  La figura 2.22.
-    Su diseño completo se debe parecer al de la figura 2.23
+    Su diseño final se debe parecer al de la figura 2.23
 
 
 
 | Zybo |  La figura 2.24.
-    Su diseño completo se debe parecer al de la figura 2.25
+    Su diseño final se debe parecer al de la figura 2.25
 
 
 
@@ -312,12 +314,12 @@ creado recientemente de la seccion de PS de Zynq, tal y como se resalta en:
 
 
 
-    (k) Guarde su diseño al seleccionar Archivo > Guardar bloque de diseño,
- (File > Save Block Desing), de la barra de menues.
+    (k) Guarde su diseño al seleccionar Archivo > Guardar Bloque de Diseño,
+ (File > Save Block Design), de la barra de menues.
 
     (l) Valide el diseño al seleccionar Herramientas > Validar Diseño,
-(Tools > Validate Desing), de la barra de menues. Ésto ejecutará el verificado de reglas de diseño
-(Desing-Rules-Check ó  DRC).
+(Tools > Validate Design), de la barra de menues. Ésto ejecutará el Verificado de Reglas de Diseño
+(Design-Rules-Check ó  DRC).
                                                            __
     Alternativamente, seleccione el botón validar diseño, |./|, de la barra de herramientas
                                                            ¯¯
@@ -327,52 +329,52 @@ principal.
 diseño ha sido exitosa. Seleccione OK para descartar el mensaje.
 
     Con el diseño correctamente validado, podemos ir a la generación de archivos HDL para el
-sistema. Éste paso es idéntico al tutorial previo, Primer Diseño en Zynq.
+sistema. Éste paso es idéntico al tutorial previo, 'Primer Diseño en Zynq'.
 
-    (n) Desde la ventana de datos, (Data Windows Pane), en el bloque archivos fuentes, (Sources), 
-seleccione la pestaña tambien nombrada archivos fuentes, (Sources).             <===============
+    (n) Desde la ventana de datos [Data Windows Pane] en el bloque archivos fuentes [Sources] 
+seleccione la pestaña tambien nombrada Archivos Fuentes [Sources].             <===============
 
-    (ñ) Haga click derecho sobre el diseño de sistema de alto nivel,
-que en este caso el sistema_interrupcion_zynq y seleccione crear vinculador HDL, (Create HDL Wrapper),
+    (ñ) Haga click derecho sobre el Diseño de Sistema de Alto Nivel, que en este caso el
+sistema_interrupcion_zynq y seleccione crear vinculador HDL [Create HDL Wrapper]
 tal y como en la figura 2.26.
     
-    Se abrirá el diálogo de creación del vinculador HDL. Seleccione Permitir a Vivado administralo
-y actualizarlo automaticamente, (Let Vivado manage wrapper and auto-update), Seleccione OK.
+    Se abrirá el diálogo de creación del vinculador HDL. Seleccione Permitir a Vivado Administralo
+y Actualizarlo Automaticamente [Let Vivado manage wrapper and auto-update], Seleccione OK.
 
     Con todos los archivos de diseño generados, el siguiente paso es implementar nuestro diseño y
-generar el archivo bitstream (trama de bits).
+generar el Archivo Binario [bitstream].
 
-    (o) En el navegador de flujo, (Flow Navigator), seleccione generar trama de bits, (generate bitstream), de la
-seccion Programa y depuración (Program and Debug). Si la ventana de diálogo aparece para guardar
-su diseño, seleccione guardar (Save).
+    (o) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate bitstream]
+de la seccion Programa y Depuración [Program and Debug]. Si la ventana de diálogo aparece para guardar
+su diseño, seleccione guardar [Save].
 
-    (p) La ventana de diálogo se abrirá advirtiendole que esta lanzando implementación y sintesis
-antes de comenzar el proceso de generación del bitstream. Seleccione SI/Yes para llevar a cabo
+    (p) La ventana de diálogo se abrirá advirtiendole que esta lanzando Implementación y Sintesis
+antes de comenzar el proceso de generación del Archivo Binario. Seleccione SI [Yes] para llevar a cabo
 el proceso.
     
-    La combinacion de ejecución de sistesis, implementación y generación del bitstream uno tras
+    La combinacion de ejecución de Sintesis, Implementación y Generación del Archivo Binario uno tras
 otro tomará unos cuantos minutos, dependiendo del desempeño de su computadora.
 
-    (q) Una vez que la generación del bitstream finalizo, otra ventana de diálogo se abrirá
-confirmandole que el proceso a sido completado existosamente. Ver figura 2.27.
+    (q) Una vez que la generación del Archivo Binario finalizo, otra ventana de diálogo se abrirá
+confirmandole que el proceso ha sido completado existosamente. Ver figura 2.27.
 
-    Seleccione abrir diseño implementado, (Open Implemented Desing), y seleccione OK.
+    Seleccione Abrir Diseño Implementado [Open Implemented Design] y seleccione OK.
 
     En este punto se le presentará la vista de diseño, donde puede ver los recursos de la 
-seccion de PL que han sido utilizados por el diseño.
+seccion programable que han sido utilizados por el diseño.
 
-    Con el bitstream generado, el paso final en Vivado es de exportar el diseño al SDK, donde se 
-creará el programa que le permitirá al la seccion de PS de la Zynq controlar los leds en la placa
+    Con el Archivo Binario generado, el paso final en Vivado es de exportar el diseño al SDK, donde se 
+creará el programa que le permitirá a la seccion de procesamiento Zynq controlar los leds en la placa
 de desarrollo.
 
-    (r) Seleccione Archivo > Exportar > Exportar hardware, (File>Export>Export hardware), 
+    (r) Seleccione Archivo > Exportar > Exportar hardware [File>Export>Export hardware] 
 desde la barra de menues.
 
     (s) La ventana de diálogo de exportación de hardware se abrirá. Asegurese de que la opcion
-incluir bitstream, (include bitstream), esta seleccionada, tal y como la figura 2.28. Luego 
+incluir Archivo Binario [include bitstream] esta seleccionada, tal y como la figura 2.28. Luego 
 seleccione OK.
 
-    (t) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK, (File> Launch SDK), desde
+    (t) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK [File> Launch SDK] desde
 la barra de menues y seleccione OK.
 
     Ésto concluye los pasos que son requeridos en el IDE Vivado. Todos los componentes
@@ -384,31 +386,32 @@ un componente de software ( ó programa ) simple, el cual controlará el sistema
 
 
 
+
+
  Ejercicio 2C - Creando una programa en el SDK
 
     En éste ejercicio se creará una aplicación software que en la gerga más comunmente llamado programa,
 que de ahora en más nombraremos programa; que utilizará interrupciones hardware en la placa de desarrollo
-de Zynq. Los pulsadores serán utilizados para incrementar un contador por diferentes valores y la cuenta 
+de Zynq. Los pulsadores serán utilizados para incrementar un contador mientras que la cuenta 
 se exhivirá continuamente sobre los leds de forma binaria, en donde el led0 corresponde con el bit menos
 significativo, algunos documentos nombrandolo como (LSB - Least Significant Bit); y el led más alto con
 el bit más significativo, (MSB - Most Significant Bit). El programa se ejecutará sobre el sistema de 
-procesamiento Zynq, comunicandolo con el bloque AXI GPIO implementado en la seccion de PL.
+procesamiento Zynq, que se comunica con el bloque AXI GPIO implementado en la seccion programable.
 
     Debe haber abierto el SDK despues de finalizar el Ej 2B. Si no lo abrio, puede abrir el SDK explorando
- Inicio > Todos los Programas > Xilinx Desing Tools > SDK 2015.1 > Xilinx SDK 2015.1  y especificando el
+ Inicio > Todos los Programas > Xilinx Design Tools > SDK 2015.1 > Xilinx SDK 2015.1  y especificando el
 espacio de trabajo del Ej 1C.
 
-    (a) Seleccione Archivo > Nuevo > Proyecto de Aplicación, (File>New>Application Project),
+    (a) Seleccione Archivo > Nuevo > Proyecto de Aplicación [File>New>Application Project]
 de la barra de menues.
 
     (b) Se abrirá la ventana de diálogo de proyecto nuevo. Ingrese interrupcion_contador en el campo
-de nombre de proyecto. Ver figura 2.29. Manteniendo a todas las demás opciones con los
-valores predeterminados. Seleccione siguiente (Next), preste atención de no presionar
-finalizar (Finish).
+de nombre de proyecto [Project Name]. Ver figura 2.29. Manteniendo a todas las demás opciones con los
+valores predeterminados. Seleccione siguiente [Next], preste atención de no presionar
+finalizar [Finish].
 
-    (c) Una vez en la pantalla de plantillas de proyecto nuevo seleccione, aplicación
-en blanco/ vacía, (Empty Application), figura 2.30, y aqui sí seleccione finalizar (Finish)
-para crear el proyecto.
+    (c) Una vez en la pantalla de Plantillas de Proyecto Nuevo seleccione, Aplicación en Blanco [Empty
+Application], figura 2.30, y aqui sí seleccione finalizar [Finish] para crear el proyecto.
 
         Nota: El proyecto nuevo debe abrirse automaticamente. Si no lo hace podría
 necesitar cerrar la pestaña de bienvenida para ver el proyecto.
@@ -416,13 +419,13 @@ necesitar cerrar la pestaña de bienvenida para ver el proyecto.
     Con el proyecto de aplicación nuevo creado, ahora podemos importar algunos codigos
 fuente preconstruidos para la aplicación.
 
-    (d) En el panel Explorador de proyecto, (Project Explorer), abra el elemento interrupcion_contador,
-verá que hay un elemento nombrado 'src'con un icono de una carpeta, seleccionelo (hagale click izquierdo
-con el mouse), luego tecla derecha con el mouse encima de la carpeta y seleccione Importar... (Import...)
-eligiendo General > Sistema de Archivos, (General > File System), como un archivo fuente 'importado'.
+    (d) En el panel Explorador de Proyecto [Project Explorer] abra el elemento interrupcion_contador,
+verá que hay un elemento nombrado 'src' con un icono de una carpeta, seleccionelo (hagale click izquierdo
+con el mouse), luego tecla derecha con el mouse encima de la carpeta y seleccione Importar... [Import...]
+eligiendo General > Sistema de Archivos [General > File System] como un archivo fuente 'importado'.
 
-    (e) En la ventana de diálogo de 'importación' del sistema de archivos, (Import File System),
-seleccione el botón navegar/explorar (browse).
+    (e) En la ventana de diálogo de 'importación' del sistema de archivos [Import File System]
+seleccione el botón navegar/explorar [browse].
 
     (f) La carpeta de archivos fuente dependerá de la placa de desarrollo Zynq que este
 en uso. Si esta utilizando ZedBoard, explore hasta 
@@ -431,69 +434,70 @@ hasta "C:/Zynq_Book/sources/zybo/nterrupcion_zynq".
 
     Seleccione OK.
 
-    (g) Seleccione "interrupcion_contador_tut_2B.c", como en la figura 2.31, Seleccione finalizar (Finish).
+    (g) Seleccione "interrupcion_contador_tut_2B.c", como en la figura 2.31, Seleccione finalizar [Finish].
 
     Éste archivo contiene codigo C que fue escrito para desempeñar la operacion de conteo en la
 interrupcion desencadenada sobre la placa de desarrollo Zynq.
 
-    (h) Abra el archivo fuente importado al expandir la carpeta 'src' y hacer doble seleccion
+    (h) Abra el archivo fuente importado al expandir la carpeta 'src' y hacer doble click
 sobre "interrupcion_contador_tut_2B.c", luego explore el codigo.
 
     El codigo ha sido comentado completamente, pero aqui será discutido brevemente por claridad.
 
-    Por ahora, debe estar familiarizado con el uso de =>>controladores<<= y parametros en la configuración
-y operatorio con el GPIO. Recuerde que la información detallada de éstos controladores se puede encontrar
-en el archivo System.mss, explicando el propósito de cada funcion y de los parametros utilizados a esta.
-Tambien se pueden encontrar parametros predefinidos en xparameters.h
+    Por ahora, debe estar familiarizado con el uso de controladores GPIO junto con sus parametros en la
+configuración e implementación. Recuerde que la información detallada de éstos controladores se
+puede encontrar en el archivo System.mss, que explica el propósito de cada funcion y de los parametros
+enviados a ellas. Tambien se pueden encontrar los parametros predefinidos en xparameters.h
 
-    Las características de la seccion de PS de Zynq, un controlador de interrupciones inherente,
+    Las características de la seccion de procesamiento Zynq, un controlador de interrupciones inherente,
 inicializado aqui como XScuGic INTCInst. Éste maneja todas la consultas de interrupcion entrantes pasadas
-a la seccion de PS y ejecuta la función asociada con cada fuente de interrupcion. Tambien es capaz de 
-priorizar multiples fuentes de interrupcion segun los requerimientos del programa.
+a la seccion de procesamiento y ejecuta la función asociada con cada fuente de interrupcion. Tambien es
+capaz de priorizar multiples fuentes de interrupcion segun los requerimientos del programa.
 
     Como nota particular esta incluida la funcion BTN_Intr_Handler(void *InstancePtr);. Ésta es la función
-controladora de interrupcion para los pulsadores y es invocada cada vez que una consulta de interrupcion
-de los pulsadores en la seccion de PL es recibida en la seccion de PS. Ésto realiza el incremento de un
-contador para cada invocación y exhive el valor del contador sobre los leds de forma binaria.
+controladora de interrupcion para los pulsadores y es invocada cada vez que es recibido un pedido de
+interrupcion en la seccion de procesamiento, solicitado por los pulsadores en la seccion programable. Ésto
+realiza el incremento de un contador en cada invocación y exhive el valor del contador sobre los leds de
+forma binaria.
 
     Se puede encontrar una función de configuración inicial debajo de la función principal 'main()'.
 Ésta es InterruptSystemSetup(XScuGic *XScuGicInstancePtr);. Ésta función inicializa y configura al
-controlador de interrupciones para la fuente de interrupcion. Tambien la ultima función que llamada
+controlador de interrupciones para una fuente de interrupcion dada. Tambien la ultima función que llamada
  habilita las fuentes de interrupcion y los registros de excepciones.
 
-    El siguiente paso es programar la seccion de PL de la Zynq con el archivo bitstream que fué
+    El siguiente paso es programar la seccion programable Zynq con el Archivo Binario que fué
 generado en el Ej 2B.
 
     Asegurese de que la placa de desarrollo de Zynq esta encendida y que el puerto JTAG
 está conectado a la computadora mediante el cable USB-USB. Tambien asegurese de que los puentes en la
 placa tambien esten posicinados como en el tutorial previo.
 
-    (i) Descarge el bitstream a la seccion de PL de la Zynq al selecionar Harramientas de
-Xilinx > Programar FPGA, (Xilinx Tools > Program FPGA), desde la barra de menues. La ventana
-de Programación de la FPGA aparecerá. El campo del bitstream ya debe estar completado con
-el archivo bitstream correcto, como en la figura 2.32.
+    (i) Descarge el Archivo Binario a la seccion programable de la Zynq al selecionar Harramientas de
+Xilinx > Programar FPGA  [Xilinx Tools > Program FPGA] desde la barra de menues. Aparecerá la ventana
+de Programación de la FPGA. El campo del Archivo Binario ya debe estar completado con
+el Archivo Binario correcto, como en la figura 2.32.
 
     Como en el tutorial previo, una vez que el dispositivo ha sido exitosamente programado, el led HECHO
- (DONE) sobre la ZedBoard debe ponerse en azul. Similarmente en la Zybo el led Hecho (DONE) debe ponerse
+ [DONE] sobre la ZedBoard debe ponerse en azul. Similarmente en la Zybo el led Hecho [DONE] debe ponerse
 verde.
 
-    Con la seccion de PL de la Zynq correctamente configurada con el archivo de bitstream, ahora
-podemos lanzar nuestro programa sobre la seccion de PS de la Zynq.
+    Con la seccion programable Zynq correctamente configurada con el archivo de Archivo Binario, ahora
+podemos lanzar nuestro programa sobre la seccion de procesamiento Zynq.
 
     (j) Seleccione el proyecto interrupcion_contador en el explorador de proyecto. Click derecho y seleccione
-ejecutar como > Lanzar en Hardware (GDB), (Run As > Launch in Hardware (GDB)).
+ejecutar como > Lanzar en Hardware (GDB) [Run As > Launch in Hardware (GDB)].
 
 
- | Zed | El contador se incrementará a travez de los diferentes valores basado en cual de los pulsadores
- presione. Ésta operacion esta demostrada en la figura 2.33.
+ | Zed | El contador se incrementará dependiendo de cual de los pulsadores presione. Ésta operacion esta
+ demostrada en la figura 2.33.
 
     Intente presionar diferentes pulsadores y observe como se incrementa el contador. (¿El contador puede
  alcanzar el valor 255?). Basado en sus intentos, ¿Puede determinar los valores asignados a cada uno de
 los pulsadores (BTNU, BTND, BTNL, BTNR y BTNC encontrados en la ZedBoard)?
 
 
-| Zybo | El contador se incrementará a travez de los diferentes valores basado en cual de los pulsadores
- presione. Ésta operacion esta demostrada en la figura 2.34.
+| Zybo | El contador se incrementará dependiendo de cual de los pulsadores presione. Ésta operacion esta
+demostrada en la figura 2.34.
 
     Intente presionar diferentes pulsadores y observe como se incrementa el contador. (¿El contador puede
  alcanzar el valor 255?). Basado en sus intentos, ¿Puede determinar los valores asignados a cada uno de
@@ -501,8 +505,12 @@ los pulsadores (BTN0, BTN1, BTN2 y BTN3 encontrados en la Zybo)?
 
 
 | Ambas | Ha creado y ejecutado exitosamente un programa (aplicación software) utilizando interrupciones
-sobre la seccion de PS de Zynq. El siguiente paso es volver atras y añadir fuentes de interrupcion
+sobre la seccion de procesamiento Zynq. El siguiente paso es volver atras y añadir fuentes de interrupcion
 adicionales con una prioridad superior para alterar la funcionalidad del sistema.
+
+
+
+
 
 
 
@@ -512,45 +520,45 @@ adicionales con una prioridad superior para alterar la funcionalidad del sistema
  Ejercicio 2D -Añadiendo más fuentes de interrupcion
 
     En este ejercicio añadiremos una fuente de interrupcion adicional al proyecto creado en el Ej 2B,
-en la forma de un temporizador AXI, (AXI timer).
+en la forma de un Temporizador AXI [AXI Timer].
 
     (a) Abra Vivado al hacer doble click en el icono de Vivado del escritorio ó desde Inicio>Todos los 
 Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
 
-    (b) Cuando el programa inicie, abra el proyecto previamente creado al selecionar Abrir Proyecto,
-(Open Project).
+    (b) Cuando el programa inicie, abra el proyecto previamente creado al selecionar Abrir Proyecto
+[Open Project].
     
     El proyecto previamente creado debe aparecer el la lista de proyectos recientes como
 "C:/Zynq_Book/zynq_interrupts/zynq_interrupts.xpr", así que seleccionelo. Si no aparece allí, seleccione
-explorar proyectos..., (Browse Project...), y explore por las carpetas hasta encontrarlo, una vez que lo
-encontró seleccione "zynq_interrupts.xpr" y despues seleccione "Abrir" (Open).
+explorar proyectos... [Browse Project...] y explore por las carpetas hasta encontrarlo, una vez que lo
+encontró seleccione "zynq_interrupts.xpr" y despues seleccione "Abrir" [Open].
 
     (c) Abra el bloque de diseño desde el panel de Archivos Fuentes, al abrir el icono de carpeta
 con los Archivos fuentes y seleccione el bloque de diseño, tal y como se muestra en la figura 2.35.
 
-    (d) Con el diagrama de bloque abierto añadiremos un temporizador AXI, (AXI Timer), al diseño.
-En el ambito del diagrama integrador de Cores de I.P., una vez allí haga click derecho con el mouse y
-seleccione Añadir Core de I.P., (Add IP). Ingrese 'timer' en el campo de busqueda, ver figura 2.36,
-y añada el Core de I.P. AXI Timer al diseño al arrastrarlo sobre el ambito ó al selecionarlo y presionar
-Enter en el teclado.
+    (d) Con el diagrama de bloques abierto añadiremos un temporizador AXI [AXI Timer] al diseño.
+En la vista esquemática del integrador de modulos, una vez allí haga click derecho con el mouse y
+seleccione Añadir modulo [Add IP]. Ingrese 'timer' en el campo de busqueda, ver figura 2.36, y añada
+el modulo temporizador AXI [AXI Timer] al diseño al arrastrarlo sobre el ambito ó al selecionarlo y
+presionar "Enter" en el teclado.
 
-    (e) Haga click en Ejecución de Automatización de Conexión, (Run Connection Automation) del 
-mensaje del asitente de diseño, en la parte superior de la ventana de diagrama, y seleccione
+    (e) Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
+mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática, y seleccione
 /axi_gpio_0/S_AXI para conectar el temporizador a la Interconexión AXI. Seleccione OK.
 
-    (f) Note que en la figura del temporizador AXI aparece una "consulta" de interrupcion, la cual se
-necesita conectar a la seccion de PS de Zynq. Sin embargo ya tenemos una interrupcion conectada a la
-entrada de la seccion de PS. Ésta entrada es un puerto de interrupcion compartido/direccionado, así que
-acepta multiples vias de interrupcion a una única señal. Por lo tanto requeriremos de un bloque adicional
-para empalmar estas dos consultas de interrupcion a una única señal. Dentro del ambito haga click derecho
-y seleccione añadir Core de I.P. Ingrese "concat"enate (empalmar) en el campo de busqueda y añada el
+    (f) Note que en la figura del temporizador AXI se destaca un puerto de interrupcion, el cual se
+necesita conectar a la seccion de procesamiento Zynq. Sin embargo ya tenemos una interrupcion conectada a
+la entrada de la seccion de procesamiento. Ésta entrada es un puerto de interrupcion compartido/direccionado,
+así que acepta multiples vias de interrupcion a una única señal. Por lo tanto requeriremos de un bloque adicional
+para empalmar estas dos fuentes de interrupcion a una única señal. Dentro del ambito haga click derecho
+y seleccione añadir Modulo. Ingrese "concat"enate (empalmar) en el campo de busqueda y añada el
 bloque "Concat" al diseño.
 
-    (g) Remueva la conexión entre AXI_GPIO ip2intc_irpt y IRQ_F2P[0:0] de la seccion de PS de Zynq al
-selecionar sobre la linea que las une y presionando desde el teclado el botón Eliminar (DELETE/SUPR).
-Conecte la salida del bloque "Concat", xlconcat_0, a IRQ_F2P[0:0]. Entonces conecte las consultas
-de interrupcion del GPIO a In[0:0] y la interrupcion del temporizador a In1[0:0], del empalme xlconcat_0.
-Creando una señal de interrupcion compartida/direccionada, que es pasada a la seccion de PS.
+    (g) Remueva la conexión entre AXI_GPIO ip2intc_irpt y IRQ_F2P[0:0] de la seccion de procesamiento Zynq al
+selecionar sobre la linea que las une y presionando desde el teclado el botón Eliminar [DELETE/SUPR].
+Conecte la salida del bloque "Concat", xlconcat_0, a IRQ_F2P[0:0]. Entonces conecte la fuente de interrupcion
+del GPIO a In[0:0] y la fuente de interrupcion del temporizador a In1[0:0], del empalme xlconcat_0.
+Creando una señal de interrupcion compartida/direccionada, que es pasada a la seccion de procesamiento.
 
     Su diagrama de bloques debe ser similar a:
 
@@ -562,51 +570,51 @@ Creando una señal de interrupcion compartida/direccionada, que es pasada a la s
 
 
 
-| Ambas | Ahora necesitamos generar el nuevo bitstream para nuestro diseño modificado.
+| Ambas | Ahora necesitamos generar el nuevo Archivo Binario para nuestro diseño modificado.
 
 
-    (h) En el navegador de flujo, (Flow Navigator), seleccione generar trama de bits, (generate bitstream), de la
-seccion Programa y depuración (Program and Debug). Si la ventana de diálogo aparece para guardar
-su diseño, seleccione guardar (Save).
+    (h) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate bitstream]
+de la seccion Programa y Depuración [Program and Debug]. Si la ventana de diálogo aparece para guardar
+su diseño, seleccione guardar [Save].
 
-    (i) La ventana de diálogo se abrirá advirtiendole que esta lanzando implementación y sintesis
-antes de comenzar el proceso de generación del bitstream. Seleccione SI/Yes para llevar a cabo
+    (i) La ventana de diálogo se abrirá advirtiendole que esta lanzando Implementación y Sintesis
+antes de comenzar el proceso de generación del Archivo Binario. Seleccione SI [Yes] para llevar a cabo
 el proceso.
     
-    La combinacion de ejecución de sistesis, implementación y generación del bitstream uno tras
+    La combinacion de ejecución de Sintesis, Implementación y Generación del Archivo Binario uno tras
 otro tomará unos cuantos minutos, dependiendo del desempeño de su computadora.
 
     (j) Cuando este proceso se complete, Seleccione OK.
 
-    (k) En el navegador de flujo, (Flow Navigator), seleccione abrir diseño implementado, (Open Implemented
-Desing), desde la seccion de implementación para abrir el diagrama hardware de la implementación.
-Si el diseño necesita recargarse (reload), seleccione recargar (reload) en la banderita amarilla
-por encima de la pantalla de implementación de hardware. Se debe abrir el diseño implementado actual
-para exportar el diseño hardware.
+    (k) En el navegador de flujo [Flow Navigator] seleccione abrir diseño implementado [Open Implemented
+Design] desde la seccion de implementación para abrir el diagrama hardware de la implementación.
+Si el diseño necesita recargarse, seleccione Recargar [Reload] en la banderita amarilla
+por encima de la pantalla de Implementación de Hardware. Se debe abrir el diseño implementado actual
+para exportar un diseño hardware.
 
-    (l) Seleccione Archivo > Exportar > Exportar hardware, (File>Export>Export hardware), 
+    (l) Seleccione Archivo > Exportar > Exportar hardware [File>Export>Export hardware] 
 desde la barra de menues.
 
     (m) La ventana de diálogo de exportación de hardware se abrirá. Asegurese de que la opcion
-incluir bitstream, (include bitstream), esta seleccionada. Luego seleccione OK. Se exhivirá un diálogo
+incluir Archivo Binario [include bitstream] esta seleccionada. Luego seleccione OK. Se exhivirá un diálogo
 consultandole si desea sobreescribir el archivo exportado, el cual es la característica del sistema
-inicial de una única interrupcion. Seleccione SI/Yes para este así como para las otras posibles
+inicial de una única interrupcion. Seleccione SI [Yes] para este mensaje así como para las otras posibles
 notificaciónes.
 
-    (n) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK, (File> Launch SDK), desde
+    (n) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK [File> Launch SDK] desde
 la barra de menues y seleccione OK.
 
     Una vez que se abra el SDK y usted construya el proyecto, modificaremos nuestro programa para hacer
 uso de la nueva fuente de interrupcion.
 
-    Dentro del explorador de proyecto, (Explore Project), click derecho del mouse sobre el proyecto
-interrupcion_contador y seleccione borrar (DELETE).
+    Dentro del Explorador de Proyecto [Explore Project] click derecho del mouse sobre el proyecto
+interrupcion_contador y seleccione borrar [DELETE].
 
-    Se abrirá el diálogo de eliminación de recursos, (Delete Resources), marque borrar el contenido del
-proyecto de su computadora, (Delete project contents on Disk), tal como en la figura 2.41, luego 
+    Se abrirá el diálogo de eliminación de recursos [Delete Resources] marque borrar el contenido del
+proyecto de su computadora [Delete project contents on Disk] tal como en la figura 2.41, luego 
 seleccione OK.
 
-    Repita para BSP, interrupcion_contador_BSP. Seleccione Continuar (Continue) si existe cualquier
+    Repita para BSP, interrupcion_contador_BSP. Seleccione Continuar [Continue] si existe cualquier
 otro mensaje.
 
     Repita los pasos del Ej 2C de la (a) a la (h) y para crear un programa de proyecto nuevo, BSP e
@@ -619,22 +627,22 @@ el nuevo el valor en los leds.
     El codigo adicional ha sido incluido en el 'main' para configurar el temporizador, y todos los
 detalles de estas funciones se puede encontrar y System.mss . La función
 IntcInitFunction(u16 DeviceId, XTmrCtr *TmrInstancePtr, XGpio *GpioInstancePtr); tambien contiene codigo
-adicional para conectar a la interrupcion del temporizador al manejador y lo habilita.
+adicional para conectar a la interrupcion del temporizador al manejador y habilitarlo.
 
     En resumen, se carga el temporizador con el valor de TMR_LOAD y se configura para que automaticamente
 se recarge este valor luego de cada finalización. El manejador de interrupciones mantiene el seguimiento
 de la cantidad de finalizaciones y luego de la tercera ejecuta los pasos requeridos, de otro modo solo
 incrementa la variable que almacena la cantidad de finalizaciones.
 
-    (ñ) Descarge el bitstream a la seccion de PL de la Zynq al selecionar Harramientas de
-Xilinx > Programar FPGA, (Xilinx Tools > Program FPGA), desde la barra de menues. 
+    (ñ) Descarge el Archivo Binario a la seccion programable Zynq al selecionar Harramientas de
+Xilinx > Programar FPGA [Xilinx Tools > Program FPGA] desde la barra de menues. 
 
     (o) Una vez que el led que indica una programación exitosa encienda en la placa de desarrollo,
 seleccione interrupcion_contador en el explorador de proyecto, luego tecla derecha del mouse y seleccione
-ejecutar como > Lanzar en Hardware (GDB), (Run As > Launch in Hardware (GDB)).
+Ejecutar Como > Lanzar en Hardware (GDB) [Run As > Launch in Hardware (GDB)].
 
-    Note que el contador se incrementará en una unidad cuando el temporizador finaloze tres veces. Los
+    Note que el contador se incrementará en una unidad cuando el temporizador finalice tres veces. Los
 botones se mantienen operando como en el ejercicio previo.
 
-    Ésto completa el tutorial donde sistemas que utilizan ya sea una única fuente de interrupcion, como
-tambien multiples fuentes de interrupcion han sido creados y probados.
+    Ésto completa el tutorial sobre sistemas que utilizan una única fuente de interrupcion como
+así tambien multiples fuentes de interrupcion, las cuales hemos creado y verificado.
