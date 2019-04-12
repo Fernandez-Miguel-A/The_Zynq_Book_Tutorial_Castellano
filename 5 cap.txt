@@ -444,7 +444,7 @@ hacerlo externo.
 
     (g) Posicione el mouse sobre la cada una de las interfaces, IIC_0 y FCLK_CLK1, sobre el bloque "ZYNQ7
 Processing System" (bloque Sistema de procesamiento de Zynq septima generacion), hasta que el icono del
-mouse cambie a un lapiz. Tecla derecha del mouse y seleccione Hacer Externo, (Make External).
+mouse cambie a un lapiz. Tecla derecha del mouse y seleccione Hacer Externo [Make External].
 Alternativamente, seleccione la interfaz y pulse "Ctrl+T" en su teclado.
 
 
@@ -459,7 +459,7 @@ hacerlo externo.
 
     (h) Posicione el mouse sobre la cada una de las interfaces, IIC_0 y FCLK_CLK1, sobre el bloque "ZYNQ7
 Processing System" (bloque Sistema de procesamiento de Zynq septima generacion), hasta que el icono del
-mouse cambie a un lapiz. Tecla derecha del mouse y seleccione Hacer Externo, (Make External).
+mouse cambie a un lapiz. Tecla derecha del mouse y seleccione Hacer Externo [Make External].
 Alternativamente, seleccione la interfaz y pulse "Ctrl+T" en su teclado.
 
 
@@ -487,18 +487,18 @@ interfaz de salida de la GPIO).
     (k) Abra la ventana de repersonalización de modulo al hacer selección doble sobre el bloque
 axi_gpio_0, se abrirá una ventana como la de la figura 5.22.
 
-    (l) Seleccione la pestaña Configuración de IP, (IP Configuration).
+    (l) Seleccione la pestaña Configuración de IP [IP Configuration].
 
 
 
 
- | Zed | Ingrese 2 en ancho del GPIO, (GPIO width), como muestra en la figura 5.23, y cierre la ventana
+ | Zed | Ingrese 2 en ancho del GPIO [GPIO width] como muestra en la figura 5.23, y cierre la ventana
 al seleccionar OK.
 
 
 
 
-| Zybo | Ingrese 1 en ancho del GPIO, (GPIO width), como muestra en la figura 5.24, y cierre la ventana
+| Zybo | Ingrese 1 en ancho del GPIO [GPIO width] como muestra en la figura 5.24, y cierre la ventana
 al seleccionar OK.
 
 
@@ -519,16 +519,17 @@ canal dual/doble.
 
     Haga selección doble sobre el bloque axi_gpio_1 para abrir la ventana de repersonalización de modulo.
     
-    En la pestaña Configuración de IP, (IP Configuration), seleccione la opción Habilitar canal dual y 
+    En la pestaña Configuración de IP [IP Configuration] seleccione la opción Habilitar canal dual y 
 luego seleccione OK.
 
 
 
+    Ested debe ver que el bloque axi_gpio_1 ahora tiene dos puertos, 1 para conectar a
+los pulsadores [push buttons] y otro para las llavecitas interrupturas [slide switches] sobre
+la placa.
 
- | Zed | Ested debe ver que el bloque axi_gpio_1 ahora tiene dos puertos, 1 para conectar al los pulsadores,
-(push buttons), y otro para las llavecitas interrupturas, (slide switches), sobre la ZedBoard.
 
-    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
+ | Zed | Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
 /axi_gpio_0/GPIO y seleccione btns_5bits en el campo 'seleccion del componente de placa'
 (Select board interface). 
 
@@ -543,10 +544,7 @@ luego seleccione OK.
 
 
 
-| Zybo | Ested debe ver que el bloque axi_gpio_1 ahora tiene dos puertos, 1 para conectar al los pulsadores,
-(push buttons), y otro para las llavecitas interrupturas, (slide switches), sobre la ZedBoard.
-
-    Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
+| Zybo | Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] para
 /axi_gpio_0/GPIO y seleccione btns_4bits en el campo 'seleccion del componente de placa'
 (Select board interface). 
 
@@ -567,10 +565,10 @@ utilizado.
 
 
 
- | Zed | Seleccione la pestaña del editor de direcciones, (Address Editor), desde la ventana de Diseño por
+ | Zed | Seleccione la pestaña del editor de direcciones [Address Editor] desde la ventana de Diseño por
 Bloques, como está resaltado en la figura 5.25.
 
-    Seleccione el botón abrir//expandir todo, (Expand All), como se resalta en la figura 5.25.
+    Seleccione el botón abrir//expandir todo [Expand All] como se resalta en la figura 5.25.
 
     Verifique el rango asignado para cada una de las celdas de perisféricos nuevamente figura 5.25.
 
@@ -581,10 +579,10 @@ puede éste paso e ir al paso (p).
 
 
 
-| Zybo | Seleccione la pestaña del editor de direcciones, (Address Editor), desde la ventana de Diseño por
+| Zybo | Seleccione la pestaña del editor de direcciones [Address Editor] desde la ventana de Diseño por
 Bloques, como está resaltado en la figura 5.26.
 
-    Seleccione el botón abrir//expandir todo, (Expand All), como se resalta en la figura 5.26.
+    Seleccione el botón abrir//expandir todo [Expand All] como se resalta en la figura 5.26.
 
     Verifique el rango asignado para cada una de las celdas de perisféricos nuevamente figura 5.26.
 
@@ -595,12 +593,12 @@ puede éste paso e ir al paso (p).
 
 
 
-| Ambas | (p) Regrese al diseño por bloques al seleccionar a la pestaña de la vista esquemática (Diagram)
+| Ambas | (p) Regrese al diseño por bloques al seleccionar a la pestaña de la vista esquemática [Diagram]
 de la ventana del Integrador de Modulos.
 
     
 
-    (q) Haga click en el botón Regenerar Capa, (Regenerate Layout), |<.( ).>|, para regenerar la capa de
+    (q) Haga click en el botón Regenerar Capa [Regenerate Layout] | (¯><.) |, para regenerar la capa de
 varios de los bloques de modulos y hacer el diseño por bloques facil de seguir.
 
 
@@ -624,7 +622,7 @@ archivos RTL para nuestro diseño por bloques.
 diseño_ip en la pestaña Archivos Fuente [Sources] y seleccione crear vinculador HDL [Create HDL Wrapper].
 
     Seleccione Permitir a Vivado administralo y actualizarlo automaticamente,
-(Let Vivado manage wrapper and auto-update), Seleccione OK.
+[Let Vivado manage wrapper and auto-update], Seleccione OK.
 
     La siguiente tarea que debemos de hacer antes de ejecutar Síntesis e Implementación del diseño, es
 añadir un archivo de restriciones que vincule las interfaces externas de nuestro diseño a los pines

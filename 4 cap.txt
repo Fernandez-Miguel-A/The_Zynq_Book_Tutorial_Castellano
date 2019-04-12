@@ -90,7 +90,7 @@ Programas> Xilinx Design Tools > Vivado 2015.1> Vivado 2015.1.
     (c) En el diálogo "Proyecto Nuevo" [new project] seleccione siguiente [Next].
 
     (d) En el diálogo de nombre de proyecto ingrese controlador_led en el campo Nombre De Proyecto,
-(Project Name), y en Ubicación De Proyecto, (Project Location), ingrese "C:/Zynq_Book".
+ [Project Name] y en Ubicación De Proyecto [Project Location] ingrese "C:/Zynq_Book".
 
     Asegurese de que halla seleccionado la opción "create project subdirectory" ( crear subcarpeta de 
 proyecto ), todas las opciones deben ser las mismas que en la figura 4.1.
@@ -622,7 +622,7 @@ seleccionar Archivo > Nuevo > Proyecto de Aplicación, (File>New>Application Pro
 menues.
 
     En el diálogo de proyecto nuevo, (new Project), ingrese sistema_prueba_led en el campo Nombre De
-Proyecto, (Project Name).
+Proyecto [Project Name].
 
     Por defecto la opción para crear paquetes de soporte de placa nuevo está seleccionado. Seleccione
 siguiente [Next].
@@ -1068,10 +1068,10 @@ Vivado 2015.1 > Xilinx HLS 2015.1 .
 
     (b) Cuando la GUI de Vivado HLS inicie, se encontrará con la pantalla de bienvenida. Ver figura 4.31.
 
-    (c) Seleccione la opción crear proyecto nuevo, (Create New Project), como la de la figura 4.32.
+    (c) Seleccione la opción crear proyecto nuevo [Create New Project] como la de la figura 4.32.
 
-    Ingrese hls_nco como Nombre de Proyecto, (Project Name), y "C:/Zynq_Book" como Ubicación De Proyecto,
-(Project Location).
+    Ingrese hls_nco como Nombre de Proyecto [Project Name] y "C:/Zynq_Book" como Ubicación De Proyecto,
+[Project Location].
 
     Asegúrese que la opción de igualar la seleccion de la figura 4.32 y seleccione siguiente [Next].
 
@@ -1079,7 +1079,7 @@ Vivado 2015.1 > Xilinx HLS 2015.1 .
 Aqui es donde los archivos fuente tipo "C" (ó archivo C fuente, directamente) pueden ser añadidos al
 proyecto, ó donde archivos fuente nuevos son creados.
 
-    Ingrese nco como la función superior y seleccione Añadir Archivos..., (Add Files...).
+    Ingrese nco como la función superior y seleccione Añadir Archivos... [Add Files...].
 
     Explore hasta "C:/Zynq_Book/sources/hls_nco" y seleccione nco.cpp, luego seleccione Abrir [Open].
 
@@ -1091,7 +1091,7 @@ proyecto, ó donde archivos fuente nuevos son creados.
 prueba <====================== pueden ser añadidos al proyecto, ó donde bancos de prueba (testbench) nuevos
 son creados.
 
-    Seleccione Añadir Archivos..., (Add Files...), y explore hasta "C:/Zynq_Book/sources/hls_nco".
+    Seleccione Añadir Archivos... [Add Files...] y explore hasta "C:/Zynq_Book/sources/hls_nco".
 Seleccione nco_bnc_prb.cpp y luego seleccione Abrir [Open] para añadir archivos de bancos de prueba
 (testbench) al proyecto.
 
@@ -1128,7 +1128,7 @@ Se debe seleccionar el chip de Zynq 'Z7010' con encapsulado clg400. Seleccione O
 
     Se abrirá el Espacio de Trabajo de Vivado HLS.
 
-    (h) En el panel Explorador (Explorer) abra los bloquecitos Archivos fuente (SOURCE) y el de Bancos de
+    (h) En el panel Explorador [Explorer] abra los bloquecitos Archivos fuente (SOURCE) y el de Bancos de
 Prueba (Test Bench). Usted debe ver los archivos fuente que especifico en el asistente de Proyecto Nuevo,
 como en la figura 4.36.
 
