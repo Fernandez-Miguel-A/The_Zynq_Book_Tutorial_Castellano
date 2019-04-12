@@ -1,5 +1,3 @@
-Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
-"El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
 
 
 
@@ -23,7 +21,7 @@ destrezas que han sido adquiridas.
 (New Project).
 
  Ejercicio 2B - En éste ejercicio usaremos el proyecto hemos creado en el Ej 2A para construir un sistema 
-embebido Zynq que utiliza interrupciones haciendo uso del integrador de modulos, incorporando modulos
+embebido Zynq que utiliza interrupciones haciendo uso del Integrador de Modulos, incorporando modulos
 existentes en el Catálogo de Vivado. Éste ejercicio ampliará el conocimiento previo, ganado en la creación
 y conexión de un sistema basado en bloques en el integrador de modulos. El diseño finalizado tendrá un
 Archivo Binario generado asociado a éste, que será exportado al SDK de Xilinx para participar en el programa
