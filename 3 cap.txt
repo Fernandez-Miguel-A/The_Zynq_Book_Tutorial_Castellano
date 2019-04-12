@@ -8,21 +8,22 @@ Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
 
 
         Introducción
-    Éste tutorial presenta una introducción de Sintesis de Alto Nivel, (High Level Synthesis - HLS),
-utilizando el ambiente de Vivado HLS. Será cubierta la creación de proyectos manualmente a travez de la
-GUI y la automatización a travez de GUIONES (Scripts). El proceso de simulación, sintesis y análisis de
-un diseño HLS de Vivado será explorado, con optimizaciones de diseño y comparación de solución mediante
-un modo.
+    Éste tutorial nos introducirá a la Sintesis de Alto Nivel [High Level Synthesis - HLS] 
+utilizando el ambiente de Vivado HLS. Que abarcara tanto la creación de proyectos de forma manual con
+la interfaz grafica [GUI], como tambien el proceso de automatización a travez de GUIONES [Scripts],
+de donde tambien descubriremos el proceso de simulación, sintesis y análisis para un diseño HLS con Vivado,
+donde compararemos las diferentes optimizaciones de diseño como tambien las distintas soluciónes a lo largo
+de todo el progreso.
 
     Éste tutorial esta dividido en cuatro ejercicios y se organiza como sigue:
 
- Ejercicio 3A - Éste ejercicio concierne en la creación de proyectos utilizando ambos métodos, Diseño a
- travez de la GUI de Vivado HLS y el uso de GUIONADO (Scripting) Tcl. Detalla la inclución de
-archivos fuente relevantes, archivos de prueba y generación de un proyecto para uso en el ejercicio
-siguiente.
+ Ejercicio 3A - Éste ejercicio trata sobre la creación de proyectos utilizando ambos métodos, Diseño a
+travez de la interfaz grafica de Vivado HLS, así como tambien el uso de GUIONADO [Scripting] Tcl. Detalla
+la inclución de archivos fuente relevantes, archivos de prueba y generación de un proyecto para uso en el
+ejercicio siguiente.
 
- Ejercicio 3B - En éste ejercicio involucra optimizaciones de diseño de una función de multiplicación de
- matriz, a travez de varias directivas. Presenta el ambiente de diseño de Vivado HLS y métodos de sintesis
+ Ejercicio 3B - En éste ejercicio estarán involucradas las optimizaciones de diseño de una función de multiplicación
+ matricial, utilizando varias directivas. Presenta el ambiente de diseño de Vivado HLS y métodos de sintesis
  y análisis de soluciónes de proyecto.
 
  Ejercicio 3C - Finalmente, se investiga más en detalle como Vivado HLS sintetiza interfaces.
@@ -33,8 +34,9 @@ siguiente.
 
  Ejercicio 3A - Creando proyectos en Vivado HLS.
 
-    En éste ejercicio presentaremos la creación de proyectos con Vivado HLS utilizando ambos métodos, 
-diseño a travez de la GUI de Vivado HLS y el uso de GUIONADO (Scripting) Tcl para llevar a cabo el proceso.
+    En éste ejercicio presentaremos la creación de proyectos con Vivado HLS utilizando dos métodos,
+Diseño a travez de la interfaz grafica, así como tambien el uso de GUIONADO [Scripting] Tcl para llevar
+a cabo el proceso.
 
     (a) Antes de comenzar es necesario copiar los archivos desde "C:/Zynq_Book/sources/hls" a una nueva
 carpeta "C:/Zynq_Book/HLS".
@@ -44,28 +46,28 @@ Vivado 2015.1 > Xilinx HLS 2015.1 .
 
     (c) Cuando la GUI de Vivado HLS inicie, se encontrará con la pantalla de bienvenida. Ver figura 3.1.
 
-    (d) Seleccione la opción crear proyecto nuevo, (Create New Project), como la de la figura 3.1.
+    (d) Seleccione la opción Crear Proyecto Nuevo [Create New Project] como la de la figura 3.1.
 
-    (e) En el diálogo de nombre de proyecto ingrese proy_mult_matriz en el campo Nombre De Proyecto,
-(Project Name), y en Ubicación De Proyecto, (Project Location), ingrese "C:/Zynq_Book/HLS/tut3A".
+    (e) En el diálogo de nombre de proyecto ingrese proy_mult_matriz en el campo Nombre De Proyecto
+[Project Name] y en Ubicación De Proyecto [Project Location] ingrese "C:/Zynq_Book/HLS/tut3A".
     
     Seleccione siguiente [Next].
 
-    (f) Ahora se le exhivirá una ventana para añadir y/o remover archivos fuente para el proyecto. Todos
-los archivos C de este tutorial han sido creados en avanzado, como intentamos guiarlo a travez del flujo
-de diseño en lugar de la propia programación. Seleccione añadir archivos..., (add Files...), y explore
-hasta "C:/Zynq_Book/HLS/tut3A".
+    (f) Ahora se le aparecerá una ventana para añadir y/o remover archivos fuente del proyecto. Todos
+los archivos C de este tutorial han sido creados de antemano para usted, porque intentamos guiarlo a
+travez del flujo de diseño en lugar de la propia programación. Seleccione Añadir Archivos... [Add Files...]
+y explore hasta "C:/Zynq_Book/HLS/tut3A".
 
     Seleccione los archivos mult_matriz.cpp y mult_matriz.h (mantenga presionado la tecla 'Ctrl'- Control
-de su teclado para seleccionar varios archivos) y seleccione abrir [Open]. En el campo función superior,
-(Top function), defina a mult_matriz, tal como en la figura 3.2. Seleccione siguiente [Next].
+de su teclado para seleccionar varios archivos) y seleccione abrir [Open]. En el campo función superior
+[Top function] defina a mult_matriz, tal como en la figura 3.2. Seleccione siguiente [Next].
 
-    (g) Ahora se le exhivirá una ventana para añadir un archivo de banco de pruebas ('testbench') para
-probar el diseño. Una vez más seleccione añadir archivos... y explore en la carpeta anterior pero
+    (g) Ahora se le aparecerá una ventana para añadir un archivo de banco de pruebas ('testbench') para
+probar el diseño. Una vez más seleccione Añadir Archivos... y explore en la carpeta anterior pero
 esta vez añadiendo al archivo prueba_mult_matriz.cpp y luego seleccione siguiente.
 
     El siguiente paso es configurar una solución para una tecnología de FPGA específica. En éste caso,
-omita el nombre de la solución y asegurese de que el Periodo de Relog (Clock Period), esté establecido a 5
+omita el nombre de la solución y asegurese de que el Periodo de Relog [Clock Period], esté sea 5
 como lo muestra la figura 3.3.
 
 
@@ -73,7 +75,7 @@ como lo muestra la figura 3.3.
  | Zed | Ya que estamos utilizando la ZedBoard con el chip Zynq-7020 seleccione, |...| en el panel
 de seleccion de partes.
 
-    En la seccion Seleccionar (Select), seleccione Placas (Boards), y entonces filtre las partes de placas
+    En la seccion Seleccionar [Select] seleccione Placas [Boards] y entonces filtre las partes de placas
 utilizando el filtro con menu desplegable como el de la figura 3.4. Seleccione ZedBoard Zynq Evaluation and
 Development Kit (ZedBoard Equipo Zynq de evaluacion y desarrollo) y seleccione OK. Seleccione Finalizar
 [Finish].
@@ -83,31 +85,31 @@ Development Kit (ZedBoard Equipo Zynq de evaluacion y desarrollo) y seleccione O
 | Zybo | Ya que estamos utilizando la Zybo con el chip Zynq-7010 seleccione, |...| en el panel
 de seleccion de partes.
 
-    En la seccion Seleccionar (Select), seleccione Partes (Parts), y entonces filtre las partes de placas
-utilizando el filtro con menu desplegable como el de la figura 3.5. La parte requerida puede ser confirmada
-al inspeccionar el chip Zynq sobre Zybo, la placa de desarrollo Zynq. Se debe seleccionar el chip de Zynq
+    En la seccion Seleccionar [Select] seleccione Partes [Parts] y entonces filtre las partes de placas
+utilizando el filtro con menu desplegable como el de la figura 3.5. Se puede corroborar que tipo de 'parte'
+tenemos, mirando el chip Zynq sobre la placa de desarrollo Zybo. Se debe seleccionar el chip de Zynq
  'Z7010' con encapsulado clg400. Seleccione OK. 
 
     Seleccione Finalizar [Finish].
 
 
 
-| Ambas | (h) Será generado el proyecto y el espacio de trabajo abrirá en modo sintesis (Synthesis),
+| Ambas | (h) Será generado el proyecto y el espacio de trabajo abrirá en modo sintesis [Synthesis]
 para el proyecto y solución generado. Como en la figura 3.6.
 
-    Abriendo la seccion Archivos Fuentes y bancos de prueba (Sources y testbench) desde la izquiera de
-la pestaña Explorador (Explorer) muestra la inclución de los archivos fuentes y de los archivos de pruebas
-del paso anterio. Haciendo seleccion doble (Double Click) con el mouse sobre estos archivos, abre los
+    Abriendo la seccion Archivos Fuentes y bancos de prueba [Sources y testbench] de la mano izquierda de
+la pestaña Explorador [Explorer], nos muestra la inclución de los Archivos Fuentes y de los Archivos de Pruebas
+del paso anterior. Haciendo seleccion doble (Double Click) con el mouse sobre estos archivos, abre los
 archivos en el editor para examinación y edición.
 
-    El proyecto consiste en un multiplicador de matriz, el cual multiplica dos matrices 'inA' e 'inB' para
+    El proyecto consiste en un multiplicador matricial, el cual multiplica dos matrices 'inA' e 'inB' para
 producir la salida 'prod'. El banco de pruebas ejerce la multiplicación de dos matrices conocidas y verifica
 el valor dentro de 'prod' con los valores que se esperan.
 
     Mientras que el proceso de obtencion de esta etapa del desarrollo de HLS es relativamente sencillo,
 que puede ser un poco repetitivo así que puede ser facilitado mediante el uso de GUIONADO en Tcl. Ésto
 automatiza el proceso nombrado de proyecto e inserción de archivos, Como tal, demostraremos ahora la
-creación del mismo proyecto utilizando el antes mencionado GUIONADO (Scripting) de acceso.
+creación del mismo proyecto utilizando el antes mencionado GUIONADO [Scripting] de acceso.
 
     (i) Primero, cierre la GUI HLS de Vivado. Ahora abriremos la ventana de comandos de Vivado HLS.
 
@@ -115,8 +117,9 @@ creación del mismo proyecto utilizando el antes mencionado GUIONADO (Scripting)
 Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
 
     (j) Observe que la ruta de la carpeta predeterminada para los comandos es la carpeta de instalación
-de Vivado HLS, como muestra la figura 3.7. Para cambiarla por nuestra carpeta de trabajo de éste tutorial,
-utilizamos los siguientes comandos seguidos de la tecla (Enter).
+de Vivado HLS, como muestra la figura 3.7. Para cambiarla por nuestra carpeta de trabajo para éste tutorial
+utilizamos los siguientes comandos seguidos de la tecla (Enter), los cuales deben realizarse estrictamente
+en el orden mostrado, de otro modo no realizarán el proceso esperado.
 
     * cd..                      - Éste es un comando de cambio de carpeta que va a la carpeta de atras.
 Repitalo hasta haber alcanzado la ruta al disco "C:/".
@@ -125,7 +128,7 @@ Repitalo hasta haber alcanzado la ruta al disco "C:/".
     * cd tut3A                  - Éste comando cambia a la carpeta Zynq_Book/HLS/tut3A.
 
     La ventana de comandos debe estar en la carpeta de trabajo "C:/Zynq_Book/HLS/tut3A". Ésta carpeta
-contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION (Script) Tcl
+contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION Tcl [Tcl Script]
 requerido para construir el proyecto, run_hls_zed.tcl y run_hls_zybo.tcl.
 
     (k) Con la carpeta de trabajo correcta y los archivos requeridos dentro de ella, podemos construir
@@ -149,7 +152,7 @@ funciona correctamente.
     
 
     El banco de pruebas ejerce la multiplicación idéntica utilizando la solución Hardware de HLS y el
-programa; y compara el resultado. Si el resultado es idéntico, se exhivirá un mensaje "Test Passed!"
+programa; y compara el resultado. Si los resultados coinciden, se exhivirá un mensaje "Test Passed!"
 (Prueba superada):
 
     (l) Para abrir el proyecto en la GUI de Vivado HLS ingrese el siguiente comando:
@@ -164,10 +167,10 @@ el cual utilizaremos en el siguiente ejercicio.
 
 
 
-    Utilizando el proyecto generado en el ejercicio previo, ahora investigaremos el proceso de optimizacion
- de diseño en Vivado HLS. Ésto tambien proveerá una idea dentro del flujo desde que se crea un proyecto
-hasta su sintesis C y cosimulación C/RTL. Tambien discutiremos el uso de la perspectiva de Analisis 
-('Analysis') en el análisis de una solución HLS.
+    Utilizando el proyecto generado en el ejercicio previo, investigaremos el proceso de optimizacion
+ de diseño en Vivado HLS. Ésto tambien nos dotará de cierta perspicacia, la cual iremos adquiriendo
+a medida que creamos un proyecto hasta concluir en una sintesis C y cosimulación C/RTL. Tambien
+discutiremos el uso de la perspectiva de Analisis [Analysis] en el análisis de una Solución HLS.
 
 
 Ejercicio 3B - Optimización de Diseño en Vivado HLS
@@ -175,61 +178,61 @@ Ejercicio 3B - Optimización de Diseño en Vivado HLS
     (a) Usted ya debe tener abierta la GUI desde el ejercicio anterior, pero si no es así. Abra el
 proyecto proy_mult_matriz en la carpeta "C:/Zynq_Book/HLS/tut3A".
 
-    (b) Abra la pestaña Archivos Fuentes y bancos de prueba (Sources y testbench) desde la pestaña
-Explorador (Explorer) de la vista de sintesis. Como antes esto muestra los archivos fuentes y archivos 
-de prueba que han sido añadidos exitosamente al proyecto. Haciendo seleccion doble (Double Click) con el
-mouse sobre estos archivos, abre los archivos en el editor para ser inspeccionados y alterados como es
-requerido.
+    (b) Abra la pestaña Archivos Fuentes y Bancos de Pruebas [Sources y Testbench] desde la pestaña
+Explorador [Explorer] de la vista de sintesis. Como antes vimos, muestra los Archivos Fuentes y
+los archivos de Banco de Pruebas que han sido añadidos exitosamente al proyecto. Haciendo seleccion
+doble (Double Click) con el mouse sobre estos archivos, abrirá los archivos en el editor para ser
+inspeccionados y alterados, lo cual será necesario más adelante.
 
     mult_matriz.cpp contiene el codigo que hace la multiplicación de las dos matrices a travez del uso
-de ciclos iterativos que recorren por las filas y columnas para calcular el producto.
+de ciclos iterativos que recorren las filas y columnas para calcular el producto.
 
-    mult_matriz.h contiene definiciones y el prototipo de función para la multiplicación de matrices.
+    mult_matriz.h contiene definiciones y el prototipo de función que multiplica las matrices.
 
-    prueba_mult_matriz.cpp es el banco de pruebas ('testbench'), que calcula el producto de dos matrices
-dadas utilizando ambas, solución de Hardware HLS y el programa comparandolas a las dos para asegurar
-de una operación exitosa.
+    prueba_mult_matriz.cpp es el Banco de Pruebas [Testbench], que calcula el producto de dos matrices
+dadas, utilizando tanto con la implementación en Hardware de HLS como con una función algoritmica,
+comparando los resultados entre las dos para asegurar que tenga un comportamiento adecuado.
     
-    (c) Haga Click en el botón de ejecución simulación en C [Run C Simulation] de la barra de herramientas
+    (c) Haga Click en el botón de Ejecución Simulación en C [Run C Simulation] de la barra de herramientas
 para realizar una simulación en codigo C de la solución. Ignore las opciónes predeterminadas (sin
 bloques de verificación ni argumentos de entrada) y seleccione OK. Una vez que la simulación complete
 se mostrará el mensaje "Test Passed!", en la consola debajo de la pantalla. Ver figura 3.8.
 
     (d) El siguiente paso es sintetizar el codigo C++ utilizando el codigo HLS. Seleccione el botón
-de Sintesis C, (C Synthesis), en la barra de herramientas. Vivado HLS comenzará el proceso de conversión
+de Sintesis C [C Synthesis] en la barra de herramientas. Vivado HLS comenzará el proceso de conversión
 de codigo C++ a un modelo RTL con el codigo asociado VHDL/Verilog/SystemC. La consola detalla los pasos
 ejecutados en la realización de ésto.
 
-    Una vez completado, un reporte de sintesis (Synthesis Report) se abrirá automaticamente. Éste detalla
+    Una vez finalizado, un Reportes de Sintesiss [Synthesis Report] se abrirá automaticamente. Éste detalla
 varios aspectos del diseño sintetizado, tales como información concerniente al temporizado y latencia,
-estimazación del uso de recursos de la FPGA.(Usted puede abrir los bloques para ver los resultados).
+como tambien estimazación del uso de recursos de la FPGA.(Usted puede abrir los bloques para ver los resultados).
 
-    El diseño de sistetizado tiene un intervalo 687 ciclos de relog (cantidad de pulsos de relog).
+    El diseño sintetizado tiene un intervalo de operación de unos 687 ciclos de relog (cantidad de pulsos de relog).
 Cada arreglo de entrada contiene 25 elementos (como utiliza matrices 5X5) y esto sugiere aproximadamente
 27 ciclos de relog por cada lectura de entrada.
 
-    Ahora podemos ejecutar una cosimulación C/RTL para asegurarnos que este RTL sintetizado se comporta
-exactamente como el codigo C++ bajo prueba.
+    Ahora podemos ejecutar una cosimulación C/RTL para asegurarnos que este RTL sintetizado que esta
+bajo prueba se comporta exactamente como el codigo C++.
 
-    Seleccione el botón |./| ejecutar cosimulación C/RTL, (Run C/RTL Cosimulation). Para la seccion RTL,
+    Seleccione el botón ejecutar cosimulación C/RTL |./| [Run C/RTL Cosimulation]. Para la seccion RTL,
 asegurese de que se selecciono VHDL y entonces seleccione OK. Ahora comenzará la cosimulación, siendo
 generado el sistema RTL utilizando VHDL. Éste proceso puede tardar un poco mientras se completa pero el 
-progreso se puede ver en la consola. Una vez completado, se abrirá el Reporte de Cosimulación, 
-(Cosimulation Report), tal y como la figura 3.10.
+progreso se puede ver en la consola. Una vez completado, se abrirá el Reporte de Cosimulación
+[Cosimulation Report] tal y como la figura 3.10.
 
     Note el mensaje 'Pass' ('Superado') en la figura 3.10 indicando que el RTL se comporta igual al codigo
 fuente C++.
 
     (e) Cree una solución nueva para el diseño desde cualquier medio, seleccionando el botón Solución Nueva
-|+[<>]| (New Solution), en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
-(Project > New Solution). Seleccione Finalizar [Finish], para aceptar por defecto los de la solución2.
+|+[<>]| [New Solution, en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
+[Project > New Solution]. Seleccione Finalizar [Finish], para aceptar por defecto los de la solución2.
 
-    (f) Haga doble seleccion (Double Click) sobre mult_matriz.cpp de la seccion Archivos Fuentes, [Sources],
-de la pestaña Explorador (Explorer), para asegurar que el codigo es visible en el espacio de trabajo,
+    (f) Haga doble seleccion (Double Click) sobre mult_matriz.cpp de la seccion Archivos Fuentes [Sources]
+de la pestaña Explorador [Explorer], para asegurar que el codigo es visible en el espacio de trabajo,
 ahora insertaremos una directiva que paralelizará los bucles anidados del codigo de la multiplicación de
 matrices. Ésto ejecutará bucles planos, removiendo la necesidad para transiciones de bucles.   <=== ???
 
-    Abra la pestaña Directivas (Directives), de la derecha del espacio de trabajo. Seleccione Producto
+    Abra la pestaña Directivas [Directives] de la derecha del espacio de trabajo. Seleccione Producto
 y observará la porción de codigo asociada resaltada en el editor, a este punto la multiplicación de 
 elementos del arreglo para producir los elementos producto de la matriz resultante.    <==== ~~~~ +-+-
 Tecla derecha del mouse sobre Producto y seleccione Insertar Directiva, (Insert Directive):
@@ -441,7 +444,7 @@ el cual utilizaremos en el siguiente ejercicio.
 
 
     (e) Abra el archivo mult_matriz.cpp desde la seccion Archivos Fuentes, [Sources], de la pestaña
-Explorador (Explorer), y seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL.
+Explorador [Explorer], y seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL.
 Cuando el reporte de sintesis abra, desplasece hasta la seccion interfaz.
 
     Note que los arreglos de entrada a y b, así como el arreglo producto resultante prod han sido
