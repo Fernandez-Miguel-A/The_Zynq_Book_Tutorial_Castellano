@@ -1,12 +1,12 @@
-
+Explicar que es un "diseño de sistema embebido Zynq."
 
 
 
                                             Introducción:
     Éste tutorial lo guiará a travez del proceso de creación de su primer diseño en Zynq utilizando el IDE Vivado
-y lo orientará en el manejo del ambiente integrador de modulos para generar un sencillo diseño que utilize el
 procesador Zynq,  para luego implementarlo en una placa de desarrollo Zynq. El Equipo para desarrollo de
-controladores/programas (SDK - Software Development Kit) será utilizado para crear un sencillo controlador que se
+y lo orientará en el manejo del Ambiente Integrador de Modulos para generar un sencillo diseño que utilize el
+Controladores/programas (SDK - Software Development Kit) será utilizado para crear un sencillo controlador que se
 ejecutará en el sistema de procesamiento ARM de Zynq (PS - Processing System) para que controle el hardware que
 se implementa en seccion programable (PL - Programmable Logic).
 
@@ -24,7 +24,7 @@ se implementa en seccion programable (PL - Programmable Logic).
  entre la seccion de procesamiento Zynq y el modulo de la seccion programable, lo cual será desarrollado más abajo.
 
     Una vez que ha finalizado el diseñado, se seguirá unos cuantos pasos más para completar el sistema hardware
- y generar el "bitstream" (trama binaria), de ahora en más el "Archivo Binario"; que será implementado en la seccion
+ y generar el "Bitstream" (trama binaria), de ahora en más el "Archivo Binario"; que será implementado en la seccion
  programable.
  El diseño hardware finalizado será exportado al Equipo de desarrollo de controladores [SDK] para el desarrollo de
  su, rudimentario, controlador  en el Ej 1C.
@@ -125,8 +125,8 @@ encuentre desmarcada, es decir que NO este seleccionada:
 
     Seleccione siguiente [Next].
 
-    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como su lenguaje de
-implementacion, en el campo target languaje, y como Simulador a Mixto [Mixed], en el campo Simulator 
+    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como su Lenguaje de
+Implementacion [Target Languaje] y como Simulador a Mixto [Mixed], en el campo Simulator 
 Languaje.
 
     Si existen archivos fuente del tipo HDL ó archivos netlist para añadir al proyecto, se los puede 
@@ -194,8 +194,8 @@ visualizados al pasar el mouse por encima de los botones, como en la figura 1.6:
 de ventana amplio y para aquellos con interfaz gráfica, tales como:
 
     *Panel de esquemáticos.
-    *Panel del dispositivo.
-    *Panel del paquete.
+    *Panel de dispositivo.
+    *Panel de modulo empaquetado.
     *Panel del editor de texto.
 
     4. La barra de estado del proyecto - Dicha barra exhive el estado del diseño activo actual.
@@ -203,7 +203,7 @@ de ventana amplio y para aquellos con interfaz gráfica, tales como:
     5. Navegador de flujo - Éste navegador le provee un facil acceso a las herramientas y comandos
  que son necesarios para guiar su diseño de principo a fin, comenzando con la seccion del 
  Administrador de Proyecto con un campo de diseño y finalizando con la generación del "Archivo
-Binario" [bitstream], en la seccion de Programa y Depuración [Program and Debug]. Los comandos para
+Binario" [Bitstream], en la seccion de Programa y Depuración [Program and Debug]. Los comandos para
 la ejecución estan disponible en la seccion de "Simulación, Sintesis e Implementación"; para simular,
 sintetizar e implementar el diseño que este activo.
 
@@ -228,12 +228,12 @@ herramientas. Todo será exhivido el la esquina inferior izquierda cuando el com
 aparecerá en ésta barra.
 
 Durante la creacion de una restriccion y un 
-    *Al aplicar restricciones [constraints] y alojar la creación en la ventana de paquete y dispositivo,
-validación y tipo de restricción será exhivido del lado izquiedo de esta barra. Pero del lado 
+    *Al aplicar restricciones [constraints] y alojar la creación en la ventana de modulo empaquetado
+y dispositivo, validación y tipo de restricción será exhivido del lado izquiedo de esta barra. Pero del lado 
 derecho las coordenadas del sitio y el tipo.
 
     *La barra de progreso de una tarea en proceso será reubicada del lado derecho de la barra de estado
-global, cuando se selecciona el botón "background" ( fondo ).
+global, cuando se selecciona el botón "fondo" [background].
 
 
     8. Ventana de Resultados - La ventana de resultados muestra el estado y resultado de los comandos
@@ -248,7 +248,7 @@ mensajes de salida tambien estan disponibles.
 
     *Reportes - Se provee acceso rápido a los reportes generados a travez del flujo de diseño.
 
-    *Información de seguimiento (Log) - Muestra a los archivos de seguimiento generados por el
+    *Información de seguimiento [Log] - Muestra a los archivos de seguimiento generados por el
  proceso de "Simulación, Síntesis e Implementación".
 
     *Ejecución de diseño - Administra la ejecución del proyecto actual.
@@ -272,7 +272,7 @@ Ejercicio 1B - Creando un sistema Zynq en Vivado
 
     En éste ejercicio crearemos un sistema embebido Zynq simple que implemente un controlador de
 pines de entrada/salida en la seccion programable de nuestro dispositivo Zynq. El controlador
-de GPIO (General Purpose Input/Output - Entrada/salida tradicional o de propósito general) se
+GPIO (General Purpose Input/Output - Entrada/salida tradicional o de propósito general) se
 conecta a los leds. Tambien se puede conectar al procesador Zynq mediante la conexión de un bus
 AXI, permitiendo así que los leds sean controlados por programa, lo cual crearemos en el Ej 1C.
 
@@ -426,7 +426,7 @@ archivos de diseño HDL.
 
     (k) Valide el diseño al seleccionar Herramientas > Validar Diseño, [Tools > Validate Design],
 de la barra de menues. Ésto ejecutará el Verificado de Reglas de Diseño
-(Design-Rules-Check ó  DRC).
+[Design-Rules-Check  -  DRC].
                                                                        __
     De manera alternativa, puede seleccionar el botón Validar Diseño, |./|, de la barra de
                                                                        ¯¯
@@ -457,7 +457,7 @@ durante el proceso de sintesis. Como hemos especificado VHDL como su lenguaje de
 ver Ej 1A, todos los archivos generados serán en VHDL.
 
     Con todos los archivos de diseño generados, el siguiente paso es implementar nuestro diseño y
-generar el Archivo Binario [bitstream].
+generar el Archivo Binario [Bitstream].
 
     (ñ) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate
 Bitstream] de la seccion Programa y depuración [Program and Debug]. Si aparece una ventana de
@@ -490,7 +490,7 @@ le permitirá al la seccion de procesamiento Zynq controlar los leds en la placa
 desde la barra de menues.
 
     (r) Se abrirá la ventana de diálogo de exportación de hardware. Asegurese de que la opcion
-incluir Archivo Binario [include bitstream] esta seleccionada, tal y como la figura 1.25. Luego 
+incluir Archivo Binario [include Bitstream] esta seleccionada, tal y como la figura 1.25. Luego 
 seleccione OK.
 
         Nota: Para que la opcion incluir Archivo Binario se habilite, debe de estar activo un
@@ -533,7 +533,7 @@ lanzador del Espacio de Trabajo  [Workspace Launcher], tal y como la figura 1.26
 
     Con el SDK abierto, podemos comenzar la creación de nuestro programa. Usted ya es capaz
 de ver el proyecto de la plataforma hardware, que será automaticamente creado y abierto.
-Ahora es necesario añadir un proyecto de programa y un paquete de soporte de placa.
+Ahora es necesario añadir un proyecto de programa y un Paquete de Soporte para Placa.
 
     (a) Seleccione Archivo > Nuevo > Proyecto de Aplicación [File>New>Application Project]
 de la barra de menues.
@@ -562,7 +562,7 @@ la carpeta toque el boton derecho y seleccione Importar... [Import...], ver figu
 siguiente [Next].
 
     (f) En la ventana de diálogo de 'Importación de Archivos' [Import File System]
-seleccione el botón navegar/explorar (browse).
+seleccione el botón navegar/explorar [browse].
 
     La carpeta de archivos fuente dependerá de la placa de desarrollo Zynq que este
 en uso. Si esta utilizando ZedBoard, explore hasta 

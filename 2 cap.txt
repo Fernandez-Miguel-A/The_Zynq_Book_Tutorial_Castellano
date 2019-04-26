@@ -17,8 +17,8 @@ destrezas que han sido adquiridas.
     Éste tutorial esta dividido en cuatro ejercicios y se organiza como sigue:
 
  Ejercicio 2A - Éste ejercicio le provee de una guia adicional al proceso de lanzado del IDE Vivado
- (abrir el IDE Vivado), así como la creación de un proyecto utilizando el asistente de proyecto nuevo, 
-(New Project).
+ (abrir el IDE Vivado), así como la creación de un proyecto utilizando el asistente de proyecto nuevo
+[New Project].
 
  Ejercicio 2B - En éste ejercicio usaremos el proyecto hemos creado en el Ej 2A para construir un sistema 
 embebido Zynq que utiliza interrupciones haciendo uso del Integrador de Modulos, incorporando modulos
@@ -77,8 +77,8 @@ encuentre desmarcada, es decir que NO este seleccionada:
 
     Seleccione siguiente [Next].
 
-    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como su lenguaje de
-implementacion, en el campo target languaje, y como Simulador a Mixto [Mixed], en el campo Simulator 
+    (f) Dentro del diálogo añadir fuentes [Add Sources] seleccione VHDL como su Lenguaje de
+Implementacion [Target Languaje] y como Simulador a Mixto [Mixed], en el campo Simulator 
 Languaje.
 
     Si existen archivos fuente del tipo HDL ó archivos netlist para añadir al proyecto, se los puede 
@@ -216,7 +216,7 @@ de Zynq septima generacion).
 mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática, y seleccione
 /axi_gpio_0/S_AXI, ver figura 2.13.
 
-    Seleccione OK para realizar la conexión automatico de un clock (relog), el cual añade al Modulo
+    Seleccione OK para realizar la conexión automatico de un relog [clock] el cual añade al Modulo
 de Reinicio del Sistema Procesador y los bloques de Interconexión AXI.
 
     Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
@@ -236,7 +236,7 @@ Seleccione btns_5bits del menu desplegable en el campo 'Seleccion del Componente
 mensaje de "Asistencia al diseñador", en la parte superior de la vista esquemática, y seleccione
 /axi_gpio_0/S_AXI, ver figura 2.16.
 
-    Seleccione OK para realizar la conexión automatico de un clock (relog), el cual añade al Modulo
+    Seleccione OK para realizar la conexión automatico de un relog [clock] el cual añade al Modulo
 de Reinicio del Sistema Procesador y los bloques de Interconexión AXI.
 
     Haga click en "Realizar Automatización de Conexión" [Run Connection Automation] del 
@@ -312,11 +312,11 @@ creado recientemente de la seccion de procesamiento Zynq, tal y como se resalta 
 
 
 
-    (k) Guarde su diseño al seleccionar Archivo > Guardar Bloque de Diseño,
- (File > Save Block Design), de la barra de menues.
+    (k) Guarde su diseño al seleccionar Archivo > Guardar Bloque de Diseño [File > Save Block Design]
+de la barra de menues.
 
-    (l) Valide el diseño al seleccionar Herramientas > Validar Diseño,
-(Tools > Validate Design), de la barra de menues. Ésto ejecutará el Verificado de Reglas de Diseño
+    (l) Valide el diseño al seleccionar Herramientas > Validar Diseño [Tools > Validate Design] de
+la barra de menues. Ésto ejecutará el Verificado de Reglas de Diseño
 (Design-Rules-Check ó  DRC).
                                                            __
     Alternativamente, seleccione el botón validar diseño, |./|, de la barra de herramientas
@@ -340,9 +340,9 @@ tal y como en la figura 2.26.
 y Actualizarlo Automaticamente [Let Vivado manage wrapper and auto-update], Seleccione OK.
 
     Con todos los archivos de diseño generados, el siguiente paso es implementar nuestro diseño y
-generar el Archivo Binario [bitstream].
+generar el Archivo Binario [Bitstream].
 
-    (o) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate bitstream]
+    (o) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate Bitstream]
 de la seccion Programa y Depuración [Program and Debug]. Si la ventana de diálogo aparece para guardar
 su diseño, seleccione guardar [Save].
 
@@ -369,7 +369,7 @@ de desarrollo.
 desde la barra de menues.
 
     (s) La ventana de diálogo de exportación de hardware se abrirá. Asegurese de que la opcion
-incluir Archivo Binario [include bitstream] esta seleccionada, tal y como la figura 2.28. Luego 
+incluir Archivo Binario [Include Bitstream] esta seleccionada, tal y como la figura 2.28. Luego 
 seleccione OK.
 
     (t) Abra el SDK de Vivado al seleccionar Archivo > Abrir SDK [File> Launch SDK] desde
@@ -571,7 +571,7 @@ Creando una señal de interrupcion compartida/direccionada, que es pasada a la s
 | Ambas | Ahora necesitamos generar el nuevo Archivo Binario para nuestro diseño modificado.
 
 
-    (h) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate bitstream]
+    (h) En el navegador de flujo [Flow Navigator] seleccione generar Archivo Binario [Generate Bitstream]
 de la seccion Programa y Depuración [Program and Debug]. Si la ventana de diálogo aparece para guardar
 su diseño, seleccione guardar [Save].
 
@@ -594,7 +594,7 @@ para exportar un diseño hardware.
 desde la barra de menues.
 
     (m) La ventana de diálogo de exportación de hardware se abrirá. Asegurese de que la opcion
-incluir Archivo Binario [include bitstream] esta seleccionada. Luego seleccione OK. Se exhivirá un diálogo
+incluir Archivo Binario [Include Bitstream] esta seleccionada. Luego seleccione OK. Se exhivirá un diálogo
 consultandole si desea sobreescribir el archivo exportado, el cual es la característica del sistema
 inicial de una única interrupcion. Seleccione SI [Yes] para este mensaje así como para las otras posibles
 notificaciónes.
