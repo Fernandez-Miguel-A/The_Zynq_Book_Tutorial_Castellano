@@ -77,17 +77,17 @@ de seleccion de partes.
 
     En la seccion Seleccionar [Select] seleccione Placas [Boards] y entonces filtre las partes de placas
 utilizando el filtro con menu desplegable como el de la figura 3.4. Seleccione ZedBoard Zynq Evaluation and
-Development Kit (ZedBoard Equipo Zynq de evaluacion y desarrollo) y seleccione OK. Seleccione Finalizar
+Development Kit (Equipo de Evaluacion y desarrollo ZedBoard de Zynq) y seleccione OK. Seleccione Finalizar
 [Finish].
 
 
 
-| Zybo | Ya que estamos utilizando la Zybo con el chip Zynq-7010 seleccione, |...| en el panel
+| Zybo | Ya que estamos utilizando la ZYBO con el chip Zynq-7010 seleccione, |...| en el panel
 de seleccion de partes.
 
     En la seccion Seleccionar [Select] seleccione Partes [Parts] y entonces filtre las partes de placas
 utilizando el filtro con menu desplegable como el de la figura 3.5. Se puede corroborar que tipo de 'parte'
-tenemos, mirando el chip Zynq sobre la placa de desarrollo Zybo. Se debe seleccionar el chip de Zynq
+tenemos, mirando el chip Zynq sobre la placa de desarrollo ZYBO. Se debe seleccionar el chip de Zynq
  'Z7010' con encapsulado clg400. Seleccione OK. 
 
     Seleccione Finalizar [Finish].
@@ -117,7 +117,7 @@ creación del mismo proyecto utilizando el antes mencionado GUIONADO [Scripting]
 Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
 
     (j) Observe que la ruta de la carpeta predeterminada para los comandos es la carpeta de instalación
-de Vivado HLS, como muestra la figura 3.7. Para cambiarla por nuestra carpeta de trabajo para éste tutorial
+de Vivado HLS, como muestra la figura 3.7. Para cambiarla por nuestra carpeta de trabajo, en éste tutorial
 utilizamos los siguientes comandos seguidos de la tecla (Enter), los cuales deben realizarse estrictamente
 en el orden mostrado, de otro modo no realizarán el proceso esperado.
 
@@ -220,54 +220,54 @@ generado el sistema RTL utilizando VHDL. Éste proceso puede tardar un poco mien
 progreso se puede ver en la consola. Una vez completado, se abrirá el Reporte de Cosimulación
 [Cosimulation Report] tal y como la figura 3.10.
 
-    Note el mensaje 'Pass' ('Superado') en la figura 3.10 indicando que el RTL se comporta igual al codigo
+    Note el mensaje 'Pass' (Aprobado) en la figura 3.10 indicando que el RTL se comporta igual al codigo
 fuente C++.
 
     (e) Cree una solución nueva para el diseño desde cualquier medio, seleccionando el botón Solución Nueva
-|+[<>]| [New Solution, en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
+|+[<>]| [New Solution], en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
 [Project > New Solution]. Seleccione Finalizar [Finish], para aceptar por defecto los de la solución2.
 
     (f) Haga doble seleccion (Double Click) sobre mult_matriz.cpp de la seccion Archivos Fuentes [Sources]
 de la pestaña Explorador [Explorer], para asegurar que el codigo es visible en el espacio de trabajo,
 ahora insertaremos una directiva que paralelizará los bucles anidados del codigo de la multiplicación de
-matrices. Ésto ejecutará bucles planos, removiendo la necesidad para transiciones de bucles.   <=== ???
+matrices. Ésto ejecutará bucles planos, removiendo la necesidad de transiciones sobre bucles.
 
-    Abra la pestaña Directivas [Directives] de la derecha del espacio de trabajo. Seleccione Producto
-y observará la porción de codigo asociada resaltada en el editor, a este punto la multiplicación de 
-elementos del arreglo para producir los elementos producto de la matriz resultante.    <==== ~~~~ +-+-
-Tecla derecha del mouse sobre Producto y seleccione Insertar Directiva, (Insert Directive):
+    Abra la pestaña Directivas [Directives] de la derecha del espacio de trabajo. Seleccione 'Producto'
+y observará la porción de codigo asociada de forma resaltada sobre el editor, este punto en particular es donde
+se opera la multiplicación de elementos de los vectores generando los elementos de la matriz PRODUCTO.
+Tecla derecha del mouse sobre Producto y seleccione Insertar Directiva [Insert Directive]:
 
-    Ésto abrirá al editor de Directivas. Use el menu desplegable para seleccionar la opción PIPELINE
-(PARALELIZADO). Seleccione OK para aceptar las opciónes por defecto. La pestaña Directivas (Directives),
+    Ésto abrirá al Editor de Directivas. Use el menu desplegable para seleccionar la opción PARALELIZADO
+[PIPELINE]. Seleccione OK para aceptar las opciónes por defecto. La pestaña Directivas [Directives]
 debe parecerse a la de la figura 3.11.
 
-    (g) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. La consola producirá
-la misma información sobre el proceso de aplanamiento del bucle Fila. Tambien explica que la segunda
-columna, Objetivo (target), del campo intervalo de inicialización es igual a 1 por defecto, significa que
-no pudo ser encontrado pora el bucle Producto. Ésto es debido a la dependencia del bucle.
+    (g) Seleccione el botón Sintesis C [C Synthesis] para sintetizar el diseño RTL. La consola producirá
+la misma información sobre el proceso de aplanamiento del bucle Fila. Tambien explica que la columna
+"Objetivo" ['target'], del campo intervalo de inicialización es igual a 1 por defecto, significa que
+no pudo encontrarse el bucle Producto. Ésto es debido a la dependencia que presenta este bucle.
 
-    Desde el reporte de sintesis, figura 3.12, se observa que el bucle del primer nivel    <==== ~~~~ +-+-
+    Desde el reporte de sintesis, figura 3.12, se observa que el bucle del primer nivel
 Fila_Columna no ha sido paralelizado pues el bucle Columna no fué aplanado. Tambien se observa que
-la primera columna, realizado (achieved), fué 2 a pesar tener Objetivo (target) en 1.
+la primera columna "Realizado" ['achieved'] fué 2 a pesar tener "Objetivo" ['target'] en 1.
 
-    (h) Abra la perspectiva Análisis (Analysis), al selecionar sobre |.=O-O| ó Ventana > Perspectiva de
- Análisis, (Window > Analysis Perspective), que tambien abrirá la vista de desempeño mostrandonos como
-varios varias operaciónes con el codigo son planificadas como ciclos de relog. 
+    (h) Abra la perspectiva Análisis [Analysis] al selecionar sobre |.=O-O| ó Ventana > Perspectiva de
+ Análisis [Window > Analysis Perspective] que tambien abrirá la vista de desempeño mostrandonos las diferentes
+operaciónes que se realizan en cada ciclo de relog. 
 
     (i) Abra los bucles Fila_Columna al selecionarlos para obtener la vista mostrada en la figura 3.13.
 
     Note que la operación de escritura resaltada ocurre en el estado C3, node_33(write). Haga Click
-derecho sobre esta celda y seleccione Ir al Archivo Fuente, (Goto Source), resaltará la linea asociada
+derecho sobre esta celda y seleccione Ir al Archivo Fuente [Goto Source] resaltará la linea asociada
 del codigo en el archivo fuente.
 
     Ésta es una operación de escritura inicializada como una escritura en un puerto en el RTL que ocurre
-antes de cualquier operación en el bucle, Producto, se puede ejecutar. Ésto previene el aplanamiento del
-bucle Producto en Fila_Columna.
+antes de cualquier operación en el bucle Producto se puede ejecutar. Ésto previene el aplanamiento del
+bucle Producto en Fila_Columna.   <=~~~~~~~~
 
-    Más aún, la inabilitación de encontrar el campo Objetivo de Intervalo de Inicialización (II=1) puede
-ser explicado al considerar iteraciones consecutivas del bucle.
+    Más aún, la imposibilidad de lograr con el nivel de "Objetivo" (1), ver segunda columna de Intervalo
+de Inicialización, puede ser explicada al considerar iteraciones consecutivas del bucle.   <=~~~~~~~~
 
-    Para mostrar la consola valla a Ventana > Ver Vista > Consola, (Window > Show View > Console),
+    Para mostrar la consola valla a Ventana > Ver Vista > Consola [Window > Show View > Console]
 la consola muestra el siguiente mensaje (puede necesitar deslizarse hacia abajo para ver este mensaje):
 
     Existe una dependencia entre las iteraciones de la linea 16 del codigo fuente, la cual es la operación
@@ -275,119 +275,120 @@ con el bucle Producto.
 
     Debido a la precencia del operador '+=', ésta linea de codigo contiene una lectura del arreglo prod
 (la antes mencionada operación 'load' - 'cargar') y una escritura al arreglo prod (una operación 'store'-
-'almacenar') con II en 1, una iteracion del bucle Producto procesada ocurriría en ciclo de relog posterior
-a la inicialización de la primera iteracion. Ésto es visualizado en la figura 3.14 al pegar copias
-consecutivas de las operaciónes de multiplicación de matrices, una sobre la otra. Con II establecido en 1
-se observa el solapamiento resaltado. Los arreglos son interpretados como BRAM por defecto, y desde este
-solapamiento requiere una operación de lectura y una de escritura para ser ejecutado en el mismo ciclo de
-relog, esto simplemente es imposible, como ambas operaciónes NO pueden suceder sobre la BRAM al mismo
-tiempo. Por lo tanto establecer II a 2 permite que la operación de escritura sea completada antes de que
-comience la operación de lectura de la siguiente iteracion.
+'almacenar') como el nivel de "Objetivo" es 1, una iteracion del bucle Producto procesada ocurriría en
+ciclo de relog posterior a la inicialización de la primera iteracion. Ésto es visualizado en la figura 3.14
+al pegar copias consecutivas de las operaciónes de multiplicación de matrices, una sobre la otra. Con el
+nivel de "Objetivo" a 1 se observa el solapamiento existente. Los arreglos son interpretados como BRAM por
+defecto, y debido a este solapamiento se requiere una operación de lectura y una de escritura para ser
+ejecutado en el mismo ciclo de relog, esto simplemente es imposible, como ambas operaciónes NO pueden
+suceder sobre la BRAM al mismo tiempo. Por lo tanto establecer el nivel de "Objetivo" a 2 permite que la
+operación de escritura sea completada antes de que comience la operación de lectura de la siguiente iteracion.
 
-    (j) Regrese a la Perspectiva de Sintesis por Defecto al seleccionar Ventana > Perspectiva de Sintesis,
-(Window > Synthesis Perspective). Seleccione SI [Yes] si una ventana de dialogo aparece.
+    (j) Regrese a la Perspectiva de Sintesis por Defecto al seleccionar Ventana > Perspectiva de Sintesis
+[Window > Synthesis Perspective]. Seleccione SI [Yes] si una ventana de dialogo aparece.
 
     Ahora crearemos una solución nueva que paralelizará al bucle Columna, desenvolviendo al bucle Producto,
 para eliminar la dependencia de iteración anidada pero a costa de incrementar operadores y por lo tanto
-a coste de hardware.
+aumentar el area de implementación hardware.
 
     (k) Cree una nueva solución para el diseño desde cualquier medio, seleccionando el botón Solución Nueva
-|+[<>]| (New Solution), en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva,
-(Project > New Solution). Desde el menu desplegable asegurese que esta seleccionada solución1 como esta
+|+[<>]| [New Solution], en la barra de herramientas ó desde la opción del menu Proyecto > Solución Nueva
+[Project > New Solution]. Desde el menu desplegable asegurese que esta seleccionada solución1 como esta
 no tiene directivas ni restricciones.
     Seleccione Finalizar [Finish], para crear la solución.
 
     (l) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor, en la pestaña
-Directivas tecla derecha de mouse sobre el bucle Columna y seleccione Insertar Directiva, (Insert
-Directive). Desde el menu desplegable seleccione el tipo de directiva PIPELINE (PARALELIZADO) asegurese
-que II=1 y seleccione OK. La pestaña Directivas (Directives), debe parecerse a la de la figura 3.15.
+Directivas tecla derecha de mouse sobre el bucle Columna y seleccione Insertar Directiva [Insert
+Directive]. Desde el menu desplegable seleccione el tipo de directiva PARALELIZADO [PIPELINE] asegurese
+que aparezca "... II=1" y seleccione OK. La pestaña Directivas [Directives] debe parecerse a la de la
+figura 3.15.
 
-    (m) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. Observando que la consola
-mostrará que mientras que el bucle Producto fué desenvolvuelto, el bucle Fila fué aplanado. El Objetivo
-(target) II en 1, no pudo ser encontrado por el bucle Fila_Columna. Ésto vez debido a las limitaciones
+    (m) Seleccione el botón Sintesis C [C Synthesis] para sintetizar el diseño RTL. Observando que la consola
+mostrará que mientras que el bucle Fila fué aplanado, el bucle Producto fué desenvuelto. El nivel de Objetivo
+[target] II en 1, no pudo se pudo lograr en el bucle Fila_Columna. Ésto vez debido a las limitaciones
 de recursos. (Puede necesitar deslizarse hacia abajo para ver este mensaje):
 
-    (n) Abra la perspectiva Análisis (Analysis), al selecionar sobre |.=O-O| ó Ventana > Perspectiva de
- Análisis, (Window > Analysis Perspective), que abrirá la vista de desempeño. Cambia a Vista de recursos
+    (n) Abra la perspectiva Análisis [Analysis] al selecionar sobre |.=O-O| ó Ventana > Perspectiva de
+ Análisis [Window > Analysis Perspective] que abrirá la vista de desempeño. Cambia a Vista de recursos
  al selecionar la pestaña debajo de la pantalla. 
 
-    (ñ) Abra los Puertos de Memoria, (Memory Ports), para ver los recursos almacenados sobre la memoria
+    (ñ) Abra los Puertos de Memoria [Memory Ports] para ver los recursos almacenados sobre la memoria
 con el sistema. Su vista debería verse similar a la de la figura 3.16.
 
     La figura 3.16 muestra las operaciónes por recursos en cada ciclo de relog. En el estado actual, la
 opereción de lectura de 2 ciclos al comienzo de b en C3 solapa con aquellas que estan en C4, así que solo
-una de ciclo unico es visible. Hay instancias las dos, a y b, siendo sometido a 3 operaciónes de lectura a
-la vez, lo cual recordará que NO es posible para BRAM de puertos duales (dual-port). Por lo tanto es
-necesario particionar esos arreglos en pequeños secciones, que permitan modificar el arreglo sin alterar
-el codigo fuente.
+una de ciclo unico es visible. Hay elementos tanto de "a" como de "b" que estan siendo sometidos a 3
+operaciónes de lectura a la vez, lo cual recordará que NO es posible para BRAM de Puertos Duales [dual-port].
+Por lo tanto es necesario particionar esos arreglos en pequeños secciones, que permitan modificar el arreglo
+sin alterar el codigo fuente.
 
-    (o) Regrese a la Perspectiva de Sintesis al seleccionar | >_< |. Cree una nueva solución para el
-diseño desde cualquier medio, seleccionando el botón Solución Nueva |+[<>]| (New Solution), en la barra de
-herramientas ó desde la opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione 
+    (o) Regrese a la Perspectiva de Sintesis al seleccionar | /_\ |. Cree una nueva solución para el
+diseño desde cualquier medio, seleccionando el botón Solución Nueva |+[<>]| [New Solution], en la barra de
+herramientas ó desde la opción del menu Proyecto > Solución Nueva [Project > New Solution]. Seleccione 
 Finalizar [Finish], para aceptar por defecto los de la solución4. Note que las directivas serán copiadas
 de la solución3.
 
     Para ésta solución redimencionaremos los arreglos de entrada utilizando directivas. El bucle Producto
-es accesado via indice k de iteracion, por lo tanto los arreglos a y b deben ser particionados por su
-dimensión k. Inspeccionando a linea 16 de mult_matriz.cpp se observa que a[i][k] es de doble dimensión y
-para b[k][j] es de una sola.
+es accesado mediante el uso del indice k, por lo tanto los arreglos a y b deben ser particionados por su
+dimensión. Inspeccionando a linea 16 de mult_matriz.cpp se observa que a[i][k] es de dimensión 2 y
+para b[k][j] es de una sola dimensión (1).
 
     (p) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor y abra la pestaña
-Directivas. Tecla derecha de mouse sobre la variable a y seleccione Insertar Directiva, (Insert
-Directive). Asegurese de que la directiva esta configurada como la figura 3.17, habiendo seleccionado
-el tipo de directiva ARRAY_RESHAPE (redimencionar arreglo/vector), y la dimensión específicada sea 2.
+Directivas. Tecla derecha de mouse sobre la variable a y seleccione Insertar Directiva [Insert
+Directive]. Asegurese de que la directiva esta configurada como la figura 3.17, habiendo seleccionado
+el tipo de directiva ARRAY_RESHAPE (redimencionar arreglo/vector), y que la dimensión específicada sea 2.
 
     (q) Repita el paso (p) pero para la variable b, ésta vez asegurese de que la dimensión sea 1.
 
-    (r) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. El reporte de
-sintesis se abrirá mostrando que el Objetivo (target) II en 1, HA SIDO ENCONTRADO.
+    (r) Seleccione el botón Sintesis C [C Synthesis] para sintetizar el diseño RTL. El reporte de
+sintesis se abrirá mostrando que el Objetivo [target] II en 1, HA SIDO LOGRADO.
 
-=========>de mayor jerarquia.<============
-    El nivel superior del diseño toma 34 ciclos de relog en completarlo, con el bucle Fila_Columna sacando
-una muestra luego de una iteracion con latencia de 9. Una muestra es entonces leer en cada ciclo (debido a
-que II es 1), y luego de 25 veces todas las muestras han sido leidas. Los 34 ciclos de relog de éste diseño
-es por consiguiente justificado por las 25 veces más la latencia de 9. 25 + 9 = 34.
+    El sistema toma 34 ciclos de relog en terminar, con el bucle Fila_Columna sacando <==== ~~~~ +-+-
+una muestra luego de una iteracion con latencia de 9. Se lee una muestra en cada ciclo (debido a
+que Objetivo II es 1), y luego de otros 25 ciclos más, todas las muestras han sido leidas. Los 34
+ciclos de relog de éste diseño es por consiguiente justificado por las 25 veces más la latencia de 9,
+como "25 + 9 = 34".
 
     La función entonces procede a calcular siguiente conjunto de datos.
 
-    (s) La optimizacion final en éste ejercicio es paralelizar la función, en lugar de los bucles con que
+    (s) La optimizacion final de éste ejercicio es paralelizar la función, en lugar de los bucles con que
 la función para comparación <==== ~~~~ +-+-. Cree una nueva solución para el diseño desde cualquier medio,
-seleccionando el botón Solución Nueva |+[<>]| (New Solution), en la barra de herramientas ó desde la
-opción del menu Proyecto > Solución Nueva, (Project > New Solution). Seleccione Finalizar [Finish], para
+seleccionando el botón Solución Nueva |+[<>]| [New Solution], en la barra de herramientas ó desde la
+opción del menu Proyecto > Solución Nueva [Project > New Solution]. Seleccione Finalizar [Finish], para
 aceptar por defecto los de la solución5. 
 
     (t) Asegurese de que el codigo fuente de mult_matriz.cpp esta visible en el editor y abra la pestaña
-Directivas. Primero remueva la directiva PIPELINE (PARALELIZADO) insertada previamente en el bucle Columna.
-Tecla derecha de mouse sobre el bucle Columna y seleccione Remover Directiva, (Remove Directive). Si una
+Directivas. Primero remueva la directiva PARALELIZADO [PIPELINE] insertada previamente en el bucle Columna.
+Tecla derecha de mouse sobre el bucle Columna y seleccione Remover Directiva [Remove Directive]. Si una
 ventana de dialogo parecida a la de la figura 3.19 aparece seleccione NO.
     
-    (u) Haga Click derecho sobre la función de nivel superior, mult_matriz y seleccione Insertar Directiva,
-seleccione el tipo de directiva PIPELINE (PARALELIZADO) y seleccione OK.
+    (u) Haga Click derecho sobre la función de mayor nivel, mult_matriz y seleccione Insertar Directiva,
+seleccione el tipo de directiva PARALELIZADO [PIPELINE] y seleccione OK.
 
-    (v) Seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL. Vivado HLS provee
-una herramienta para comparar reportes de sintesis. Seleccione el botón |o¯¯> O| ó desde la opción del
-menu Proyecto > Comparar Reportes, (Project > Compare Reports). Asegurese de que la solución4 y la
+    (v) Seleccione el botón Sintesis C [C Synthesis] para sintetizar el diseño RTL. Vivado HLS provee
+una herramienta para comparar reportes de sintesis. Seleccione el botón |o¯¯> °| ó desde la opción del
+menu Proyecto > Comparar Reportes [Project > Compare Reports]. Asegurese de que la solución4 y la
 solución5 fueron añadidas como en la figura 3.20, y seleccione OK.
 
     La figura 3.21 muestra la comparación de reportes de sintesis para la solución4 (con paralelismo de
-bucles) y la solución5 (con paralelismo de la función de nivel superior). Se observa que el paralelismo de
-la función de nivel superior, resulta en un diseño que alcanza el completado al cabo de pocos ciclos de
+bucles) y la solución5 (con paralelismo de la función de mayor nivel). Se observa que el paralelismo de
+la función de mayor nivel, resulta en un diseño que logra finalizarlo al cabo de pocos ciclos de
 relog, requiriendo de solo 13 ciclos para comenzar con una nueva transaccion, en lugar de 35 para el 
 paralelismo de bucles.
 
-    Sin embargo, este trae consigo un coste de aumento de utilización de hardware, debido al desentramado
+    Sin embargo, este trae consigo un coste de aumento de utilización de hardware, debido al desanidado
 de todos los bucles con el diseño. Que no sería comercializable, debido a su altisimo precio, por lo tanto
 es necesario hacer un balance entre desempeño de sistema y utilización de hardware para el diseño, y es 
-posible que un diseño parcialmente desentramado pueda encontrar los requerimientos de diseño en una
+posible que un diseño parcialmente desanidado pueda encontrar los requerimientos de diseño en una
 reducción del coste de hardware.
 
-    La ZedBoard contiene el chip Zynq Z-7020, con unos comodamente 220 DSP48E slices, que hacen a este
-dispositivo estar muy bien provisto para implementar este diseño hardware. Sin embargo, la Zybo que
-contiene al chip Zynq Zynq-7010, solo contiene 48 DSP48E .slices La solución5 requiere 125 DSP48E slices
-indicando que el paralelismo de la función de nivel superior del diseño hardware tenga que incrementar
-la utilización del dispositivo para extender que el chip Zynq de la Zybo no puede llevar a cabo la
-implementación por completo. La solución4 estaría aparentemente provista con utilización de recursos
-reducidos e incrementando la latencia.
+    La ZedBoard contiene el chip Zynq Z-7020, con unos comodamente 220 DSP48E1 slices, que hacen a este
+dispositivo estar muy bien provisto para implementar este diseño hardware. Sin embargo, la ZYBO que
+contiene al chip Zynq Zynq-7010, solo contiene 80 DSP48E1 slices. Como la solución5 requiere 125 DSP48E1
+slices, con paralelismo de la función de mayor nivel de nuestro diseño hardware, hace que necesite
+incrementar el area de implementación hardware a tal punto que el chip Zynq de la ZYBO no es capaz de
+alcanzar para llevar a cabo toda la implementación. La solución4 estaría aparentemente dentro del orden
+de los recursos hardware de la ZYBO, utilizando pocos recursos a coste de incrementar la latencia.
 
     (w) Ésto completa el ejercicio. Cierre la GUI de Vivado HLS.
 
@@ -421,10 +422,10 @@ función de multiplicación de matrices de los dos ejercicios anteriores.
 Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
 
     (b) Cambie la carpeta de trabajo a "C:/Zynq_Book/HLS/tut3C". Ésta carpeta
-contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION (Script) Tcl
+contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION Tcl [Tcl Script]
 requerido para construir el proyecto, run_hls_zed.tcl y run_hls_zybo.tcl.
 
-    (C) Ejecute el GUION Tcl utilizando el comando:
+    (c) Ejecute el GUION Tcl utilizando el comando:
 
 
 
@@ -443,9 +444,9 @@ el cual utilizaremos en el siguiente ejercicio.
 
 
 
-    (e) Abra el archivo mult_matriz.cpp desde la seccion Archivos Fuentes, [Sources], de la pestaña
-Explorador [Explorer], y seleccione el botón Sintesis C, (C Synthesis), para sintetizar el diseño RTL.
-Cuando el reporte de sintesis abra, desplasece hasta la seccion interfaz.
+    (e) Abra el archivo mult_matriz.cpp desde la seccion Archivos Fuentes [Sources] de la pestaña
+Explorador [Explorer], y seleccione el botón Sintesis C [C Synthesis] para sintetizar el diseño RTL.
+Cuando el reporte de sintesis abra, desplacese hasta la seccion interfaz.
 
     Note que los arreglos de entrada a y b, así como el arreglo producto resultante prod han sido
 implementados utilizando el protocolo ap_memory. Esto es inferido desde el codigo C++ como el tipo array
@@ -471,8 +472,8 @@ señales de control indicando la etapa de operación.
     * ap_idle es una indicación de que ese dato esta procesando datos.
     * ap_done indica que el dato de salida ha sido procesado y está disponible.
 
-    Volviendo al EJ 3B, los arreglos que fueron particionados para reducir a cada uno en varias secciones
-pequeñas con puertos expandidos, señales de control y recursos de implementación. Ésto incrementa el ancho
+    Volviendo al EJ 3B, los arreglos que fueron particionados reduciciendolos a secciones pequeñas con
+puertos expandidos, señales de control y recursos de implementación. Ésto incrementa el ancho
 de banda. Éste influencia directamente la interfaz de sintesis a travez del uso de directivas.
 
 
