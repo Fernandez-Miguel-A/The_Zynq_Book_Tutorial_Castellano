@@ -1,6 +1,12 @@
 Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
 "El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
 
+--------------************ Explicar Que quiere decir HLS (High Level Synthesis  -  Síntesis en Alto Nivel)
+
+Se realiza una sitesis de un circuito electrónico describiendolos utilizando lenguajes de alto nivel
+**************------------
+
+
 
 
 3                                Diseñando con Vivado HLS
