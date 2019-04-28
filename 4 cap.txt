@@ -1,5 +1,3 @@
- Traduccion del Libro: "The Zynq Book Tutorials  for Zybo and ZedBoard"
-"El Libro de Tutoriales de Zynq  para Zybo y ZedBoard".
 
 
 
