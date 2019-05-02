@@ -102,7 +102,7 @@ tenemos, mirando el chip Zynq sobre la placa de desarrollo ZYBO. Se debe selecci
 | Ambas | (h) Será generado el proyecto y el espacio de trabajo abrirá en modo sintesis [Synthesis]
 para el proyecto y solución generado. Como en la figura 3.6.
 
-    Abriendo la seccion Archivos Fuentes y bancos de prueba [Sources y testbench] de la mano izquierda de
+    Abriendo la seccion Archivos Fuentes y bancos de pruebas [Sources y testbench] de la mano izquierda de
 la pestaña Explorador [Explorer], nos muestra la inclución de los Archivos Fuentes y de los Archivos de Pruebas
 del paso anterior. Haciendo seleccion doble (Double Click) con el mouse sobre estos archivos, abre los
 archivos en el editor para examinación y edición.
@@ -133,7 +133,7 @@ Repitalo hasta haber alcanzado la ruta al disco "C:/".
     * cd tut3A                  - Éste comando cambia a la carpeta Zynq_Book/HLS/tut3A.
 
     La ventana de comandos debe estar en la carpeta de trabajo "C:/Zynq_Book/HLS/tut3A". Ésta carpeta
-contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION Tcl [Tcl Script]
+contiene los archivos fuente y los bancos de pruebas de un proyecto y tambien el GUION Tcl [Tcl Script]
 requerido para construir el proyecto, run_hls_zed.tcl y run_hls_zybo.tcl.
 
     (k) Con la carpeta de trabajo correcta y los archivos requeridos dentro de ella, podemos construir
@@ -427,7 +427,7 @@ función de multiplicación de matrices de los dos ejercicios anteriores.
 Vivado 2015.1 > Xilinx HLS 2015.1 Command Prompt.
 
     (b) Cambie la carpeta de trabajo a "C:/Zynq_Book/HLS/tut3C". Ésta carpeta
-contiene los archivos fuente y los bancos de prueba de un proyecto y tambien el GUION Tcl [Tcl Script]
+contiene los archivos fuente y los bancos de pruebas de un proyecto y tambien el GUION Tcl [Tcl Script]
 requerido para construir el proyecto, run_hls_zed.tcl y run_hls_zybo.tcl.
 
     (c) Ejecute el GUION Tcl utilizando el comando:
